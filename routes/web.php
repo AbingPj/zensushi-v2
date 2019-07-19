@@ -18,8 +18,10 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+
 // WelcomPage
 // Route::get('/home', 'HomeController@index')->name('home');
+
 Route::get('/welcomepage', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
 // Page Controller
