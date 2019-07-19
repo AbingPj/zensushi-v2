@@ -25,29 +25,30 @@
     </head>
     <body style="background-image: url({{asset('images/16.jpg')}})">
         <div class="container" style="margin-top:5%;
-    margin-bottom:100px;">
+                margin-bottom:100px;">
         <div class="row">
 
-            <div class="col-sm-9 col-md-7 col-lg-7 mx-auto">
+            <div class="col-sm-12 col-md-11 col-lg-8 mx-auto">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-sm-12  col-lg-6">
+                            <div class="col-sm-12  col-md-6">
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
-                                <center>
+                                <br>
+                                <br>
+                                <div class="text-center">
                                     <h2> Zen Sushi </h2>
                                     <p>Inventory System</p>
-                                </center>
+                                </div>
 
-
+                                <br>
+                                <br>
                                 <div class="form-group">
-                                    <div class="text-center" style="margin-bottom:-8px;">
-                                        <label for="email">{{ __('E-Mail Address') }}</label>
-                                    </div>
 
-                                    <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
+
+                                    <input placeholder="E-Mail Address" id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
                                     @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -57,10 +58,8 @@
 
 
                                 <div class="form-group">
-                                    <div class="text-center" style="margin-bottom:-8px;">
-                                            <label for="password">{{ __('Password') }}</label>
-                                    </div>
-                                    <input id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;" >
+
+                                    <input placeholder="Password" id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;" >
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -87,7 +86,7 @@
 
 
                                 <div class="form-group text-center text-success">
-                                    <a class="btn btn-outline-success btn-block btnSignUp" data-toggle="collapse" href="#signup_form">Sign up</a>
+                                <a class="btn btn-outline-success btn-block " href="{{ route('page.register') }}">Sign up</a>
                                 </div>
                                 <!-- <div class="form-group text-center">
                                     <a href="https://www.fb.com">Forgot Password?</a>
@@ -95,107 +94,14 @@
                                 </form>
                             </div>
 
-                            <div class="col-sm-12  col-lg-6">
-
+                            <div class="col-sm-12  col-md-6">
                                 <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;">
                             </div>
                             <br>
                             <br>
-
-
                         </div>
 
-                        <div class="row">
 
-                            <div class="col-sm-12  col-lg-12">
-                                    <form method="POST" action="{{ route('register') }}">
-                                            @csrf
-                                <div class="collapse" id="signup_form">
-                                    <div class="card border-success mb-3">
-                                        <div class="card-header text-success text-center">
-                                            <b> Sign-Up</b>
-                                        </div>
-                                        <div class="card-body text-success">
-
-                                            <div class="form-group">
-                                                <label>{{ __('Name') }}</label>
-
-                                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                                                @error('name')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-
-                                            </div>
-
-
-
-
-
-
-
-
-
-
-                                            <div class="form-group">
-                                                <label for="email">{{ __('E-Mail Address') }}</label>
-
-                                                <input id="email" type="email" class="form-control border-success @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                                                @error('email')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
-
-                                                <small id="text" class="form-text text-muted">Email must be unique.</small>
-                                            </div>
-
-                                            <div class="form-group ">
-                                                    <label for="password">{{ __('Password') }}</label>
-
-
-                                                        <input id="password" type="password" class="form-control border-success @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                                        @error('password')
-                                                            <span class="invalid-feedback" role="alert">
-                                                                <strong>{{ $message }}</strong>
-                                                            </span>
-                                                        @enderror
-                                            </div>
-
-                                            <div class="form-group">
-                                                    <label for="password-confirm">{{ __('Confirm Password') }}</label>
-
-
-                                                        <input id="password-confirm" type="password" class="form-control border-success" name="password_confirmation" required autocomplete="new-password">
-
-                                            </div>
-
-
-                                            <br>
-                                            {{-- <button id="btnSignUp" class="btn btn-success btn-block ld-over" type="submit">Sign up
-                                                <div class="ld ld-ball ld-broadcast"></div>
-                                            </button> --}}
-
-
-                                                    <div class="">
-                                                        <button type="submit" class="btn btn-success btn-block">
-                                                            {{ __('Register') }}
-                                                        </button>
-                                                    </div>
-
-
-
-                                            <br>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                    </form>
-                            </div>
 
                         </div>
                     </div>
@@ -205,15 +111,7 @@
     </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script>
-
-            $('.btnLogin').on("click", () => {
-                console.log("ok");
-                $('.btnLogin').attr('disabled','disabled');
-
-// $('.btnLogin').removeAttr("disabled");
-            });
-
-        </script>
+    </script>
     </body>
 </html>
 
