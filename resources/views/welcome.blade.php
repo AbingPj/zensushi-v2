@@ -28,26 +28,27 @@
                 margin-bottom:100px;">
         <div class="row">
 
-            <div class="col-sm-9 col-md-7 col-lg-7 mx-auto">
+            <div class="col-sm-12 col-md-11 col-lg-8 mx-auto">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
 
-                            <div class="col-sm-12  col-lg-6">
+                            <div class="col-sm-12  col-md-6">
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
+                                <br>
+                                <br>
                                 <div class="text-center">
                                     <h2> Zen Sushi </h2>
                                     <p>Inventory System</p>
                                 </div>
 
-
+                                <br>
+                                <br>
                                 <div class="form-group">
-                                    <div class="text-center" style="margin-bottom:-8px;">
-                                        <label for="email">{{ __('E-Mail Address') }}</label>
-                                    </div>
 
-                                    <input id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
+
+                                    <input placeholder="E-Mail Address" id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
                                     @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
@@ -57,10 +58,8 @@
 
 
                                 <div class="form-group">
-                                    <div class="text-center" style="margin-bottom:-8px;">
-                                            <label for="password">{{ __('Password') }}</label>
-                                    </div>
-                                    <input id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;" >
+
+                                    <input placeholder="Password" id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;" >
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
@@ -95,7 +94,7 @@
                                 </form>
                             </div>
 
-                            <div class="col-sm-12  col-lg-6">
+                            <div class="col-sm-12  col-md-6">
                                 <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;">
                             </div>
                             <br>
