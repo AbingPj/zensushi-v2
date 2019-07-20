@@ -41,18 +41,9 @@ class RolesTableSeeder extends Seeder
             'name' => "Admin Zensushi",
             'email' => "admin@zensushi.com",
             'password' => Hash::make('password'),
-            'role_id' => 1,
+            'role' => 1,
             'created_at' => Carbon::now(),
         ]);
-
-        DB::table('users')->insert([
-            'name' => "Member Zensushi",
-            'email' => "member@zensushi.com",
-            'password' => Hash::make('password'),
-            'role_id' => 2,
-            'created_at' => Carbon::now(),
-        ]);
-
 
     }
 }

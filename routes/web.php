@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\PageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +26,6 @@ Route::get('/welcomepage', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
 // Page Controller
 Route::get('/zensushi', 'PageController@home')->name('page.home');
-Route::get('/zensushi-items', 'PageController@items')->name('page.item');
 
 
 
