@@ -4,5 +4,5 @@
 
 @section('content')
   @include('layout.partials.banner')
-    <vc-items></vc-items>
+    <vc-items baseurl ="{{ Url('/') }}"></vc-items>
 @endsection

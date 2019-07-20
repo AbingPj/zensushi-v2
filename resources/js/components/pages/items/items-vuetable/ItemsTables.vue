@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Post Table</h1>
+    <h1>Items Table</h1>
 
     <div class="row">
       <div class="col">
@@ -31,7 +31,7 @@
     <div class="table-responsive-sm">
       <vuetable
         ref="vuetable"
-        api-url="http://zensushidavao-inv.test/items"
+        :api-url="baseUrl"
         :fields="fields"
         data-path="data"
         pagination-path
@@ -75,6 +75,9 @@ import FieldsDef from "./FieldsDef.js";
 // Vue.use(VueEvents);
 
 export default {
+  props: {
+    baseUrl: String
+  },
   components: {
     Vuetable,
     VuetablePagination,
@@ -83,6 +86,7 @@ export default {
 
     // CustomActions
   },
+
   data() {
     return {
       postData: {},
@@ -92,6 +96,9 @@ export default {
       css: CssForBootstrap4,
       fields: FieldsDef
     };
+  },
+  created() {
+      this.baseUrl = this.baseUrl + '/items';
   },
   mounted() {
     this.$events.listen("show-update-modal", data =>
