@@ -22,41 +22,21 @@ class CategoriesUnitsItemTypesSeeder extends Seeder
 
         DB::table('item_types')->insert([
             'id' => 1,
-            'description' => "Raw",
+            'description' => "raw",
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('item_types')->insert([
             'id' => 2,
-            'description' => "Product",
+            'description' => "products",
             'created_at' => Carbon::now(),
         ]);
 
         DB::table('item_types')->insert([
             'id' => 3,
-            'description' => "Other",
+            'description' => "others",
             'created_at' => Carbon::now(),
         ]);
-
-        DB::table('items')->insert([
-            'description' => "BEEF",
-            'unit_id' => 4,
-            'category_id' => 2,
-            'item_type_id' => 1,
-            'user_id' => 1,
-            'created_at' => Carbon::now(),
-        ]);
-
-        DB::table('items')->insert([
-            'description' => "PORK",
-            'unit_id' => 4,
-            'category_id' => 2,
-            'item_type_id' => 1,
-            'user_id' => 1,
-            'created_at' => Carbon::now(),
-        ]);
-
-
     }
     private function getCategory()
     {

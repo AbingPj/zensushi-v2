@@ -13,7 +13,4 @@ class PageController extends Controller
     public function home(){
         return view('app.pages.home.home');
     }
-    public function items(){
-        return view('app.pages.items.items');
-    }
 }
