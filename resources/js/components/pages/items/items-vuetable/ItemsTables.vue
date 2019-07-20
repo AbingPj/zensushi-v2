@@ -31,7 +31,7 @@
 
       <vuetable
         ref="vuetable"
-        :api-url="baseUrl"
+        :api-url="base_Url"
         :fields="fields"
         data-path="data"
         pagination-path
@@ -67,8 +67,8 @@ import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePagination
 import FilterBar from "./FilterBar";
 import FieldsDef from "./FieldsDef.js";
 
-// import VueEvents from "vue-events";
-// Vue.use(VueEvents);
+import VueEvents from "vue-events";
+Vue.use(VueEvents);
 
 export default {
   props: {
@@ -85,6 +85,7 @@ export default {
 
   data() {
     return {
+      base_Url: "",
       postData: {},
       perPageOption: [1, 5, 10, 25, 50, 100],
       perPage: 25,
@@ -94,7 +95,7 @@ export default {
     };
   },
   created() {
-      this.baseUrl = this.baseUrl + '/items';
+      this.base_Url = this.baseUrl + '/items';
   },
   mounted() {
     this.$events.listen("show-update-modal", data =>
@@ -103,9 +104,9 @@ export default {
     this.$events.listen("show-delete-modal", data =>
       this.showDeleteModal(data)
     );
-    Echo.channel("PostChannel").listen("PostEvent", data => {
-      this.refreshVueTable();
-    });
+    // Echo.channel("PostChannel").listen("PostEvent", data => {
+    //   this.refreshVueTable();
+    // });
     //this.$events.listen("refreshVueTable", data => this.refreshVueTable());
   },
 
