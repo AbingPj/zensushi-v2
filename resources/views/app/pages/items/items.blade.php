@@ -1,4 +1,5 @@
 
+<?php $bannerheader = "zen sushi items inventory"; ?>
 @extends('layout.app')
 
 @section('content')
