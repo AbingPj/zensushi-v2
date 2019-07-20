@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('vc-items', require('./components/pages/items/items.vue').default);
+Vue.component('vc-items-table', require('./components/pages/items/items-vuetable/ItemsTables.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

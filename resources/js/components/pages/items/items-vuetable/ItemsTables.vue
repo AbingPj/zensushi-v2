@@ -31,7 +31,7 @@
     <div class="table-responsive-sm">
       <vuetable
         ref="vuetable"
-        api-url="http://git-project.test/ptables"
+        api-url="http://zensushidavao-inv.test/items"
         :fields="fields"
         data-path="data"
         pagination-path
@@ -86,8 +86,8 @@ export default {
   data() {
     return {
       postData: {},
-      perPageOption: [1, 5, 10, 50, 100],
-      perPage: 10,
+      perPageOption: [1, 5, 10, 25, 50, 100],
+      perPage: 25,
       moreParams: {},
       css: CssForBootstrap4,
       fields: FieldsDef
@@ -121,7 +121,6 @@ export default {
 
     onChangePerPage() {
       this.perPage = this.perPage;
-      // console.log(this.perPage);
     },
     onPaginationData(paginationData) {
       this.$refs.pagination.setPaginationData(paginationData);
