@@ -16,8 +16,21 @@ class ItemsController extends Controller
     public function index()
     {
         $request = request();
-        //$query = app(Post::class)->newQuery()->with('group');
-        $query = app(Item::class)->newQuery();
+        $query = Item::join('units','items.unit_id','units.id')
+                     ->join('users', 'items.user_id','users.id')
+                     ->join('categories','items.category_id','categories.id')
+                     ->join('item_types', 'items.item_type_id','item_types.id')
+                      ->select(
+                                'items.id AS id',
+                                'items.description AS description',
+                                'items.remove AS remove',
+                                'items.created_at AS created',
+                                'users.name AS created_by',
+                                'categories.description AS category',
+                                'item_types.description AS item_type',
+                                'units.description AS unit'
+                            )
+                     ->newQuery();
             if (request('sort') != "" ){
                 // handle multisort
                 $sorts = explode(',', request()->sort);
@@ -26,16 +39,18 @@ class ItemsController extends Controller
                     $query = $query->orderBy($sortCol, $sortDir);
                 }
             } else {
-                $query = $query->orderBy('id', 'asc');
+                $query = $query->orderBy('items.id', 'asc');
             }
 
 
              if ($request->exists('filter')) {
                  $query->where(function($q) use($request) {
                      $value = "%{$request->filter}%";
-                     $q->where('id', 'like', $value)
-                        //  ->orWhere('title', 'like', $value)
-                         ->orWhere('description', 'like', $value);
+                     $q->where('items.id', 'like', $value)
+                         ->orWhere('items.description', 'like', $value)
+                         ->orWhere('categories.description', 'like', $value)
+                         ->orWhere('item_types.description', 'like', $value)
+                         ->orWhere('users.name', 'like', $value);
                  });
              }
 
@@ -47,6 +62,10 @@ class ItemsController extends Controller
                   'filter' => request()->filter,
                   'per_page' => request()->per_page
               ]);
+
+            //   dd($pagination);
+
+
             return response()->json(
                    $pagination
                 )
