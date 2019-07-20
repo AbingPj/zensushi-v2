@@ -1,7 +1,7 @@
 // Bootstrap4 + FontAwesome Icon
 export default {
     table: {
-        tableWrapper: "",
+        tableWrapper: "table-responsive-sm",
         tableHeaderClass: "mb-0",
         tableBodyClass: "mb-0",
         tableClass: "table table-bordered table-hover table-sm",

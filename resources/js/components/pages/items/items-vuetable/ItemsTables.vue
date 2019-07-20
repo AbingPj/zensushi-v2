@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="table-responsive-sm">
+
       <vuetable
         ref="vuetable"
         :api-url="baseUrl"
@@ -40,7 +40,6 @@
         :per-page="perPage"
         @vuetable:pagination-data="onPaginationData"
       ></vuetable>
-    </div>
 
     <div class="row" style="margin-top:5px;">
       <div class="col">
@@ -55,9 +54,7 @@
         ></vuetable-pagination>
       </div>
     </div>
-    <!-- <posts-update></posts-update> -->
-    <posts-update :updateData="postData"></posts-update>
-    <posts-delete :post="postData"></posts-delete>
+
   </div>
 </template>
 
@@ -65,7 +62,6 @@
 import Vue from "vue";
 import Vuetable from "vuetable-2";
 import CssForBootstrap4 from "./VuetableCssBootstrap4.js";
-// import VuetablePagination from "vuetable-2/src/components/VuetablePagination";
 import VuetablePagination from "./VuetablePaginationBootstrap4.vue";
 import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 import FilterBar from "./FilterBar";
