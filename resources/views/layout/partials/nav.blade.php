@@ -7,7 +7,7 @@
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item dropdown">
-                <a class="nav-link" href="" id="navbardrop">
+                <a class="nav-link" href="{{route('page.items')}}" id="navbardrop">
                     Inventory
                 </a>
             </li>
