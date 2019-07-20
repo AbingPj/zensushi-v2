@@ -1,45 +1,49 @@
 import VuetableFieldSwitch from "./VuetableFieldSwitch.vue";
 import VuetableFieldButtons from "./VuetableFieldButtons.vue";
 
+
+
 export default [
     {
         name: "id",
-        title: "ID",
+        title: "Item ID",
         sortField: "id"
     },
     {
-        name: "image",
-        title: "Image",
-        titleClass: "text-center",
-        dataClass: "text-center",
-        formatter(value) {
-            let image = '<img src="' + value + '" alt height="70" width="100">';
-            return image;
-        }
-    },
-    {
-        name: "title",
-        title: "Title",
-        sortField: "title"
-    },
-    {
         name: "description",
-        title: "Description"
+        title: "Description",
+        sortField: "description"
     },
     {
-        name: "submitted_by",
-        title: "Submitted By"
+        name: "balance",
+        title: "Balance"
+
     },
     {
-        name: VuetableFieldSwitch,
-        title: "Toggle Switch",
-        titleClass: "text-center",
-        dataClass: "text-center",
-        switch: {
-            // label: "Male?",
-            label: data => data.title,
-            field: data => data.gender === "M"
-        }
+        name: "unit",
+        title: "Unit",
+        sortField: "unit"
+    },
+    {
+        name: "category",
+        title: "Category",
+        sortField: "category"
+    },
+    {
+        name: "item_type",
+        title: "Item Type",
+        sortField: "item_type"
+    },
+    {
+        name: "created",
+        title: "Created",
+        sortField: "created"
+    },
+
+    {
+        name: "created_by",
+        title: "Created By",
+        sortField: "created_by"
     },
     {
         name: VuetableFieldButtons,

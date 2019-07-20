@@ -28,7 +28,10 @@ class ItemsController extends Controller
                                 'users.name AS created_by',
                                 'categories.description AS category',
                                 'item_types.description AS item_type',
-                                'units.description AS unit'
+                                'units.description AS unit',
+                                'items.category_id',
+                                'items.item_type_id',
+                                'items.unit_id'
                             )
                      ->newQuery();
             if (request('sort') != "" ){
