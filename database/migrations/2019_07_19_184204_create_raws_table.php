@@ -15,11 +15,12 @@ class CreateRawsTable extends Migration
     {
         Schema::create('raws', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('item')->unsigned();
             $table->double('value', 10, 2);
-            $table->boolean('remove')->nullable()->default(false);
             $table->timestamps();
-            $table->foreign('item')->references('id')->on('items')->onDelete('cascade');
+            $table->boolean('remove')->nullable()->default(false);
+
+            $table->bigInteger('item_id')->unsigned();
+            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
 
         });
     }
