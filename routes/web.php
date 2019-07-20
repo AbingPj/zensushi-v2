@@ -21,12 +21,18 @@ Auth::routes();
 
 // WelcomPage
 // Route::get('/home', 'HomeController@index')->name('home');
-
 Route::get('/welcomepage', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
+
 // Page Controller
 Route::get('/zensushi', 'PageController@home')->name('page.home');
+<<<<<<< HEAD
+=======
+Route::get('/zensushi-items', 'PageController@items')->name('page.items');
+>>>>>>> develop_item_page
 
+// Items Controller
+Route::get('/items', 'ItemsController@index');
 
 
 

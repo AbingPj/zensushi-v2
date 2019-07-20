@@ -7,7 +7,7 @@
       <div id="app">
         @include('layout.partials.nav')
         <div class="main-container">
-        {{-- <div class="container"> --}}
+
             @yield('content')
         </div>
         @include('layout.partials.footer')

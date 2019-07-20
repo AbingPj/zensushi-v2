@@ -20,6 +20,11 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+<<<<<<< HEAD
+=======
+Vue.component('vc-items', require('./components/pages/items/items.vue').default);
+Vue.component('vc-items-table', require('./components/pages/items/items-vuetable/ItemsTables.vue').default);
+>>>>>>> develop_item_page
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
