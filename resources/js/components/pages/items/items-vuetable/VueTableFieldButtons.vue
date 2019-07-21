@@ -17,11 +17,11 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        >Action</button>
+        > Action</button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#">IN</a>
-          <a class="dropdown-item" href="#">OUT</a>
-          <a class="dropdown-item" href="#">Additional</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-minus-square" aria-hidden="true"></i>  &nbsp;OUT</a>
+          <a class="dropdown-item" href="#"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Additional</a>
         </div>
       </div>
     </div>

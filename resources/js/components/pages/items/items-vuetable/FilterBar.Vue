@@ -2,8 +2,10 @@
   <div class="filter-bar">
     <div class="form-inline">
       <div class="form-group">
-           <button class="btn btn-primary" > <i class="fa fa-plus-square-o" aria-hidden="true"></i> Create Item </button>
-           &nbsp; &nbsp; &nbsp; &nbsp;
+        <button class="btn btn-primary btn-sm">
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i>  &nbsp; Create Item
+        </button>
+        &nbsp; &nbsp; &nbsp; &nbsp;
         <label>
           Search: &nbsp;
           <input
@@ -11,7 +13,7 @@
             v-model="filterText"
             class="form-control form-control-sm"
             @keyup="doFilter"
-          />
+          >
           <!-- placeholder="name, nickname, or email" -->
         </label>
 
@@ -34,7 +36,6 @@ export default {
     doFilter() {
       this.$emit("filterText", this.filterText);
     }
-
   }
 };
 </script>
