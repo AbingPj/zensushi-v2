@@ -2,6 +2,8 @@
   <div class="filter-bar">
     <div class="form-inline">
       <div class="form-group">
+           <button class="btn btn-primary" >Create Item </button>
+           &nbsp; &nbsp; &nbsp; &nbsp;
         <label>
           Search: &nbsp;
           <input
@@ -32,10 +34,7 @@ export default {
     doFilter() {
       this.$emit("filterText", this.filterText);
     }
-    // resetFilter() {
-    //   this.filterText = "";
-    //   this.$emit("onFilterReset");
-    // }
+
   }
 };
 </script>
