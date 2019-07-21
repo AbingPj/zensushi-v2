@@ -2,6 +2,16 @@
   <div class="filter-bar">
     <div class="form-inline">
       <div class="form-group">
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i> &nbsp; Create Item
+        </button>
+        &nbsp; &nbsp; &nbsp; &nbsp;
         <label>
           Search: &nbsp;
           <input
@@ -9,7 +19,7 @@
             v-model="filterText"
             class="form-control form-control-sm"
             @keyup="doFilter"
-          />
+          >
           <!-- placeholder="name, nickname, or email" -->
         </label>
 
@@ -32,10 +42,6 @@ export default {
     doFilter() {
       this.$emit("filterText", this.filterText);
     }
-    // resetFilter() {
-    //   this.filterText = "";
-    //   this.$emit("onFilterReset");
-    // }
   }
 };
 </script>
