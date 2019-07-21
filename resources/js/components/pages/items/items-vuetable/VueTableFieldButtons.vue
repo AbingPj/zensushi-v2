@@ -1,7 +1,32 @@
 <template>
   <th v-if="isHeader" class="vuetable-th-component-buttons" v-html="title"></th>
   <td v-else class="vuetable-td-component-buttons">
-    <button
+    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+      <button @click="editAction(rowData, rowIndex)" type="button" class="btn btn-info">
+        <i class="fa fa-edit"></i>
+      </button>
+      <button @click="deleteAction( rowData, rowIndex)" type="button" class="btn btn-danger">
+        <i class="fa fa-trash"></i>
+      </button>
+
+      <div class="btn-group" role="group">
+        <button
+          id="btnGroupDrop1"
+          type="button"
+          class="btn btn-secondary dropdown-toggle"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >Action</button>
+        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+          <a class="dropdown-item" href="#">IN</a>
+          <a class="dropdown-item" href="#">OUT</a>
+          <a class="dropdown-item" href="#">Additional</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- <button
       class="btn btn-info btn-sm"
       @click="editAction(rowData, rowIndex) "
       data-toggle="modal"
@@ -16,7 +41,7 @@
       data-target="#deletePostModal"
     >
       <i class="fa fa-trash"></i>
-    </button>
+    </button>-->
   </td>
 </template>
 <script>
