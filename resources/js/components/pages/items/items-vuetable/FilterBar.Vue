@@ -2,8 +2,14 @@
   <div class="filter-bar">
     <div class="form-inline">
       <div class="form-group">
-        <button class="btn btn-primary btn-sm">
-          <i class="fa fa-plus-square-o" aria-hidden="true"></i>  &nbsp; Create Item
+        <!-- Button trigger modal -->
+        <button
+          type="button"
+          class="btn btn-primary btn-sm"
+          data-toggle="modal"
+          data-target="#exampleModalCenter"
+        >
+          <i class="fa fa-plus-square-o" aria-hidden="true"></i> &nbsp; Create Item
         </button>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <label>
