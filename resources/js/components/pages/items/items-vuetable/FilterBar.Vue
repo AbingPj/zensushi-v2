@@ -7,7 +7,7 @@
           type="button"
           class="btn btn-primary btn-sm"
           data-toggle="modal"
-          data-target="#exampleModalCenter"
+          data-target="#chooseItemTypeModal"
         >
           <i class="fa fa-plus-square-o" aria-hidden="true"></i> &nbsp; Create Item
         </button>
