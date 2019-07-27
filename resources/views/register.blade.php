@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Zen Sushi Inventory</title>
     <link rel="icon" href="{{ asset('images/zenicon.png')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
@@ -25,7 +26,7 @@
 </head>
 
 <body style="background-image: url({{asset('images/16.jpg')}})">
-    <div class="container" style="margin-top:5%;
+    <div id="app" class="container" style="margin-top:5%;
     margin-bottom:100px;">
         <div class="row">
 
