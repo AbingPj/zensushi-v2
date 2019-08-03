@@ -15,8 +15,11 @@
           <div class="container">
             <div class="row">
               <div v-for="(itemType, index) in itemTypes" :key="index">
-                <div class="col">
-                  <button class="btn btn-primary">{{ itemType.desc }}</button>
+                <div class="col-4">
+                  <button
+                    class="btn btn-primary"
+                    @click="onClickItemType(itemType)"
+                  >{{ itemType.description}}</button>
                 </div>
               </div>
             </div>
@@ -31,20 +34,28 @@
 export default {
   data() {
     return {
-      selectedItemType: {},
       itemTypes: []
     };
   },
   created() {
-    axios
-      .get("/items/item_types")
-      .then(function(response) {
-        this.itemTypes = response.data;
-      })
-      .catch(function(error) {
-        console.log(error);
-      });
+    this.getItemTypes();
   },
-  methods: {}
+  methods: {
+    onClickItemType(data) {
+      window.location = "http://example.com/" + data.id;
+    },
+    getItemTypes() {
+      let that = this;
+      axios
+        .get("/items/item_types")
+        .then(function(response) {
+          console.log(response.data);
+          that.itemTypes = response.data;
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  }
 };
 </script>
