@@ -14,15 +14,14 @@ use App\Http\Controllers\PageController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 
 Auth::routes();
 
 // WelcomPage
 // Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/welcomepage', 'WelcomeController@welcome')->name('page.welcome');
+Route::get('/', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
 
 // Page Controller
@@ -31,6 +30,9 @@ Route::get('/zensushi-items', 'PageController@items')->name('page.items');
 
 // Items Controller
 Route::get('/items', 'ItemsController@index');
+Route::get('/items/item_types', 'ItemsController@item_types');
+Route::get('/items/create/{id}', 'ItemsController@createItem');
+
 
 
 
