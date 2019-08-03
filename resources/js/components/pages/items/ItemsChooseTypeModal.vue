@@ -42,7 +42,7 @@ export default {
   },
   methods: {
     onClickItemType(data) {
-      window.location = "http://example.com/" + data.id;
+      window.location = "/items/create/" + data.id;
     },
     getItemTypes() {
       let that = this;

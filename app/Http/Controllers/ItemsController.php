@@ -18,6 +18,10 @@ class ItemsController extends Controller
         return response()->json($items);   
     }
 
+    public function createItem($id){
+        dd($id);
+    }
+
     public function index()
     {
         $request = request();
