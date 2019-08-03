@@ -4,13 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Item;
+use App\Item_type;
 
 class ItemsController extends Controller
 {
     public function items(){
         $items = Item::all();
         return response()->json($items);
-        // dd($items);
+    }
+
+    public function item_types(){
+        $items = Item_type::all();
+        return response()->json($items);   
     }
 
     public function index()

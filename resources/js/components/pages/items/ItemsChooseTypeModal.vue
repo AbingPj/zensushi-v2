@@ -4,23 +4,20 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-           <div class="text-center"> <h5>Choose Item Type</h5></div>
+          <div class="text-center">
+            <h5>Choose Item Type</h5>
+          </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
         <div class="modal-body">
           <div class="container">
-
             <div class="row">
-              <div class="col mx-auto">
-                <button class="btn btn-primary">Raw</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary">Product</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary">Other</button>
+              <div v-for="(itemType, index) in itemTypes" :key="index">
+                <div class="col">
+                  <button class="btn btn-primary">{{ itemType.desc }}</button>
+                </div>
               </div>
             </div>
           </div>
@@ -34,12 +31,20 @@
 export default {
   data() {
     return {
-       selectedItemType: {},
-       
-    }
+      selectedItemType: {},
+      itemTypes: []
+    };
   },
-  methods: {
-    
+  created() {
+    axios
+      .get("/items/item_types")
+      .then(function(response) {
+        this.itemTypes = response.data;
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
   },
+  methods: {}
 };
 </script>
