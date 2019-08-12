@@ -18,11 +18,8 @@
           <div class="form-group">
             <label>Category &nbsp;</label>
             <select v-model="selectedCategory" class="form-control form-control-sm">
-              <option
-                v-for="(cat, index) in newCategories"
-                :key="index"
-                :value="cat"
-              >{{ cat.description }}</option>
+              <option value disabled>Select Category</option>
+              <option v-for="cat in newCategories" :value="cat" :key="cat">{{ cat.description }}</option>
             </select>
           </div>
           <div class="form-group">
@@ -38,13 +35,15 @@
           <div class="form-group">
             <label>Unit &nbsp;</label>
             <select v-model="selectedUnit" class="form-control form-control-sm">
+              <option value disabled>Select Unit</option>
               <option
-                v-for="(unit, index) in newUnits"
-                :key="index"
-                :value="unit"
+                v-for="unit in newUnits"
+                :key="unit.id"
+                :value="unit.id"
               >{{ unit.description }}</option>
             </select>
           </div>
+          <button class="btn btn-primary" @click="btnSave()">Save</button>
         </form>
       </div>
     </div>
@@ -64,8 +63,8 @@ export default {
       newItemType: [],
       newCategories: {},
       newUnits: {},
-      selectedCategory: [],
-      selectedUnit: []
+      selectedCategory: "",
+      selectedUnit: ""
     };
   },
   created() {
@@ -74,7 +73,7 @@ export default {
     this.newUnits = JSON.parse(this.units);
   },
   methods: {
-    onChangeSelectedCategory() {}
+    btnSave() {}
   }
 };
 </script>
