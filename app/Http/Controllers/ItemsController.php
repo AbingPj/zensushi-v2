@@ -19,7 +19,10 @@ class ItemsController extends Controller
     }
 
     public function createItem($id){
-        dd($id);
+       
+        $item = Item_type::find($id);
+        return view('app.pages.items.items-create', compact($item));
+       
     }
 
     public function index()

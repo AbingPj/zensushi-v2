@@ -5,6 +5,12 @@
 @section('content')
   @include('layout.partials.banner')
    <div class="container">
+       <h1>
+       {{-- {{ $item }} --}}
+       </h1>
+       {{-- <h2>{{ $data.id }} --}}
+            
+       </h2>
        <div class="row">
            <div class="col">
             <form action="">
