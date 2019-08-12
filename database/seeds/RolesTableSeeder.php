@@ -53,6 +53,12 @@ class RolesTableSeeder extends Seeder
             'created_at' => Carbon::now(),
         ]);
 
-
+        DB::table('users')->insert([
+            'name' => "AbingPj",
+            'email' => "pj.abing@gmail.com",
+            'password' => Hash::make('password'),
+            'role_id' => 1,
+            'created_at' => Carbon::now(),
+        ]);
     }
 }
