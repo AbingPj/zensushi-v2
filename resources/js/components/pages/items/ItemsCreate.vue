@@ -124,14 +124,17 @@ export default {
   },
   methods: {
     btnSave() {
+      let selectedRawId = null;
+      if (this.selectedRaw) {
+        selectedRawId = this.selectedRaw.id;
+      }
       axios
         .post("/items/create/item", {
           itemTypeId: this.parseItemType.id,
           category: this.selectedCategory.id,
           unit: this.selectedUnit.id,
           description: this.description,
-          selectedRaw: this.selectedRaw.id,
-          // selectedItem: this.selectedRaw.item.id,
+          selectedRaw: selectedRawId,
           rawValue: this.rawValue,
           rawProductValue: this.rawProductValue
         })
