@@ -3,10 +3,10 @@
   <td v-else class="vuetable-td-component-buttons">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
       <button @click="editAction(rowData, rowIndex)" type="button" class="btn btn-info">
-        <i class="fa fa-edit"></i>
+        <i class="fa fa-edit fa-lg"></i>
       </button>
       <button @click="deleteAction( rowData, rowIndex)" type="button" class="btn btn-danger">
-        <i class="fa fa-trash"></i>
+        <i class="fa fa-trash fa-lg"></i>
       </button>
 
       <div class="btn-group" role="group">
@@ -17,11 +17,19 @@
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
-        > Action</button>
+        >Action</button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-          <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a>
-          <a class="dropdown-item" href="#"><i class="fa fa-minus-square" aria-hidden="true"></i>  &nbsp;OUT</a>
-          <a class="dropdown-item" href="#"><i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Additional</a>
+          <!-- <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a> -->
+          <a class="dropdown-item" href="#">
+            <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; IN
+          </a>
+
+          <a class="dropdown-item" href="#">
+            <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;OUT
+          </a>
+          <a class="dropdown-item" href="#">
+            <i class="fa fa-plus fa-lg" aria-hidden="true"></i> &nbsp; Additional
+          </a>
         </div>
       </div>
     </div>
