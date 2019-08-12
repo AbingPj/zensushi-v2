@@ -130,7 +130,8 @@ export default {
           category: this.selectedCategory.id,
           unit: this.selectedUnit.id,
           description: this.description,
-          selectedRaw: this.selectedRaw,
+          selectedRaw: this.selectedRaw.id,
+          // selectedItem: this.selectedRaw.item.id,
           rawValue: this.rawValue,
           rawProductValue: this.rawProductValue
         })
