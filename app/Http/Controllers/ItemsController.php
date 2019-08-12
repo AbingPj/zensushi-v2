@@ -8,6 +8,7 @@ use App\Item;
 use App\Item_type;
 use App\Raw;
 use App\Unit;
+use Auth;
 
 class ItemsController extends Controller
 {
@@ -25,7 +26,9 @@ class ItemsController extends Controller
 
     public function createItem($id)
     {
-
+        if (!($id >= 1 && $id <= 3)) {
+            return view('app.pages.items.items');
+        }
         $itemType = Item_type::find($id);
         $categories = Category::all();
         $units = Unit::all();
@@ -40,6 +43,27 @@ class ItemsController extends Controller
             });
         }
         return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+    }
+
+    public function createItemSave(Request $request)
+    {
+
+        if ($request->input('itemTypeId') ==  1) {
+            // item
+            $item = new Item;
+            $item->item_type_id = $request->input('itemTypeId');
+            $item->category_id = $request->input('category');
+            $item->unit_id = $request->input('unit');
+            $item->description = $request->input('description');
+            $item->user_id = Auth::user()->id;
+            $item->save();
+
+            //Raw
+            $raw = new Raw;
+            $raw->value = $request->input('rawValue');
+            $raw->item_id = $item->id;
+            $raw->save();
+        }
     }
 
     public function index()
