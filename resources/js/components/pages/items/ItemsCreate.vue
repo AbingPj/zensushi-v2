@@ -1,29 +1,48 @@
 <template>
   <div>
-    <h1>Create Item</h1>
-    <div class="row">
-      <div class="col-5">
-        <form action>
+    <h1>Create Item ({{ parseItemType.description }})</h1>
+    <form action>
+      <div class="row">
+        <!--  -->
+
+        <!--  -->
+
+        <div class="col-lg-6">
+          <!--  -->
           <div class="form-group">
             <label for>Item Type</label>
             <input
               type="text"
               name="item_type"
-              :value="newItemType.description"
+              :value="parseItemType.description"
               class="form-control"
               disabled
             />
           </div>
-
+          <!--  -->
           <div class="form-group">
             <label>Category &nbsp;</label>
             <select v-model="selectedCategory" class="form-control form-control-sm">
-              <option value disabled>Select Category</option>
-              <option v-for="cat in newCategories" :value="cat" :key="cat">{{ cat.description }}</option>
+              <option value="null" disabled>Select Category</option>
+              <option v-for="cat in parseCategories" :value="cat" :key="cat">{{ cat.description }}</option>
             </select>
           </div>
+          <!--  -->
           <div class="form-group">
-            <label for>Description</label>
+            <label>Unit &nbsp;</label>
+            <select v-model="selectedUnit" class="form-control form-control-sm">
+              <option value="null" disabled>Select Unit</option>
+              <option
+                v-for="unit in parseUnits"
+                :key="unit.id"
+                :value="unit.id"
+              >{{ unit.description }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="form-group">
+            <label for>Description (Name)</label>
             <input
               type="text"
               name="description"
@@ -32,21 +51,51 @@
               class="form-control"
             />
           </div>
-          <div class="form-group">
-            <label>Unit &nbsp;</label>
-            <select v-model="selectedUnit" class="form-control form-control-sm">
-              <option value disabled>Select Unit</option>
-              <option
-                v-for="unit in newUnits"
-                :key="unit.id"
-                :value="unit.id"
-              >{{ unit.description }}</option>
-            </select>
+
+          <!-- Raw Item -->
+          <div v-if="parseItemType.id == 1">
+            <div class="form-group">
+              <label for>Value(Grams)</label>
+              <input
+                type="text"
+                name="description"
+                v-model="rawValue"
+                placeholder="ex. 1000 grams"
+                class="form-control"
+              />
+            </div>
           </div>
+          <!-- Product Raw Item -->
+          <div v-else-if="parseItemType.id == 2">
+            <div class="form-group">
+              <label for>Raw product</label>
+              <select v-model="selectedRaw" class="form-control form-control-sm">
+                <option value="null" disabled>Select Raw Product</option>
+                <option
+                  v-for="unit in parseRawItems"
+                  :key="unit.id"
+                  :value="unit.id"
+                >{{ unit.item.description }}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for>Value(Grams)</label>
+              <input
+                type="text"
+                name="description"
+                v-model="rawProductValue"
+                placeholder="ex. 100 grams"
+                class="form-control"
+              />
+            </div>
+          </div>
+          <!-- Other Item -->
+          <div v-else>Others</div>
+          <br />
           <button class="btn btn-primary" @click="btnSave()">Save</button>
-        </form>
+        </div>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 
@@ -55,22 +104,28 @@ export default {
   props: {
     itemtype: String,
     categories: String,
-    units: String
+    units: String,
+    rawitems: String
   },
   data() {
     return {
       description: "",
-      newItemType: [],
-      newCategories: {},
-      newUnits: {},
-      selectedCategory: "",
-      selectedUnit: ""
+      parseItemType: [],
+      parseCategories: {},
+      parseUnits: {},
+      parseRawItems: {},
+      selectedCategory: null,
+      selectedUnit: null,
+      selectedRaw: null,
+      rawValue: "",
+      rawProductValue: ""
     };
   },
   created() {
-    this.newItemType = JSON.parse(this.itemtype);
-    this.newCategories = JSON.parse(this.categories);
-    this.newUnits = JSON.parse(this.units);
+    this.parseItemType = JSON.parse(this.itemtype);
+    this.parseCategories = JSON.parse(this.categories);
+    this.parseUnits = JSON.parse(this.units);
+    this.parseRawItems = JSON.parse(this.rawitems);
   },
   methods: {
     btnSave() {}

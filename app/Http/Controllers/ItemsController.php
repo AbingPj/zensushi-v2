@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\Raw;
 use App\Unit;
 
 class ItemsController extends Controller
@@ -28,8 +29,17 @@ class ItemsController extends Controller
         $itemType = Item_type::find($id);
         $categories = Category::all();
         $units = Unit::all();
-
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units'));
+        // $rawItems = Item::All()->where('item_type_id', '1');
+        $rawItems = Raw::all();
+        // foreach ($rawItems as $key => $raw) {
+        //     $raw->item = $raw->item;
+        // }
+        if ($rawItems->isNotEmpty()) {
+            $rawItems->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
     public function index()
