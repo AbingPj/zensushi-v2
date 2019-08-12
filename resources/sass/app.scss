@@ -1,21 +1,21 @@
-// body {
-//     // background: bisque;
-//     /* fallback for old browsers */
-//     // background: -webkit-linear-gradient(to right,  lightpink, bisque, cornsilk);
-//     /* Chrome 10-25, Safari 5.1-6 */
-//     // background: linear-gradient(to right, lightpink, bisque,  cornsilk);
-//     background: linear-gradient(
-//         to bottom,
-//         white,
-//         white,
-//         white,
-//         white,
-//         white,
-//         cornsilk,
-//         bisque,
-//         lightpink
-//     );
-// }
+body {
+    // background: bisque;
+    /* fallback for old browsers */
+    // background: -webkit-linear-gradient(to right,  lightpink, bisque, cornsilk);
+    /* Chrome 10-25, Safari 5.1-6 */
+    // background: linear-gradient(to right, lightpink, bisque,  cornsilk);
+    background: linear-gradient(
+        to bottom,
+        white,
+        white,
+        white,
+        white,
+        white,
+        cornsilk,
+        bisque,
+        lightpink
+    );
+}
 
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
@@ -33,3 +33,4 @@
 
 //Pages
 @import "./pages/welcome";
+@import "./pages/register";

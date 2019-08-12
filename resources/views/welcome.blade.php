@@ -8,21 +8,6 @@
     <title>Zen Sushi Inventory</title>
     <link rel="icon" href="{{ asset('images/zenicon.png')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
-    <style>
-        body {
-            /* background-image: url("/images/16.jpg"); */
-
-            height: 100%;
-            background-position: center;
-            /* background-repeat: no-repeat; */
-            background-size: cover;
-            margin-bottom: 0px;
-        }
-
-        .card {
-            background-color: rgba(230, 233, 230, 0.8);
-        }
-    </style>
 </head>
 
 {{-- <body style="background-image: url({{asset('images/16.jpg')}})"> --}}
