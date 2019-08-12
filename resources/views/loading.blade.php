@@ -8,19 +8,14 @@
     <title>Zen Sushi Inventory</title>
     <link rel="icon" href="{{ asset('images/zenicon.png')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
-    <style type="text/css">
-    .centered-block {
-    width: 100px; 
-    left: 50%; 
-    -webkit-transform: translate(-50%, 0); 
-    position: absolute;
-}
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader/loading.css')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader/loading-btn.css')}}"/>
+   
 </head>
 
 {{-- <body style="background-image: url({{asset('images/16.jpg')}})"> --}}
 
-<body id=pageWelcome>
+<body>
     <div id="app">
         <div class="container">
             <div class="row">
@@ -44,11 +39,11 @@
                              <img src="{{asset('images/svg_logo/logo7.svg')}}"  class="ld ld-spin "  />
                       </button>
 
-                       <div class="text-center">
+                       
                         <div class="ld-over-full running">
                             <img src="{{asset('images/svg_logo/logo2.svg')}}"  class="ld ld-shadow centered-block"  />
                         </div>
-                      </div>
+                     
 
                       <a class="btn btn-danger" href="/">TO HOME</a>
 
