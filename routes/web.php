@@ -32,16 +32,4 @@ Route::get('/zensushi-items', 'PageController@items')->name('page.items');
 Route::get('/items', 'ItemsController@index');
 Route::get('/items/item_types', 'ItemsController@item_types');
 Route::get('/items/create/{id}', 'ItemsController@createItem');
-
-
-
-
-
-
-
-
-
-
-
-
-
+Route::post('/items/create/item', 'ItemsController@createItemSave');

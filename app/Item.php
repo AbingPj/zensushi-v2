@@ -4,11 +4,12 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Item extends Model
 {
 
-    protected $guarded=[];
+    protected $guarded = [];
 
     public function user()
     {
@@ -27,6 +28,8 @@ class Item extends Model
         return $this->belongsTo('App\Item_type', 'item_type_id', 'id');
     }
 
-
+    public function Raw()
+    {
+        return $this->hasOne('App\Raw', 'item_id', 'id');
+    }
 }
-
