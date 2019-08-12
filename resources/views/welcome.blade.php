@@ -2,30 +2,33 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
-        <title>Zen Sushi Inventory</title>
-        <link rel="icon" href="{{ asset('images/zenicon.png')}}">
-        <link rel="stylesheet" href="{{ asset('css/app.css')}}">
-        <style>
-            body {
-                /* background-image: url("/images/16.jpg"); */
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Zen Sushi Inventory</title>
+    <link rel="icon" href="{{ asset('images/zenicon.png')}}">
+    <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+    <style>
+        body {
+            /* background-image: url("/images/16.jpg"); */
 
-                height: 100%;
-                background-position: center;
-                /* background-repeat: no-repeat; */
-                background-size: cover;
-                margin-bottom: 0px;
-            }
+            height: 100%;
+            background-position: center;
+            /* background-repeat: no-repeat; */
+            background-size: cover;
+            margin-bottom: 0px;
+        }
 
-            .card {
-                background-color: rgba(230, 233, 230, 0.8);
-            }
-        </style>
-    </head>
-    <body style="background-image: url({{asset('images/16.jpg')}})">
-        <div id="app" class="container" style="margin-top:5%;
+        .card {
+            background-color: rgba(230, 233, 230, 0.8);
+        }
+    </style>
+</head>
+
+{{-- <body style="background-image: url({{asset('images/16.jpg')}})"> --}}
+
+<body id=pageWelcome>
+    <div id="app" class="container" style="margin-top:5%;
                 margin-bottom:100px;">
         <div class="row">
 
@@ -37,66 +40,67 @@
                             <div class="col-sm-12  col-md-6">
                                 <form method="POST" action="{{ route('login') }}">
                                     @csrf
-                                <br>
-                                <br>
-                                <div class="text-center">
-                                    <h2> Zen Sushi </h2>
-                                    <p>Inventory System</p>
-                                </div>
+                                    <br>
+                                    <br>
+                                    <div class="text-center">
+                                        {{-- <h2> Zen Sushi </h2>
+                                        <p>Inventory System</p> --}}
+                                    </div>
 
-                                <br>
-                                <br>
-                                <div class="form-group">
-
-
-                                    <input placeholder="E-Mail Address" id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
-                                    @error('email')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                    @enderror
-                                </div>
+                                    <br>
+                                    <br>
+                                    <div class="form-group">
 
 
-                                <div class="form-group">
-
-                                    <input placeholder="Password" id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;" >
-                                    @error('password')
+                                        <input placeholder="E-Mail Address" id="email" type="email" class="form-control form-control-sm @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus style="text-align:center;">
+                                        @error('email')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
-                                     @enderror
-                                </div>
+                                        @enderror
+                                    </div>
+
+
+                                    <div class="form-group">
+
+                                        <input placeholder="Password" id="password" type="password" class="form-control  form-control-sm @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" style="text-align:center;">
+                                        @error('password')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                        @enderror
+                                    </div>
 
 
 
 
-                                <div class="form-group">
-                                    {{-- <button class="btn btn-primary btn-block ld-over" id="btnLogin">
+                                    <div class="form-group">
+                                        {{-- <button class="btn btn-primary btn-block ld-over" id="btnLogin">
                                         Log in
                                         <div class="ld ld-ball ld-broadcast"></div>
                                     </button> --}}
-                                    <button type="submit" class="btn btn-primary btn-block btnLogin">
+                                        <button type="submit" class="btn btn-primary btn-block btnLogin">
                                             {{ __('Login') }}
                                         </button>
-                                    <hr class="my-4">
-                                </div>
+                                        <hr class="my-4">
+                                    </div>
 
 
 
 
 
-                                <div class="form-group text-center text-success">
-                                <a class="btn btn-outline-success btn-block " href="{{ route('page.register') }}">Sign up</a>
-                                </div>
-                                <!-- <div class="form-group text-center">
+                                    <div class="form-group text-center text-success">
+                                        <a class="btn btn-outline-success btn-block " href="{{ route('page.register') }}">Sign up</a>
+                                    </div>
+                                    <!-- <div class="form-group text-center">
                                     <a href="https://www.fb.com">Forgot Password?</a>
                                 </div> -->
                                 </form>
                             </div>
 
                             <div class="col-sm-12  col-md-6">
-                                <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;">
+                                {{-- <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;"> --}}
+                                <img>
                             </div>
                             <br>
                             <br>
@@ -104,15 +108,14 @@
 
 
 
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    </div>
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script>
-    </script>
-    </body>
-</html>
 
+</body>
+
+</html>
