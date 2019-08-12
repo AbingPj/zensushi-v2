@@ -6,7 +6,9 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\Raw;
 use App\Unit;
+use Auth;
 
 class ItemsController extends Controller
 {
@@ -24,12 +26,75 @@ class ItemsController extends Controller
 
     public function createItem($id)
     {
-
+        if (!($id >= 1 && $id <= 3)) {
+            return view('app.pages.items.items');
+        }
         $itemType = Item_type::find($id);
         $categories = Category::all();
         $units = Unit::all();
+        // $rawItems = Item::All()->where('item_type_id', '1');
+        $rawItems = Raw::all();
+        // foreach ($rawItems as $key => $raw) {
+        //     $raw->item = $raw->item;
+        // }
+        if ($rawItems->isNotEmpty()) {
+            $rawItems->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+    }
 
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units'));
+    public function createItemSave(Request $request)
+    {
+
+        if ($request->input('itemTypeId') ==  1) {
+            // item
+            $item = new Item;
+            $item->item_type_id = $request->input('itemTypeId');
+            $item->category_id = $request->input('category');
+            $item->unit_id = $request->input('unit');
+            $item->description = $request->input('description');
+            $item->user_id = Auth::user()->id;
+            $item->save();
+            //Raw
+            $raw = new Raw;
+            $raw->value = $request->input('rawValue');
+            $raw->item_id = $item->id;
+            $raw->save();
+        }
+
+        if ($request->input('itemTypeId') ==  1) {
+            // item
+            $item = new Item;
+            $item->item_type_id = $request->input('itemTypeId');
+            $item->category_id = $request->input('category');
+            $item->unit_id = $request->input('unit');
+            $item->description = $request->input('description');
+            $item->user_id = Auth::user()->id;
+            $item->save();
+            //Raw
+            $raw = new Raw;
+            $raw->value = $request->input('rawValue');
+            $raw->item_id = $item->id;
+            $raw->save();
+        } elseif ($request->input('itemTypeId') ==  2) {
+
+            // item
+            $item = new Item;
+            $item->item_type_id = $request->input('itemTypeId');
+            $item->category_id = $request->input('category');
+            $item->unit_id = $request->input('unit');
+            $item->description = $request->input('description');
+            $item->user_id = Auth::user()->id;
+            $item->save();
+            // Raw Product
+            $rawProduct = new Raw_product;
+            $rawProduct->value = $request->input('rawProductValue');
+            $rawProduct->raw = $request->input('selectedRaw');
+            $rawProduct->item_id = $item->id;
+            $rawProduct->save();
+        }
     }
 
     public function index()
