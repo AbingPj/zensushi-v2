@@ -124,6 +124,8 @@ export default {
   },
   methods: {
     btnSave() {
+      LoadingOverlay();
+
       let selectedRawId = null;
       if (this.selectedRaw) {
         selectedRawId = this.selectedRaw.id;
@@ -140,6 +142,7 @@ export default {
         })
         .then(function(response) {
           console.log(response);
+          LoadingOverlayHide();
         })
         .catch(function(error) {
           console.log(error);

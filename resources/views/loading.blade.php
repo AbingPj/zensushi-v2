@@ -8,8 +8,7 @@
     <title>Zen Sushi Inventory</title>
     <link rel="icon" href="{{ asset('images/zenicon.png')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader/loading.css')}}"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/loader/loading-btn.css')}}"/>
+  
    
 </head>
 
@@ -36,14 +35,16 @@
                         <button class="btn btn-primary btn-block ld-ext-right running">
                                         My Button2
                          
-                             <img src="{{asset('images/svg_logo/logo7.svg')}}"  class="ld ld-spin "  />
+                             <img src="{{asset('images/svg_logo/logo7.svg')}}"  class="ld ld-spin "   />
                       </button>
 
                        
-                        <div class="ld-over-full running">
+                        {{-- <div class="ld-over-full running">
                             <img src="{{asset('images/svg_logo/logo2.svg')}}"  class="ld ld-shadow centered-block"  />
-                        </div>
+                        </div> --}}
                      
+                    <img src="{{asset('images/svg_logo/logo2.svg')}}"  class="ld ld-shadow centered-block" onclick="return LoadingOverlay()"  />
+
 
                       <a class="btn btn-danger" href="/">TO HOME</a>
 
@@ -54,6 +55,17 @@
         </div>
         </div>
         <script src="{{ asset('js/app.js') }}" defer></script>
+        <script>
+            function LoadingOverlay(){
+                            $.LoadingOverlay("show");
+                            // Hide it after 3 seconds
+                            setTimeout(function(){
+                                $.LoadingOverlay("hide");
+                            }, 3000);
+            }
+
+
+        </script>
     
 </body>
 

@@ -64,6 +64,7 @@ export default {
 
   methods: {
     editAction(data, index) {
+      LoadingOverlay();
       // console.log(data, index);
       let dataToUpdate = { ...data };
       this.$events.fire("show-update-modal", dataToUpdate);
