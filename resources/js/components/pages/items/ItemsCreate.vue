@@ -124,19 +124,25 @@ export default {
   },
   methods: {
     btnSave() {
+      LoadingOverlay();
+
+      let selectedRawId = null;
+      if (this.selectedRaw) {
+        selectedRawId = this.selectedRaw.id;
+      }
       axios
         .post("/items/create/item", {
           itemTypeId: this.parseItemType.id,
           category: this.selectedCategory.id,
           unit: this.selectedUnit.id,
           description: this.description,
-          selectedRaw: this.selectedRaw.id,
-          // selectedItem: this.selectedRaw.item.id,
+          selectedRaw: selectedRawId,
           rawValue: this.rawValue,
           rawProductValue: this.rawProductValue
         })
         .then(function(response) {
           console.log(response);
+          LoadingOverlayHide();
         })
         .catch(function(error) {
           console.log(error);
