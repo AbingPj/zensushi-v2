@@ -33,10 +33,11 @@ Route::get('/items', 'ItemsController@index');
 Route::get('/items/item_types', 'ItemsController@item_types');
 Route::get('/items/create/{id}', 'ItemsController@createItem');
 Route::post('/items/create/item', 'ItemsController@createItemSave');
+Route::post('/items/remove/{id}', 'ItemsController@removeItem');
 
 
 
 ///Loading Sample page
-Route::get('loading',function(){
+Route::get('loading', function () {
     return view('loading');
 });

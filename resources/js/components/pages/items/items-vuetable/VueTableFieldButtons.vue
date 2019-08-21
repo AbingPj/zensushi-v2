@@ -70,10 +70,7 @@ export default {
       this.$events.fire("show-update-modal", dataToUpdate);
     },
     deleteAction(data, index) {
-      console.log(data, index);
-
-      let dataToDelete = { ...data };
-      this.$events.fire("show-delete-modal", dataToDelete);
+      alert(data.id);
     }
   }
 };
