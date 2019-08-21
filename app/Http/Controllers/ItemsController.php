@@ -47,7 +47,6 @@ class ItemsController extends Controller
 
     public function createItemSave(Request $request)
     {
-
         if ($request->input('itemTypeId') ==  1) {
             // item
             $item = new Item;
@@ -96,6 +95,17 @@ class ItemsController extends Controller
             $rawProduct->save();
         }
     }
+
+    public function removeItem($id)
+    {
+        $item =  Item::find($id);
+        dd($item);
+    }
+
+
+
+
+
 
     public function index()
     {
