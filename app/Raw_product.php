@@ -4,15 +4,15 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Raw extends Model
+class Raw_product extends Model
 {
     public function item()
     {
         return $this->belongsTo('App\Item', 'item_id', 'id');
     }
 
-    public function raw_product()
+    public function raw()
     {
-        return $this->hasMany('App\Raw_product', 'raw_id', 'id');
+        return $this->belongsTo('App\Raw', 'raw_id', 'id');
     }
 }
