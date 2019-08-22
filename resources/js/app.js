@@ -42,6 +42,11 @@ Vue.component(
     require("./components/pages/items/ItemsCreate.vue").default
 );
 
+Vue.component(
+    "vc-items-delete-modal",
+    require("./components/pages/items/ItemsDelete.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
