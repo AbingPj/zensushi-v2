@@ -28,18 +28,17 @@
       </div>
     </div>
 
-
-      <vuetable
-        ref="vuetable"
-        :api-url="base_Url"
-        :fields="fields"
-        data-path="data"
-        pagination-path
-        :css="css.table"
-        :append-params="moreParams"
-        :per-page="perPage"
-        @vuetable:pagination-data="onPaginationData"
-      ></vuetable>
+    <vuetable
+      ref="vuetable"
+      :api-url="base_Url"
+      :fields="fields"
+      data-path="data"
+      pagination-path
+      :css="css.table"
+      :append-params="moreParams"
+      :per-page="perPage"
+      @vuetable:pagination-data="onPaginationData"
+    ></vuetable>
 
     <div class="row" style="margin-top:5px;">
       <div class="col">
@@ -54,12 +53,11 @@
         ></vuetable-pagination>
       </div>
     </div>
-
   </div>
 </template>
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 import Vuetable from "vuetable-2";
 import CssForBootstrap4 from "./VuetableCssBootstrap4.js";
 import VuetablePagination from "./VuetablePaginationBootstrap4.vue";
@@ -67,8 +65,8 @@ import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePagination
 import FilterBar from "./FilterBar";
 import FieldsDef from "./FieldsDef.js";
 
-import VueEvents from "vue-events";
-Vue.use(VueEvents);
+// import VueEvents from "vue-events";
+// Vue.use(VueEvents);
 
 export default {
   props: {
@@ -95,7 +93,7 @@ export default {
     };
   },
   created() {
-      this.base_Url = this.baseUrl + '/items';
+    this.base_Url = this.baseUrl + "/items";
   },
   mounted() {
     this.$events.listen("show-update-modal", data =>

@@ -5,8 +5,10 @@
  */
 
 require("./bootstrap");
-
 window.Vue = require("vue");
+
+import VueEvents from "vue-events";
+Vue.use(VueEvents);
 
 /**
  * The following block of code may be used to automatically register your
