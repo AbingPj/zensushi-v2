@@ -14,7 +14,7 @@
             <p>
               Are you sure you want to delete this item:
               <br />Item:&nbsp;[ &nbsp;
-              <b>{{ item.description }}</b> &nbsp;]? -->
+              <b>{{ item.description }}</b> &nbsp;] ?
             </p>
             <center>
               <button @click="deleteItem()" class="btn btn-danger" data-dismiss="modal">Yes</button>
@@ -37,16 +37,16 @@ export default {
     };
   },
   methods: {
-    async deletePost() {
+    async deleteItem() {
       LoadingOverlay();
-
-      let { status } = await axios.delete("/posts/delete/" + this.post.id);
+      let { status } = await axios.delete("/items/delete/" + this.item.id);
       if (status == 200) {
         this.$events.fire("refreshItemsVueTable", status);
         LoadingOverlayHide();
       }
     },
     setItem(data) {
+      console.log(data);
       this.item = data;
     }
   },

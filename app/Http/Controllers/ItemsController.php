@@ -64,9 +64,7 @@ class ItemsController extends Controller
             $raw->value = $request->input('rawValue');
             $raw->item_id = $item->id;
             $raw->save();
-        }
-
-        if ($request->input('itemTypeId') ==  1) {
+        } elseif ($request->input('itemTypeId') ==  3) {
 
             //SaveItem
             $item->save();
