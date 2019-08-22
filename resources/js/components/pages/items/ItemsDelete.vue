@@ -1,11 +1,11 @@
 <template>
   <div>
-    <div class="modal fade" id="deletePostModal">
+    <div class="modal fade" id="deleteItemModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Delete Post</h4>
+            <h4 class="modal-title">Delete Item</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
 
@@ -14,11 +14,10 @@
             <p>
               Are you sure you want to delete this item:
               <br />Item:&nbsp;[ &nbsp;
-              <b>{{ item.description }}</b> &nbsp;]?
+              <b>{{ item.description }}</b> &nbsp;]? -->
             </p>
             <center>
-              <button @click="deletePost()" class="btn btn-danger" data-dismiss="modal">Yes</button>
-
+              <button @click="deleteItem()" class="btn btn-danger" data-dismiss="modal">Yes</button>
               <button class="btn btn-secondary" data-dismiss="modal">No</button>
             </center>
           </div>
@@ -33,7 +32,12 @@
 <script>
 export default {
   props: {
-    item: Object
+    propsItem: Object
+  },
+  data() {
+    return {
+      item: []
+    };
   },
   methods: {
     async deletePost() {
@@ -46,7 +50,14 @@ export default {
         console.log("Failed Update");
         LoadingOverlayHide();
       }
+    },
+    setItem(data) {
+      this.item = data;
     }
+  },
+
+  created() {
+    this.$events.listen("showItemDeleteModal", data => this.setItem(data));
   }
 };
 </script>

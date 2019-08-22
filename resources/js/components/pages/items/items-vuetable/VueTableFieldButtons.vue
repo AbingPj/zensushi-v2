@@ -5,7 +5,13 @@
       <button @click="editAction(rowData, rowIndex)" type="button" class="btn btn-info">
         <i class="fa fa-edit fa-lg"></i>
       </button>
-      <button @click="deleteAction( rowData, rowIndex)" type="button" class="btn btn-danger">
+      <button
+        @click="deleteAction( rowData, rowIndex)"
+        type="button"
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#deleteItemModal"
+      >
         <i class="fa fa-trash fa-lg"></i>
       </button>
 
@@ -55,8 +61,6 @@
 <script>
 import $ from "jquery";
 import VuetableFieldMixin from "vuetable-2/src/components/VuetableFieldMixin.vue";
-// import VueEvents from "vue-events";
-// Vue.use(VueEvents);
 
 export default {
   name: "vuetable-field-buttons",
@@ -64,13 +68,10 @@ export default {
 
   methods: {
     editAction(data, index) {
-      LoadingOverlay();
-      // console.log(data, index);
-      let dataToUpdate = { ...data };
-      this.$events.fire("show-update-modal", dataToUpdate);
+      this.$events.fire("show-update-modal", data);
     },
     deleteAction(data, index) {
-      alert(data.id);
+      this.$events.fire("showItemDeleteModal", data);
     }
   }
 };
