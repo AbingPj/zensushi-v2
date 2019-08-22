@@ -101,6 +101,8 @@ class ItemsController extends Controller
                 Raw_product::destroy($raw_product_id);
                 $item->delete();
             } elseif ($itemType == 3) {
+                $not_raw_id = $item->not_raw->id;
+                Not_raw::destroy($not_raw_id);
                 $item->delete();
             }
         });
