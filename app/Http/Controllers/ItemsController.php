@@ -6,6 +6,7 @@ use App\Category;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\Not_raw;
 use App\Raw;
 use App\Raw_product;
 use App\Unit;
@@ -78,11 +79,10 @@ class ItemsController extends Controller
             } elseif ($request->input('itemTypeId') ==  3) {
                 //SaveItem
                 $item->save();
-                //Raw
-                $raw = new Raw;
-                $raw->value = $request->input('rawValue');
-                $raw->item_id = $item->id;
-                $raw->save();
+                //Not Raw
+                $not_raw = new Not_raw;
+                $not_raw->item_id = $item->id;
+                $not_raw->save();
             }
         });
     }
