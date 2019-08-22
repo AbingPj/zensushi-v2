@@ -91,15 +91,19 @@ class ItemsController extends Controller
     {
         $item =  Item::find($id);
         $itemType =  $item->item_type_id;
-        if ($itemType == 1) {
-            $rawid = $item->raw->id;
-            Raw::destroy($rawid);
-            $item->delete();
-        } elseif ($itemType == 2) {
-            $item->delete();
-        } elseif ($itemType == 3) {
-            $item->delete();
-        }
+        DB::transaction(function () use ($itemType, $item) {
+            if ($itemType == 1) {
+                $raw_id = $item->raw->id;
+                Raw::destroy($raw_id);
+                $item->delete();
+            } elseif ($itemType == 2) {
+                $raw_product_id = $item->raw_product->id;
+                Raw_product::destroy($raw_product_id);
+                $item->delete();
+            } elseif ($itemType == 3) {
+                $item->delete();
+            }
+        });
     }
 
 
