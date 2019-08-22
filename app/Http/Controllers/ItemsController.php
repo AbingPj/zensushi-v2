@@ -87,7 +87,7 @@ class ItemsController extends Controller
         }
     }
 
-    public function removeItem($id)
+    public function deleteItem($id)
     {
         $item =  Item::find($id);
         dd($item);
