@@ -47,14 +47,17 @@ class ItemsController extends Controller
 
     public function createItemSave(Request $request)
     {
+
+        // item
+        $item = new Item;
+        $item->item_type_id = $request->input('itemTypeId');
+        $item->category_id = $request->input('category');
+        $item->unit_id = $request->input('unit');
+        $item->description = $request->input('description');
+        $item->user_id = Auth::user()->id;
+
         if ($request->input('itemTypeId') ==  1) {
-            // item
-            $item = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
+            //SaveItem
             $item->save();
             //Raw
             $raw = new Raw;
@@ -64,13 +67,8 @@ class ItemsController extends Controller
         }
 
         if ($request->input('itemTypeId') ==  1) {
-            // item
-            $item = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
+
+            //SaveItem
             $item->save();
             //Raw
             $raw = new Raw;
@@ -78,14 +76,7 @@ class ItemsController extends Controller
             $raw->item_id = $item->id;
             $raw->save();
         } elseif ($request->input('itemTypeId') ==  2) {
-
-            // item
-            $item = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
+            //SaveItem
             $item->save();
             // Raw Product
             $rawProduct = new Raw_product;
