@@ -31,9 +31,6 @@
 
 <script>
 export default {
-  props: {
-    propsItem: Object
-  },
   data() {
     return {
       item: []
@@ -42,12 +39,10 @@ export default {
   methods: {
     async deletePost() {
       LoadingOverlay();
+
       let { status } = await axios.delete("/posts/delete/" + this.post.id);
       if (status == 200) {
-        this.$events.fire("refreshVueTable", status);
-        LoadingOverlayHide();
-      } else {
-        console.log("Failed Update");
+        this.$events.fire("refreshItemsVueTable", status);
         LoadingOverlayHide();
       }
     },

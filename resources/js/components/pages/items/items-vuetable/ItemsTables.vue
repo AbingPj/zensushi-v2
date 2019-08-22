@@ -102,10 +102,11 @@ export default {
     this.$events.listen("show-delete-modal", data =>
       this.showDeleteModal(data)
     );
+
     // Echo.channel("PostChannel").listen("PostEvent", data => {
     //   this.refreshVueTable();
     // });
-    //this.$events.listen("refreshVueTable", data => this.refreshVueTable());
+    this.$events.listen("refreshItemsVueTable", data => this.refreshVueTable());
   },
 
   methods: {
