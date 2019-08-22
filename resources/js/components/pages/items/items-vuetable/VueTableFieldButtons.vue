@@ -59,7 +59,6 @@
   </td>
 </template>
 <script>
-import $ from "jquery";
 import VuetableFieldMixin from "vuetable-2/src/components/VuetableFieldMixin.vue";
 
 export default {
