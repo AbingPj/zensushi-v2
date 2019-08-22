@@ -16,7 +16,7 @@ class CreateRawProductsTable extends Migration
         Schema::create('raw_products', function (Blueprint $table) {
             $table->bigIncrements('id');
 
-            $table->bigInteger('raw')->unsigned();
+            $table->bigInteger('raw_id')->unsigned();
             $table->double('value', 10, 2);
 
             $table->timestamps();
@@ -24,7 +24,6 @@ class CreateRawProductsTable extends Migration
 
             $table->bigInteger('item_id')->unsigned();
             $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
-
         });
     }
 
