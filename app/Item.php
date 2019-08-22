@@ -37,4 +37,9 @@ class Item extends Model
     {
         return $this->hasOne('App\Raw_product', 'item_id', 'id');
     }
+
+    public function not_raw()
+    {
+        return $this->hasOne('App\Not_raw', 'item_id', 'id');
+    }
 }
