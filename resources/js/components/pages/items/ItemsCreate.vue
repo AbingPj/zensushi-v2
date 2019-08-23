@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { setTimeout } from "timers";
 export default {
   props: {
     itemtype: String,
@@ -141,8 +142,12 @@ export default {
           rawProductValue: this.rawProductValue
         })
         .then(function(response) {
-          console.log(response);
-          LoadingOverlayHide();
+          console.log(response.status);
+          if (response.status == 200) {
+            setTimeout(() => {
+              window.location.href = "/zensushi-items";
+            }, 1500);
+          }
         })
         .catch(function(error) {
           console.log(error);

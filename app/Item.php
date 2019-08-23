@@ -28,8 +28,18 @@ class Item extends Model
         return $this->belongsTo('App\Item_type', 'item_type_id', 'id');
     }
 
-    public function Raw()
+    public function raw()
     {
         return $this->hasOne('App\Raw', 'item_id', 'id');
+    }
+
+    public function raw_product()
+    {
+        return $this->hasOne('App\Raw_product', 'item_id', 'id');
+    }
+
+    public function not_raw()
+    {
+        return $this->hasOne('App\Not_raw', 'item_id', 'id');
     }
 }
