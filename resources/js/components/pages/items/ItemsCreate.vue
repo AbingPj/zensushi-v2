@@ -19,7 +19,7 @@
             disabled
           />
         </div>
-        <!--  -->
+        <!--  Category -->
         <div class="form-group">
           <label>Category &nbsp;</label>
           <select v-model="selectedCategory" class="form-control form-control-sm">
@@ -27,7 +27,7 @@
             <option v-for="cat in parseCategories" :value="cat" :key="cat.id">{{ cat.description }}</option>
           </select>
         </div>
-        <!--  -->
+        <!-- Unit -->
         <div class="form-group">
           <label>Unit &nbsp;</label>
           <select v-model="selectedUnit" class="form-control form-control-sm">
