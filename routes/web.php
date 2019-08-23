@@ -35,6 +35,11 @@ Route::get('/items/create/{id}', 'ItemsController@createItem');
 Route::post('/items/create/item', 'ItemsController@createItemSave');
 Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 
+Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
+Route::post('/items/update/{id}', 'ItemsController@updateItem');
+
+
+
 
 
 ///Loading Sample page

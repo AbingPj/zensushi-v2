@@ -2,7 +2,13 @@
   <th v-if="isHeader" class="vuetable-th-component-buttons" v-html="title"></th>
   <td v-else class="vuetable-td-component-buttons">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-      <button @click="editAction(rowData, rowIndex)" type="button" class="btn btn-info">
+      <button
+        @click="editAction(rowData, rowIndex)"
+        type="button"
+        class="btn btn-info"
+        data-toggle="modal"
+        data-target="#updateItemModal"
+      >
         <i class="fa fa-edit fa-lg"></i>
       </button>
       <button
@@ -67,10 +73,13 @@ export default {
 
   methods: {
     editAction(data, index) {
-      this.$events.fire("show-update-modal", data);
+      let dataToUpdate = { ...data };
+      // let dataToUpdate = data;
+      this.$events.fire("showItemUpdateModal", dataToUpdate);
     },
     deleteAction(data, index) {
-      this.$events.fire("showItemDeleteModal", data);
+      let dataToDelete = { ...data };
+      this.$events.fire("showItemDeleteModal", dataToDelete);
     }
   }
 };

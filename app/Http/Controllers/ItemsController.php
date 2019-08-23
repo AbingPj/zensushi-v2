@@ -27,6 +27,24 @@ class ItemsController extends Controller
         return response()->json($items);
     }
 
+    public function showUpdateItemModal($id)
+    {
+
+        $item =  Item::find($id);
+        $item->selected_category = $item->category;
+        $item->selected_unit = $item->unit;
+        $categories = Category::all();
+        $units = Unit::all();
+
+
+        $data = array("item" =>  $item, "categories" => $categories, "units" =>  $units);
+
+        return response()->json($data);
+    }
+
+
+
+
     public function createItem($id)
     {
         if (!($id >= 1 && $id <= 3)) {
