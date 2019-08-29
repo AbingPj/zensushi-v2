@@ -48,12 +48,13 @@ class ItemsController extends Controller
                 "raw_value" =>  $item->raw->value
             );
         } elseif ($item->item_type_id == 2) {
-
             if ($raws->isNotEmpty()) {
                 $raws->map(function ($row) {
                     return $row->item = $row->item;
                 });
             }
+
+            $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
 
 
             $data = array(
@@ -62,7 +63,7 @@ class ItemsController extends Controller
                 "units" =>  $units,
                 "raws" =>  $raws,
                 "raw_product_value" =>  $item->raw_product->value,
-                // "selected_raw" =>  $item->raw_product->raw
+                "selected_raw" =>    $selectedRaw
 
             );
         } elseif ($item->item_type_id == 3) {

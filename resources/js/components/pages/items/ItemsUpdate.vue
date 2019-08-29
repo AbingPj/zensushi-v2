@@ -116,7 +116,7 @@ export default {
         this.rawValue = data.raw_value;
         this.rawProductValue = data.raw_product_value;
         this.raws = data.raws;
-        // this.selectedRaw = data.selected_raw;
+        this.selectedRaw = data.selected_raw;
         LoadingOverlayHide();
       }
     },
