@@ -37,9 +37,6 @@ class ItemsController extends Controller
         $categories = Category::all();
         $units = Unit::all();
         $raws = Raw::all();
-
-
-
         if ($item->item_type_id == 1) {
             $data = array(
                 "item" =>  $item,
@@ -53,10 +50,7 @@ class ItemsController extends Controller
                     return $row->item = $row->item;
                 });
             }
-
             $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
-
-
             $data = array(
                 "item" =>  $item,
                 "categories" => $categories,
@@ -163,22 +157,24 @@ class ItemsController extends Controller
 
     public function updateItem(Request $request)
     {
+
         DB::transaction(function () use ($request) {
+
             $id = $request->input('id');
             $item = Item::find($id);
-            $itemType =  $item->item_type_id;
             $item->category_id = $request->input('category');
             $item->unit_id = $request->input('unit');
             $item->description = $request->input('description');
+
             if ($item->item_type_id ==  1) {
                 $item->raw->value = $request->input('rawValue');
                 $item->save();
                 $item->raw->save();
             } elseif ($item->item_type_id ==  2) {
-                // $item->raw_product->value = $request->input('rawProductValue');
-                // $item->raw_product->raw_id = $request->input('selectedRaw');
+                $item->raw_product->value = $request->input('rawProductValue');
+                $item->raw_product->raw_id = $request->input('selectedRaw');
                 $item->save();
-                // $item->raw_product->save();
+                $item->raw_product->save();
             } elseif ($item->item_type_id ==  3) {
                 $item->save();
             }

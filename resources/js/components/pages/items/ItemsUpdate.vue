@@ -130,13 +130,21 @@ export default {
     // }
 
     async submitUpdate() {
+      let selectedRawIdParam = null;
+      let rawProductValueParam = null;
+      if (this.item.item_type_id == 2) {
+        selectedRawIdParam = this.selectedRaw.id;
+        rawProductValueParam = this.rawProductValue;
+      }
       await axios
         .put("/items/update", {
           id: this.item.id,
           description: this.item.description,
           category: this.selectedCategory.id,
           unit: this.selectedUnit.id,
-          rawValue: this.rawValue
+          rawValue: this.rawValue,
+          selectedRaw: selectedRawIdParam,
+          rawProductValue: rawProductValueParam
         })
         .then(response => {
           console.log(response);
