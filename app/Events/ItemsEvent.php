@@ -24,7 +24,7 @@ class ItemsEvent implements ShouldBroadcast
     public function broadCastWith()
     {
         return [
-            'postId' => $this->data
+            'data' => $this->data
         ];
     }
 
