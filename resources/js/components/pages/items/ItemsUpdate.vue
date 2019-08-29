@@ -39,6 +39,43 @@
                   <option v-for="unit in units" :value="unit" :key="unit.id">{{ unit.description }}</option>
                 </select>
               </div>
+
+              <div v-if="item.item_type_id == 1">
+                <div class="form-group">
+                  <label for>Value(Grams)</label>
+                  <input
+                    type="text"
+                    name="description"
+                    v-model="rawValue"
+                    placeholder="ex. 1000 grams"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+              <div v-else-if="item.item_type_id == 2">
+                <div class="form-group">
+                  <!-- <label for>Raw product</label>
+                  <select v-model="selectedRaw" class="form-control">
+                    <option value="null" disabled>Select Raw Product</option>
+                    <option
+                      v-for="raw in parseRawItems"
+                      :value="raw"
+                      :key="raw.id"
+                    >{{ raw.item.description }}</option>
+                  </select>-->
+                </div>
+                <div class="form-group">
+                  <label for>Value(Grams)</label>
+                  <input
+                    type="text"
+                    name="description"
+                    v-model="rawProductValue"
+                    placeholder="ex. 100 grams"
+                    class="form-control"
+                  />
+                </div>
+              </div>
+
               <div class="modal-footer">
                 <button @click="submitUpdate()" class="btn btn-info" data-dismiss="modal">Update</button>
               </div>
@@ -58,7 +95,8 @@ export default {
       units: [],
       categories: [],
       selectedUnit: {},
-      selectedCategory: {}
+      selectedCategory: {},
+      rawValue: 0
     };
   },
   methods: {
@@ -72,17 +110,34 @@ export default {
         this.categories = data.categories;
         this.selectedUnit = data.item.selected_unit;
         this.selectedCategory = data.item.selected_category;
+        this.rawValue = 1;
         LoadingOverlayHide();
       }
-    }
-    // async deleteItem() {
+    },
+    // async updateItem() {
     //   LoadingOverlay();
-    //   let { status } = await axios.delete("/items/delete/" + this.item.id);
+    //   let { status } = await axios.delete("/items/update/" + this.item.id);
     //   if (status == 200) {
     //     this.$events.fire("refreshItemsVueTable", status);
     //     LoadingOverlayHide();
     //   }
-    // },
+    // }
+
+    async submitUpdate() {
+      await axios
+        .put("/items/update", {
+          id: this.item.id,
+          description: this.item.description,
+          category: this.selectedCategory.id,
+          unit: this.selectedUnit.id
+        })
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(err);
+        });
+    }
   },
 
   created() {
