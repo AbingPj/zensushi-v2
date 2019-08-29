@@ -54,15 +54,15 @@
               </div>
               <div v-else-if="item.item_type_id == 2">
                 <div class="form-group">
-                  <!-- <label for>Raw product</label>
+                  <label for>Raw product</label>
                   <select v-model="selectedRaw" class="form-control">
                     <option value="null" disabled>Select Raw Product</option>
                     <option
-                      v-for="raw in parseRawItems"
+                      v-for="raw in raws"
                       :value="raw"
                       :key="raw.id"
                     >{{ raw.item.description }}</option>
-                  </select>-->
+                  </select>
                 </div>
                 <div class="form-group">
                   <label for>Value(Grams)</label>
@@ -96,7 +96,10 @@ export default {
       categories: [],
       selectedUnit: {},
       selectedCategory: {},
-      rawValue: 0
+      rawValue: 0,
+      rawProductValue: 0,
+      raws: [],
+      selectedRaw: {}
     };
   },
   methods: {
@@ -110,7 +113,10 @@ export default {
         this.categories = data.categories;
         this.selectedUnit = data.item.selected_unit;
         this.selectedCategory = data.item.selected_category;
-        this.rawValue = data.rawValue;
+        this.rawValue = data.raw_value;
+        this.rawProductValue = data.raw_product_value;
+        this.raws = data.raws;
+        // this.selectedRaw = data.selected_raw;
         LoadingOverlayHide();
       }
     },

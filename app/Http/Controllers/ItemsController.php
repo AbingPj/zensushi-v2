@@ -36,19 +36,34 @@ class ItemsController extends Controller
         $item->selected_unit = $item->unit;
         $categories = Category::all();
         $units = Unit::all();
+        $raws = Raw::all();
+
+
 
         if ($item->item_type_id == 1) {
             $data = array(
                 "item" =>  $item,
                 "categories" => $categories,
                 "units" =>  $units,
-                "rawValue" =>  $item->raw->value
+                "raw_value" =>  $item->raw->value
             );
         } elseif ($item->item_type_id == 2) {
+
+            if ($raws->isNotEmpty()) {
+                $raws->map(function ($row) {
+                    return $row->item = $row->item;
+                });
+            }
+
+
             $data = array(
                 "item" =>  $item,
                 "categories" => $categories,
-                "units" =>  $units
+                "units" =>  $units,
+                "raws" =>  $raws,
+                "raw_product_value" =>  $item->raw_product->value,
+                // "selected_raw" =>  $item->raw_product->raw
+
             );
         } elseif ($item->item_type_id == 3) {
             $data = array(
