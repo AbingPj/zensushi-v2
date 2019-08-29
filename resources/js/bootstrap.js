@@ -58,4 +58,27 @@ if (token) {
 
 //OTHER IMPORTS//
 
+// import Echo from "laravel-echo";
+
+// window.Echo = new Echo({
+//     broadcaster: "pusher",
+//     key: "8edc97b8507f1e75e12e",
+//     cluster: "ap1",
+//     forceTLS: true
+// });
+
+import Echo from "laravel-echo";
+window.Pusher = require("pusher-js");
+window.Echo = new Echo({
+    broadcaster: "pusher",
+    key: "8edc97b8507f1e75e12e",
+    cluster: "ap1",
+    forceTLS: true
+});
+
+// var channel = Echo.channel("my-channel");
+// channel.listen("my-event", function(data) {
+//     alert(JSON.stringify(data));
+// });
+
 require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");

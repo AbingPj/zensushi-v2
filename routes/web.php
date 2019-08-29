@@ -39,6 +39,9 @@ Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
 Route::put('/items/update', 'ItemsController@updateItem');
 
 
+Route::post('/triggerPusher', 'ItemsController@triggerPusher');
+
+
 
 
 
