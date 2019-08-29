@@ -35,9 +35,14 @@ return [
             'key' => env('PUSHER_APP_KEY'),
             'secret' => env('PUSHER_APP_SECRET'),
             'app_id' => env('PUSHER_APP_ID'),
+            // 'key' => env('PUSHER_APP_KEY', '831668'),
+            // 'secret' => env('PUSHER_APP_SECRET', '869cf3e7458015819b6f'),
+            // 'app_id' => env('PUSHER_APP_ID', 'f41c6fccd36a2a9fcdef'),
             'options' => [
                 'cluster' => env('PUSHER_APP_CLUSTER'),
+                // 'cluster' => env('PUSHER_APP_CLUSTER', 'ap1'),
                 'encrypted' => true,
+                // 'useTLS' => true
             ],
         ],
 
