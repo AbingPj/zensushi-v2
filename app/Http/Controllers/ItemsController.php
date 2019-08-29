@@ -31,13 +31,32 @@ class ItemsController extends Controller
     {
 
         $item =  Item::find($id);
+
         $item->selected_category = $item->category;
         $item->selected_unit = $item->unit;
         $categories = Category::all();
         $units = Unit::all();
 
-
-        $data = array("item" =>  $item, "categories" => $categories, "units" =>  $units);
+        if ($item->item_type_id == 1) {
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units,
+                "rawValue" =>  $item->raw->value
+            );
+        } elseif ($item->item_type_id == 2) {
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units
+            );
+        } elseif ($item->item_type_id == 3) {
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units
+            );
+        }
 
         return response()->json($data);
     }
@@ -136,9 +155,9 @@ class ItemsController extends Controller
             $item->unit_id = $request->input('unit');
             $item->description = $request->input('description');
             if ($item->item_type_id ==  1) {
-                // $item->raw->value = $request->input('rawValue');
+                $item->raw->value = $request->input('rawValue');
                 $item->save();
-                // $item->raw->save();
+                $item->raw->save();
             } elseif ($item->item_type_id ==  2) {
                 // $item->raw_product->value = $request->input('rawProductValue');
                 // $item->raw_product->raw_id = $request->input('selectedRaw');

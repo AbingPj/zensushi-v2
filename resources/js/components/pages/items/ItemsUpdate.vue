@@ -110,7 +110,7 @@ export default {
         this.categories = data.categories;
         this.selectedUnit = data.item.selected_unit;
         this.selectedCategory = data.item.selected_category;
-        this.rawValue = 1;
+        this.rawValue = data.rawValue;
         LoadingOverlayHide();
       }
     },
@@ -129,7 +129,8 @@ export default {
           id: this.item.id,
           description: this.item.description,
           category: this.selectedCategory.id,
-          unit: this.selectedUnit.id
+          unit: this.selectedUnit.id,
+          rawValue: this.rawValue
         })
         .then(response => {
           console.log(response);
