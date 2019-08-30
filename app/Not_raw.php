@@ -4,15 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Raw extends Model
+class Not_raw extends Model
 {
     public function item()
     {
         return $this->belongsTo('App\Item', 'item_id', 'id');
-    }
-
-    public function raw_product()
-    {
-        return $this->hasMany('App\Raw_product', 'raw_id', 'id');
     }
 }

@@ -28,8 +28,8 @@
                                     <br>
                                     <br>
                                     <div class="text-center">
-                                        {{-- <h2> Zen Sushi </h2>
-                                        <p>Inventory System</p> --}}
+                                        <h2> Zen Sushi </h2>
+                                        <p>Inventory System</p>
                                     </div>
 
                                     <br>
@@ -64,8 +64,9 @@
                                         Log in
                                         <div class="ld ld-ball ld-broadcast"></div>
                                     </button> --}}
-                                        <button type="submit" class="btn btn-primary btn-block btnLogin">
+                                        <button type="submit" class="btn btn-primary btn-block ld-over btnLogin">
                                             {{ __('Login') }}
+                                             <img style="margin:-10px;" src="{{asset('images/svg_logo/logo7.svg')}}"  class="ld ld-broadcast" />
                                         </button>
                                         <hr class="my-4">
                                     </div>
@@ -85,7 +86,7 @@
 
                             <div class="col-sm-12  col-md-6">
                                 {{-- <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;"> --}}
-                                <img>
+                                <img class="welcome-image">
                             </div>
                             <br>
                             <br>

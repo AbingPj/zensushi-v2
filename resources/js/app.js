@@ -5,8 +5,10 @@
  */
 
 require("./bootstrap");
-
 window.Vue = require("vue");
+
+import VueEvents from "vue-events";
+Vue.use(VueEvents);
 
 /**
  * The following block of code may be used to automatically register your
@@ -38,6 +40,16 @@ Vue.component(
 Vue.component(
     "vc-items-create",
     require("./components/pages/items/ItemsCreate.vue").default
+);
+
+Vue.component(
+    "vc-items-delete-modal",
+    require("./components/pages/items/ItemsDelete.vue").default
+);
+
+Vue.component(
+    "vc-items-update-modal",
+    require("./components/pages/items/ItemsUpdate.vue").default
 );
 
 /**

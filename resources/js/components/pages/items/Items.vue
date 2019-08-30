@@ -1,7 +1,10 @@
 <template>
   <div class="container">
-    <vc-items-table :baseUrl="baseurl"></vc-items-table>
+    <!-- <button @click="trigger()">Trigger Puhser</button> -->
+    <vc-items-table ref="itemsVuetable" :baseUrl="baseurl"></vc-items-table>
     <vc-items-choose-itemtype-modal></vc-items-choose-itemtype-modal>
+    <vc-items-delete-modal></vc-items-delete-modal>
+    <vc-items-update-modal></vc-items-update-modal>
   </div>
 </template>
 
@@ -10,8 +13,16 @@ export default {
   props: {
     baseurl: String
   },
+  methods: {
+    // trigger() {
+    //   axios.post("/triggerPusher");
+    // }
+  },
+
   mounted() {
-    console.log(this.baseurl);
+    Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+      this.$refs.itemsVuetable.refreshVueTable();
+    });
   }
 };
 </script>

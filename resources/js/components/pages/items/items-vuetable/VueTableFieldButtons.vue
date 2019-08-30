@@ -2,10 +2,22 @@
   <th v-if="isHeader" class="vuetable-th-component-buttons" v-html="title"></th>
   <td v-else class="vuetable-td-component-buttons">
     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-      <button @click="editAction(rowData, rowIndex)" type="button" class="btn btn-info">
+      <button
+        @click="editAction(rowData, rowIndex)"
+        type="button"
+        class="btn btn-info"
+        data-toggle="modal"
+        data-target="#updateItemModal"
+      >
         <i class="fa fa-edit fa-lg"></i>
       </button>
-      <button @click="deleteAction( rowData, rowIndex)" type="button" class="btn btn-danger">
+      <button
+        @click="deleteAction( rowData, rowIndex)"
+        type="button"
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#deleteItemModal"
+      >
         <i class="fa fa-trash fa-lg"></i>
       </button>
 
@@ -53,10 +65,7 @@
   </td>
 </template>
 <script>
-import $ from "jquery";
 import VuetableFieldMixin from "vuetable-2/src/components/VuetableFieldMixin.vue";
-// import VueEvents from "vue-events";
-// Vue.use(VueEvents);
 
 export default {
   name: "vuetable-field-buttons",
@@ -64,15 +73,13 @@ export default {
 
   methods: {
     editAction(data, index) {
-      // console.log(data, index);
       let dataToUpdate = { ...data };
-      this.$events.fire("show-update-modal", dataToUpdate);
+      // let dataToUpdate = data;
+      this.$events.fire("showItemUpdateModal", dataToUpdate);
     },
     deleteAction(data, index) {
-      console.log(data, index);
-
       let dataToDelete = { ...data };
-      this.$events.fire("show-delete-modal", dataToDelete);
+      this.$events.fire("showItemDeleteModal", dataToDelete);
     }
   }
 };

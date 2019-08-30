@@ -3,15 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\Category;
+use App\Events\ItemsEvent;
+
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\Not_raw;
 use App\Raw;
+use App\Raw_product;
 use App\Unit;
 use Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class ItemsController extends Controller
 {
+    public function triggerPusher()
+    {
+        broadcast(new ItemsEvent('HELLO WORLD'));
+    }
+
+
     public function items()
     {
         $items = Item::all();
@@ -23,6 +35,53 @@ class ItemsController extends Controller
         $items = Item_type::all();
         return response()->json($items);
     }
+
+    public function showUpdateItemModal($id)
+    {
+
+        $item =  Item::find($id);
+
+        $item->selected_category = $item->category;
+        $item->selected_unit = $item->unit;
+        $categories = Category::all();
+        $units = Unit::all();
+        $raws = Raw::all();
+        if ($item->item_type_id == 1) {
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units,
+                "raw_value" =>  $item->raw->value
+            );
+        } elseif ($item->item_type_id == 2) {
+            if ($raws->isNotEmpty()) {
+                $raws->map(function ($row) {
+                    return $row->item = $row->item;
+                });
+            }
+            $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units,
+                "raws" =>  $raws,
+                "raw_product_value" =>  $item->raw_product->value,
+                "selected_raw" =>    $selectedRaw
+
+            );
+        } elseif ($item->item_type_id == 3) {
+            $data = array(
+                "item" =>  $item,
+                "categories" => $categories,
+                "units" =>  $units
+            );
+        }
+
+        return response()->json($data);
+    }
+
+
+
 
     public function createItem($id)
     {
@@ -48,54 +107,102 @@ class ItemsController extends Controller
     public function createItemSave(Request $request)
     {
 
-        if ($request->input('itemTypeId') ==  1) {
-            // item
+        // item
+        DB::transaction(function () use ($request) {
             $item = new Item;
             $item->item_type_id = $request->input('itemTypeId');
             $item->category_id = $request->input('category');
             $item->unit_id = $request->input('unit');
             $item->description = $request->input('description');
             $item->user_id = Auth::user()->id;
-            $item->save();
-            //Raw
-            $raw = new Raw;
-            $raw->value = $request->input('rawValue');
-            $raw->item_id = $item->id;
-            $raw->save();
-        }
-
-        if ($request->input('itemTypeId') ==  1) {
-            // item
-            $item = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
-            $item->save();
-            //Raw
-            $raw = new Raw;
-            $raw->value = $request->input('rawValue');
-            $raw->item_id = $item->id;
-            $raw->save();
-        } elseif ($request->input('itemTypeId') ==  2) {
-
-            // item
-            $item = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
-            $item->save();
-            // Raw Product
-            $rawProduct = new Raw_product;
-            $rawProduct->value = $request->input('rawProductValue');
-            $rawProduct->raw = $request->input('selectedRaw');
-            $rawProduct->item_id = $item->id;
-            $rawProduct->save();
-        }
+            if ($request->input('itemTypeId') ==  1) {
+                //SaveItem
+                $item->save();
+                //Raw
+                $raw = new Raw;
+                $raw->value = $request->input('rawValue');
+                $raw->item_id = $item->id;
+                $raw->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($request->input('itemTypeId') ==  2) {
+                //SaveItem
+                $item->save();
+                // Raw Product
+                $rawProduct = new Raw_product;
+                $rawProduct->value = $request->input('rawProductValue');
+                $rawProduct->raw_id = $request->input('selectedRaw');
+                $rawProduct->item_id = $item->id;
+                $rawProduct->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($request->input('itemTypeId') ==  3) {
+                //SaveItem
+                $item->save();
+                //Not Raw
+                $not_raw = new Not_raw;
+                $not_raw->item_id = $item->id;
+                $not_raw->save();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
     }
+
+    public function deleteItem($id)
+    {
+        $item =  Item::find($id);
+        $itemType =  $item->item_type_id;
+        DB::transaction(function () use ($itemType, $item) {
+            if ($itemType == 1) {
+                $raw_id = $item->raw->id;
+                Raw::destroy($raw_id);
+                $item->delete();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($itemType == 2) {
+                $raw_product_id = $item->raw_product->id;
+                Raw_product::destroy($raw_product_id);
+                $item->delete();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($itemType == 3) {
+                $not_raw_id = $item->not_raw->id;
+                Not_raw::destroy($not_raw_id);
+                $item->delete();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
+    }
+
+    public function updateItem(Request $request)
+    {
+
+        DB::transaction(function () use ($request) {
+
+            $id = $request->input('id');
+            $item = Item::find($id);
+            $item->category_id = $request->input('category');
+            $item->unit_id = $request->input('unit');
+            $item->description = $request->input('description');
+
+            if ($item->item_type_id ==  1) {
+                $item->raw->value = $request->input('rawValue');
+                $item->save();
+                $item->raw->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($item->item_type_id ==  2) {
+                $item->raw_product->value = $request->input('rawProductValue');
+                $item->raw_product->raw_id = $request->input('selectedRaw');
+                $item->save();
+                $item->raw_product->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($item->item_type_id ==  3) {
+                $item->save();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
+    }
+
+
+
+
+
 
     public function index()
     {

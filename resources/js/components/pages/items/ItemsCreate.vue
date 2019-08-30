@@ -19,7 +19,7 @@
             disabled
           />
         </div>
-        <!--  -->
+        <!--  Category -->
         <div class="form-group">
           <label>Category &nbsp;</label>
           <select v-model="selectedCategory" class="form-control form-control-sm">
@@ -27,7 +27,7 @@
             <option v-for="cat in parseCategories" :value="cat" :key="cat.id">{{ cat.description }}</option>
           </select>
         </div>
-        <!--  -->
+        <!-- Unit -->
         <div class="form-group">
           <label>Unit &nbsp;</label>
           <select v-model="selectedUnit" class="form-control form-control-sm">
@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { setTimeout } from "timers";
 export default {
   props: {
     itemtype: String,
@@ -122,8 +123,15 @@ export default {
     this.parseUnits = JSON.parse(this.units);
     this.parseRawItems = JSON.parse(this.rawitems);
   },
+  // mounted() {
+  //   Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+  //     this.$refs.itemsVuetable.refreshVueTable();
+  //   });
+  // },
   methods: {
     btnSave() {
+      LoadingOverlay();
+
       let selectedRawId = null;
       if (this.selectedRaw) {
         selectedRawId = this.selectedRaw.id;
@@ -139,7 +147,12 @@ export default {
           rawProductValue: this.rawProductValue
         })
         .then(function(response) {
-          console.log(response);
+          console.log(response.status);
+          if (response.status == 200) {
+            setTimeout(() => {
+              window.location.href = "/zensushi-items";
+            }, 2000);
+          }
         })
         .catch(function(error) {
           console.log(error);

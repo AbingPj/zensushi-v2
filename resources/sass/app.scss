@@ -17,6 +17,8 @@ body {
     );
 }
 
+
+
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Nunito");
 
@@ -34,3 +36,7 @@ body {
 //Pages
 @import "./pages/welcome";
 @import "./pages/register";
+
+//Loader
+@import "loader/loading";
+@import "loader/loading-btn";
