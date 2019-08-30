@@ -123,6 +123,7 @@ class ItemsController extends Controller
                 $raw->value = $request->input('rawValue');
                 $raw->item_id = $item->id;
                 $raw->save();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($request->input('itemTypeId') ==  2) {
                 //SaveItem
                 $item->save();
@@ -132,6 +133,7 @@ class ItemsController extends Controller
                 $rawProduct->raw_id = $request->input('selectedRaw');
                 $rawProduct->item_id = $item->id;
                 $rawProduct->save();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($request->input('itemTypeId') ==  3) {
                 //SaveItem
                 $item->save();
@@ -139,6 +141,7 @@ class ItemsController extends Controller
                 $not_raw = new Not_raw;
                 $not_raw->item_id = $item->id;
                 $not_raw->save();
+                broadcast(new ItemsEvent($item->id));
             }
         });
     }
@@ -152,14 +155,17 @@ class ItemsController extends Controller
                 $raw_id = $item->raw->id;
                 Raw::destroy($raw_id);
                 $item->delete();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($itemType == 2) {
                 $raw_product_id = $item->raw_product->id;
                 Raw_product::destroy($raw_product_id);
                 $item->delete();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($itemType == 3) {
                 $not_raw_id = $item->not_raw->id;
                 Not_raw::destroy($not_raw_id);
                 $item->delete();
+                broadcast(new ItemsEvent($item->id));
             }
         });
     }
@@ -179,13 +185,16 @@ class ItemsController extends Controller
                 $item->raw->value = $request->input('rawValue');
                 $item->save();
                 $item->raw->save();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($item->item_type_id ==  2) {
                 $item->raw_product->value = $request->input('rawProductValue');
                 $item->raw_product->raw_id = $request->input('selectedRaw');
                 $item->save();
                 $item->raw_product->save();
+                broadcast(new ItemsEvent($item->id));
             } elseif ($item->item_type_id ==  3) {
                 $item->save();
+                broadcast(new ItemsEvent($item->id));
             }
         });
     }
