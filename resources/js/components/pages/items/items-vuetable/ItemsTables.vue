@@ -103,10 +103,7 @@ export default {
       this.showDeleteModal(data)
     );
 
-    // Echo.channel("PostChannel").listen("PostEvent", data => {
-    //   this.refreshVueTable();
-    // });
-    this.$events.listen("refreshItemsVueTable", data => this.refreshVueTable());
+    // this.$events.listen("refreshItemsVueTable", data => this.refreshVueTable());
   },
 
   methods: {
@@ -120,6 +117,7 @@ export default {
 
     refreshVueTable() {
       this.$refs.vuetable.refresh();
+      LoadingOverlayHide();
     },
 
     onChangePerPage() {

@@ -120,14 +120,6 @@ export default {
         LoadingOverlayHide();
       }
     },
-    // async updateItem() {
-    //   LoadingOverlay();
-    //   let { status } = await axios.delete("/items/update/" + this.item.id);
-    //   if (status == 200) {
-    //     this.$events.fire("refreshItemsVueTable", status);
-    //     LoadingOverlayHide();
-    //   }
-    // }
 
     async submitUpdate() {
       let selectedRawIdParam = null;

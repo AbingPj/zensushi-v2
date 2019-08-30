@@ -40,10 +40,6 @@ export default {
     async deleteItem() {
       LoadingOverlay();
       let { status } = await axios.delete("/items/delete/" + this.item.id);
-      if (status == 200) {
-        this.$events.fire("refreshItemsVueTable", status);
-        LoadingOverlayHide();
-      }
     },
     setItem(data) {
       console.log(data);
