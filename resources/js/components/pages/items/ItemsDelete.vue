@@ -39,7 +39,26 @@ export default {
   methods: {
     async deleteItem() {
       LoadingOverlay();
-      let { status } = await axios.delete("/items/delete/" + this.item.id);
+      // let { status } = await axios.delete("/items/delete/" + this.item.id);
+      // if (status == 500) {
+      //   LoadingOverlayHide();
+      //   alert("erorr");
+      // }
+      await axios
+
+        .delete("/items/delete/" + this.item.id)
+
+        .catch(err => {
+          alert(
+            "This function have an error, please contact the zensushi developer. \n" +
+              "Error: [" +
+              err.message +
+              " \n " +
+              err.response.data.message +
+              "]"
+          );
+          LoadingOverlayHide();
+        });
     },
     setItem(data) {
       console.log(data);
