@@ -39,13 +39,7 @@ export default {
   methods: {
     async deleteItem() {
       LoadingOverlay();
-      // let { status } = await axios.delete("/items/delete/" + this.item.id);
-      // if (status == 500) {
-      //   LoadingOverlayHide();
-      //   alert("erorr");
-      // }
       await axios
-
         .delete("/items/delete/" + this.item.id)
 
         .catch(err => {
