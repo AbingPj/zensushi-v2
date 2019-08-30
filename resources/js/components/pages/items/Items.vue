@@ -23,21 +23,8 @@ export default {
   },
 
   mounted() {
-    Echo.channel("my-channel").listen("my-event", data => {
-      console.log("Shitt" + data);
-      // console.log(JSON.stringify(data));
-    });
-  },
-
-  //   var channel = pusher.subscribe('my-channel');
-  //   channel.bind('my-event', function(data) {
-  //     alert(JSON.stringify(data));
-  //   });
-
-  created() {
     Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
-      console.log("Hai!!" + data);
-      // console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
     });
   }
 };

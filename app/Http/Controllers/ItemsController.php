@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Events\ItemsEvent;
+
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
@@ -13,6 +14,7 @@ use App\Raw_product;
 use App\Unit;
 use Auth;
 use Illuminate\Support\Facades\DB;
+
 
 class ItemsController extends Controller
 {
