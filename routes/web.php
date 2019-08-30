@@ -36,7 +36,10 @@ Route::post('/items/create/item', 'ItemsController@createItemSave');
 Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 
 Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
-Route::post('/items/update/{id}', 'ItemsController@updateItem');
+Route::put('/items/update', 'ItemsController@updateItem');
+
+
+Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
 
 

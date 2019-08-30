@@ -123,6 +123,11 @@ export default {
     this.parseUnits = JSON.parse(this.units);
     this.parseRawItems = JSON.parse(this.rawitems);
   },
+  // mounted() {
+  //   Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+  //     this.$refs.itemsVuetable.refreshVueTable();
+  //   });
+  // },
   methods: {
     btnSave() {
       LoadingOverlay();
@@ -146,7 +151,7 @@ export default {
           if (response.status == 200) {
             setTimeout(() => {
               window.location.href = "/zensushi-items";
-            }, 1500);
+            }, 2000);
           }
         })
         .catch(function(error) {

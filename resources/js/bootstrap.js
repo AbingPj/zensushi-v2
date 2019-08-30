@@ -45,17 +45,13 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
-
-// window.Pusher = require('pusher-js');
-
-// window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: process.env.MIX_PUSHER_APP_KEY,
-//     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
-//     encrypted: true
-// });
-
-//OTHER IMPORTS//
+import Echo from "laravel-echo";
+window.Pusher = require("pusher-js");
+window.Echo = new Echo({
+    broadcaster: "pusher",
+    key: "8edc97b8507f1e75e12e",
+    cluster: "ap1",
+    forceTLS: true
+});
 
 require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");

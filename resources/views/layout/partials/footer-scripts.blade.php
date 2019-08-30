@@ -1,3 +1,31 @@
+
+{{-- <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script>
+
+  // Enable pusher logging - don't include this in production
+  Pusher.logToConsole = true;
+
+  var pusher = new Pusher('8edc97b8507f1e75e12e', {
+    cluster: 'ap1',
+    forceTLS: true
+  });
+
+//   var channel = pusher.subscribe('my-channel');
+//   channel.bind('my-event', function(data) {
+//     alert(JSON.stringify(data));
+//   });
+
+  var channel = pusher.subscribe('ItemsChannel');
+  channel.bind('ItemsEvent', function(data) {
+    alert(JSON.stringify(data));
+  });
+</script> --}}
+
+
+
+
+
+
 {{-- <!-- Scripts --> --}}
 <script src="{{ url('/js/app.js') }}"></script>
 {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
