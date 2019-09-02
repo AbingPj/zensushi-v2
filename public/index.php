@@ -21,7 +21,11 @@ define('LARAVEL_START', microtime(true));
 |
 */
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
+
+// For x10hosting Configuration
+//require __DIR__.'/../zensushidavao-inv/vendor/autoload.php';
+
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +39,11 @@ require __DIR__.'/../vendor/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/../bootstrap/app.php';
+$app = require_once __DIR__ . '/../bootstrap/app.php';
+
+// For x10hosting Configuration
+//$app = require_once __DIR__ . '/../zensushidavao-inv/bootstrap/app.php';
+
 
 /*
 |--------------------------------------------------------------------------
