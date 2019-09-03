@@ -122,6 +122,7 @@ export default {
     },
 
     async submitUpdate() {
+      LoadingOverlay();
       let selectedRawIdParam = null;
       let rawProductValueParam = null;
       if (this.item.item_type_id == 2) {
@@ -138,11 +139,16 @@ export default {
           selectedRaw: selectedRawIdParam,
           rawProductValue: rawProductValueParam
         })
-        .then(response => {
-          console.log(response);
-        })
-        .catch(error => {
-          console.log(err);
+        .catch(err => {
+          alert(
+            "This function have an error, please contact the zensushi developer. \n" +
+              "Error: [" +
+              err.message +
+              " \n " +
+              err.response.data.message +
+              "]"
+          );
+          LoadingOverlayHide();
         });
     }
   },
