@@ -5,6 +5,7 @@
     <vc-items-choose-itemtype-modal></vc-items-choose-itemtype-modal>
     <vc-items-delete-modal></vc-items-delete-modal>
     <vc-items-update-modal></vc-items-update-modal>
+    <vc-items-in-modal></vc-items-in-modal>
   </div>
 </template>
 
