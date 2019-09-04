@@ -54,7 +54,7 @@ Vue.component(
 
 Vue.component(
     "vc-items-in-modal",
-    require("./components/pages/items/ItemsUpdate.vue").default
+    require("./components/pages/items/ItemsIn.vue").default
 );
 
 /**
