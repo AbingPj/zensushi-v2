@@ -133,14 +133,24 @@ export default {
       LoadingOverlay();
 
       let selectedRawId = null;
+      let selectedCategoryId = null;
+      let selectedUnitId = null;
       if (this.selectedRaw) {
         selectedRawId = this.selectedRaw.id;
+      }
+      if (this.selectedCategory) {
+        selectedCategoryId = this.selectedCategory.id;
+      }
+      if (this.selectedUnit) {
+        selectedUnitId = this.selectedUnit.id;
       }
       axios
         .post("/items/create/item", {
           itemTypeId: this.parseItemType.id,
+          // category: selectedCategoryId,
+          // unit: selectedUnitId,
           category: this.selectedCategory.id,
-          unit: this.selectedUnit.id,
+          unit: his.selectedUnit.id,
           description: this.description,
           selectedRaw: selectedRawId,
           rawValue: this.rawValue,
@@ -154,8 +164,16 @@ export default {
             }, 2000);
           }
         })
-        .catch(function(error) {
-          console.log(error);
+        .catch(err => {
+          alert(
+            "This function have an error, please contact the zensushi developer. \n" +
+              "Error: [" +
+              err.message +
+              " \n " +
+              err.response.data.message +
+              "]"
+          );
+          LoadingOverlayHide();
         });
     }
   }

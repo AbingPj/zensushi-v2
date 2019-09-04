@@ -32,7 +32,7 @@
         >Action</button>
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
           <!-- <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a> -->
-          <a class="dropdown-item" href="#">
+          <a @click="itemIn(rowData)" class="dropdown-item">
             <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; IN
           </a>
 
@@ -76,6 +76,14 @@ export default {
       let dataToUpdate = { ...data };
       // let dataToUpdate = data;
       this.$events.fire("showItemUpdateModal", dataToUpdate);
+    },
+
+    itemIn(data) {
+      let dataToIn = { ...data };
+
+      if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
+        this.$events.fire("showItemInModal", dataToIn);
+      }
     },
     deleteAction(data, index) {
       let dataToDelete = { ...data };
