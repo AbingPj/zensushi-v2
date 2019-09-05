@@ -14,11 +14,7 @@
             <div class="form-group">
               <label for="title">Stock-in: {{ item.description }}</label>
               <div class="input-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  aria-label="Amount (to the nearest dollar)"
-                />
+                <input type="number" class="form-control" placeholder="0" v-model="inStock" />
                 <div class="input-group-append">
                   <span class="input-group-text">{{ item.unit }}</span>
                 </div>
@@ -43,12 +39,25 @@
 export default {
   data() {
     return {
-      item: {}
+      item: {},
+      inStock: null
     };
   },
   methods: {
     stockIn() {
       LoadingOverlay();
+      axios
+        .post("/items/stockin", {
+          itemId: this.item.id,
+          in: this.inStock
+        })
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+
       setTimeout(() => {
         LoadingOverlayHide();
         $("#itemInModal").modal("hide");
@@ -61,6 +70,12 @@ export default {
       "showItemInModal",
       data => ($("#itemInModal").modal("show"), (this.item = data))
     );
+  },
+  mounted() {
+    $("#itemInModal").on("show.bs.modal	", function(e) {
+      console.log("shit");
+      this.inStock = 0;
+    });
   }
 };
 </script>
