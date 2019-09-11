@@ -8,6 +8,7 @@ use App\In_record;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\items_view;
 use App\Not_raw;
 use App\Raw;
 use App\Raw_product;
@@ -210,6 +211,7 @@ class ItemsController extends Controller
                 $in->value = $value;
                 $in->user = Auth::id();
                 $in->save();
+                broadcast(new ItemsEvent($item->id));
             }
         });
     }
@@ -222,24 +224,43 @@ class ItemsController extends Controller
     public function index()
     {
         $request = request();
-        $query = Item::join('units', 'items.unit_id', 'units.id')
-            ->join('users', 'items.user_id', 'users.id')
-            ->join('categories', 'items.category_id', 'categories.id')
-            ->join('item_types', 'items.item_type_id', 'item_types.id')
+
+        // $query = Item::join('units', 'items.unit_id', 'units.id')
+        //     ->join('users', 'items.user_id', 'users.id')
+        //     ->join('categories', 'items.category_id', 'categories.id')
+        //     ->join('item_types', 'items.item_type_id', 'item_types.id')
+        //     ->select(
+        //         'items.id AS id',
+        //         'items.description AS description',
+        //         'items.remove AS remove',
+        //         'items.created_at AS created',
+        //         'users.name AS created_by',
+        //         'categories.description AS category',
+        //         'item_types.description AS item_type',
+        //         'units.description AS unit',
+        //         'items.category_id',
+        //         'items.item_type_id',
+        //         'items.unit_id'
+        //     )
+        //     ->newQuery();
+
+        $query =
+            items_view::join('users', 'items_views.user_id', 'users.id')
             ->select(
-                'items.id AS id',
-                'items.description AS description',
-                'items.remove AS remove',
-                'items.created_at AS created',
+                'items_views.id',
+                'items_views.description',
+                'items_views.category',
+                'items_views.item_type',
+                'items_views.unit',
+                'items_views.created_at AS created',
+                'items_views.balance',
                 'users.name AS created_by',
-                'categories.description AS category',
-                'item_types.description AS item_type',
-                'units.description AS unit',
-                'items.category_id',
-                'items.item_type_id',
-                'items.unit_id'
-            )
-            ->newQuery();
+                'items_views.category_id',
+                'items_views.item_type_id',
+                'items_views.unit_id'
+            )->newQuery();
+
+
         if (request('sort') != "") {
             // handle multisort
             $sorts = explode(',', request()->sort);
@@ -248,17 +269,17 @@ class ItemsController extends Controller
                 $query = $query->orderBy($sortCol, $sortDir);
             }
         } else {
-            $query = $query->orderBy('items.id', 'asc');
+            $query = $query->orderBy('items_views.id', 'asc');
         }
 
 
         if ($request->exists('filter')) {
             $query->where(function ($q) use ($request) {
                 $value = "%{$request->filter}%";
-                $q->where('items.id', 'like', $value)
-                    ->orWhere('items.description', 'like', $value)
-                    ->orWhere('categories.description', 'like', $value)
-                    ->orWhere('item_types.description', 'like', $value)
+                $q->where('items_views.id', 'like', $value)
+                    ->orWhere('items_views.description', 'like', $value)
+                    ->orWhere('items_views.category', 'like', $value)
+                    ->orWhere('items_views.item_type', 'like', $value)
                     ->orWhere('users.name', 'like', $value);
             });
         }

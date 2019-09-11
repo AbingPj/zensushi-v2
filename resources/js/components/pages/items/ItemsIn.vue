@@ -52,16 +52,18 @@ export default {
           value: this.inStock
         })
         .then(res => {
-          setTimeout(() => {
-            LoadingOverlayHide();
-            $("#itemInModal").modal("hide");
-          }, 2000);
+          $("#itemInModal").modal("hide");
         })
         .catch(err => {
-          setTimeout(() => {
-            LoadingOverlayHide();
-            $("#itemInModal").modal("hide");
-          }, 2000);
+          alert(
+            "This function have an error, please contact the zensushi developer. \n" +
+              "Error: [" +
+              err.message +
+              " \n " +
+              err.response.data.message +
+              "]"
+          );
+          LoadingOverlayHide();
         });
     }
   },
