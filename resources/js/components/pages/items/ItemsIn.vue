@@ -49,19 +49,20 @@ export default {
       axios
         .post("/items/stockin", {
           itemId: this.item.id,
-          in: this.inStock
+          value: this.inStock
         })
         .then(res => {
-          console.log(res);
+          setTimeout(() => {
+            LoadingOverlayHide();
+            $("#itemInModal").modal("hide");
+          }, 2000);
         })
         .catch(err => {
-          console.error(err);
+          setTimeout(() => {
+            LoadingOverlayHide();
+            $("#itemInModal").modal("hide");
+          }, 2000);
         });
-
-      setTimeout(() => {
-        LoadingOverlayHide();
-        $("#itemInModal").modal("hide");
-      }, 2000);
     }
   },
 
