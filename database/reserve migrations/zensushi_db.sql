@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 11, 2019 at 09:16 AM
+-- Generation Time: Sep 11, 2019 at 09:27 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.11
 
@@ -43,7 +43,7 @@ CREATE TABLE `additionals` (
 --
 
 INSERT INTO `additionals` (`id`, `item_id`, `value`, `created_at`, `updated_at`, `user`, `remove`) VALUES
-(1, 1, 88.00, '2019-09-11 09:08:59', NULL, 3, 0);
+(1, 1, 88.00, '2019-09-11 09:26:52', NULL, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -79,13 +79,13 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Seafoods', '2019-09-11 01:07:15', NULL),
-(2, 'Meats', '2019-09-11 01:07:15', NULL),
-(3, 'Fresh', '2019-09-11 01:07:15', NULL),
-(4, 'Dry Goods', '2019-09-11 01:07:15', NULL),
-(5, 'Tea', '2019-09-11 01:07:15', NULL),
-(6, 'Souces', '2019-09-11 01:07:15', NULL),
-(7, 'Others', '2019-09-11 01:07:15', NULL);
+(1, 'Seafoods', '2019-09-11 01:26:14', NULL),
+(2, 'Meats', '2019-09-11 01:26:14', NULL),
+(3, 'Fresh', '2019-09-11 01:26:14', NULL),
+(4, 'Dry Goods', '2019-09-11 01:26:14', NULL),
+(5, 'Tea', '2019-09-11 01:26:14', NULL),
+(6, 'Souces', '2019-09-11 01:26:14', NULL),
+(7, 'Others', '2019-09-11 01:26:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -102,13 +102,6 @@ CREATE TABLE `in_records` (
   `user` bigint(20) UNSIGNED NOT NULL,
   `remove` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `in_records`
---
-
-INSERT INTO `in_records` (`id`, `item_id`, `value`, `created_at`, `updated_at`, `user`, `remove`) VALUES
-(1, 1, 100.00, '2019-09-11 01:08:26', '2019-09-11 01:08:26', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -133,10 +126,10 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `description`, `created_at`, `updated_at`, `remove`, `unit_id`, `category_id`, `item_type_id`, `user_id`) VALUES
-(1, 'BEEF', '2019-09-11 01:07:15', NULL, 0, 4, 2, 1, 1),
-(2, 'PORK', '2019-09-11 01:07:15', NULL, 0, 4, 2, 1, 1),
-(3, 'PORK (80 Grams)', '2019-09-11 01:07:15', NULL, 0, 4, 2, 2, 2),
-(4, 'Dish Washing Liquid', '2019-09-11 01:07:15', NULL, 0, 1, 7, 3, 2);
+(1, 'BEEF', '2019-09-11 01:26:15', NULL, 0, 4, 2, 1, 1),
+(2, 'PORK', '2019-09-11 01:26:15', NULL, 0, 4, 2, 1, 1),
+(3, 'PORK (80 Grams)', '2019-09-11 01:26:15', NULL, 0, 4, 2, 2, 2),
+(4, 'Dish Washing Liquid', '2019-09-11 01:26:15', NULL, 0, 1, 7, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -179,9 +172,9 @@ CREATE TABLE `item_types` (
 --
 
 INSERT INTO `item_types` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Raw', '2019-09-11 01:07:15', NULL),
-(2, 'Product', '2019-09-11 01:07:15', NULL),
-(3, 'Other', '2019-09-11 01:07:15', NULL);
+(1, 'Raw', '2019-09-11 01:26:14', NULL),
+(2, 'Product', '2019-09-11 01:26:15', NULL),
+(3, 'Other', '2019-09-11 01:26:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -200,22 +193,22 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(112, '2019_07_19_183020_create_roles_table', 1),
-(113, '2019_07_19_183233_create_users_table', 1),
-(114, '2019_07_19_183420_create_password_resets_table', 1),
-(115, '2019_07_19_183725_create_categories_table', 1),
-(116, '2019_07_19_183747_create_item_types_table', 1),
-(117, '2019_07_19_183835_create_units_table', 1),
-(118, '2019_07_19_183857_create_items_table', 1),
-(119, '2019_07_19_184204_create_raws_table', 1),
-(120, '2019_07_19_184234_create_raw_products_table', 1),
-(121, '2019_07_19_184305_create_not_raws_table', 1),
-(122, '2019_07_19_184948_create_additionals_table', 1),
-(123, '2019_07_19_185015_create_bones_table', 1),
-(124, '2019_07_19_185034_create_scraps_table', 1),
-(125, '2019_09_05_075320_create_in_records_table', 1),
-(126, '2019_09_05_075449_create_out_records_table', 1),
-(127, '2019_09_11_072140_create_items_display_view', 1);
+(128, '2019_07_19_183020_create_roles_table', 1),
+(129, '2019_07_19_183233_create_users_table', 1),
+(130, '2019_07_19_183420_create_password_resets_table', 1),
+(131, '2019_07_19_183725_create_categories_table', 1),
+(132, '2019_07_19_183747_create_item_types_table', 1),
+(133, '2019_07_19_183835_create_units_table', 1),
+(134, '2019_07_19_183857_create_items_table', 1),
+(135, '2019_07_19_184204_create_raws_table', 1),
+(136, '2019_07_19_184234_create_raw_products_table', 1),
+(137, '2019_07_19_184305_create_not_raws_table', 1),
+(138, '2019_07_19_184948_create_additionals_table', 1),
+(139, '2019_07_19_185015_create_bones_table', 1),
+(140, '2019_07_19_185034_create_scraps_table', 1),
+(141, '2019_09_05_075320_create_in_records_table', 1),
+(142, '2019_09_05_075449_create_out_records_table', 1),
+(143, '2019_09_11_072140_create_items_display_view', 1);
 
 -- --------------------------------------------------------
 
@@ -237,7 +230,7 @@ CREATE TABLE `not_raws` (
 --
 
 INSERT INTO `not_raws` (`id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, NULL, '2019-09-11 01:07:15', NULL, 0, 4);
+(1, NULL, '2019-09-11 01:26:15', NULL, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -287,8 +280,8 @@ CREATE TABLE `raws` (
 --
 
 INSERT INTO `raws` (`id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, 1000.00, '2019-09-11 01:07:15', NULL, 0, 1),
-(2, 1000.00, '2019-09-11 01:07:15', NULL, 0, 2);
+(1, 1000.00, '2019-09-11 01:26:15', NULL, 0, 1),
+(2, 1000.00, '2019-09-11 01:26:15', NULL, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -311,7 +304,7 @@ CREATE TABLE `raw_products` (
 --
 
 INSERT INTO `raw_products` (`id`, `raw_id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, 2, 80.00, '2019-09-11 01:07:15', NULL, 0, 3);
+(1, 2, 80.00, '2019-09-11 01:26:15', NULL, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -331,10 +324,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2019-09-11 01:07:14', NULL),
-(2, 'member', '2019-09-11 01:07:14', NULL),
-(3, 'unconfirm', '2019-09-11 01:07:14', NULL),
-(4, 'inactive', '2019-09-11 01:07:14', NULL);
+(1, 'admin', '2019-09-11 01:26:14', NULL),
+(2, 'member', '2019-09-11 01:26:14', NULL),
+(3, 'unconfirm', '2019-09-11 01:26:14', NULL),
+(4, 'inactive', '2019-09-11 01:26:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -370,15 +363,15 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Pack', '2019-09-11 01:07:15', NULL),
-(2, 'Tab', '2019-09-11 01:07:15', NULL),
-(3, 'Roll', '2019-09-11 01:07:15', NULL),
-(4, 'Kilo', '2019-09-11 01:07:15', NULL),
-(5, 'Liter', '2019-09-11 01:07:15', NULL),
-(6, 'Bottle', '2019-09-11 01:07:15', NULL),
-(7, 'Box', '2019-09-11 01:07:15', NULL),
-(8, 'Bar', '2019-09-11 01:07:15', NULL),
-(9, 'Tray', '2019-09-11 01:07:15', NULL);
+(1, 'Pack', '2019-09-11 01:26:14', NULL),
+(2, 'Tab', '2019-09-11 01:26:14', NULL),
+(3, 'Roll', '2019-09-11 01:26:14', NULL),
+(4, 'Kilo', '2019-09-11 01:26:14', NULL),
+(5, 'Liter', '2019-09-11 01:26:14', NULL),
+(6, 'Bottle', '2019-09-11 01:26:14', NULL),
+(7, 'Box', '2019-09-11 01:26:14', NULL),
+(8, 'Bar', '2019-09-11 01:26:14', NULL),
+(9, 'Tray', '2019-09-11 01:26:14', NULL);
 
 -- --------------------------------------------------------
 
@@ -404,9 +397,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `remove`, `role_id`) VALUES
-(1, 'Admin Zensushi', 'admin@zensushi.com', '$2y$10$s0i30jjgA6hY1Un7v/N23ew4kHHkPJUzOwofdagp0kZ4PqLA8BKkq', NULL, NULL, '2019-09-11 01:07:15', NULL, 0, 1),
-(2, 'Member Zensushi', 'member@zensushi.com', '$2y$10$WVzJbcx.03I9MiDrCiBlL.dnL47YJgi/AwGgHMf1nvuLOu1tKTRSK', NULL, NULL, '2019-09-11 01:07:15', NULL, 0, 2),
-(3, 'AbingPj', 'abing.pj@gmail.com', '$2y$10$35GizTqM4n.5S6uUHVmNvenb/yFWCklf3p7e0Juxd7vqioPaNHbMK', NULL, NULL, '2019-09-11 01:07:15', NULL, 0, 1);
+(1, 'Admin Zensushi', 'admin@zensushi.com', '$2y$10$Bpqp4OgEnOT87fvC.YHI2.dz2RHcHSlDKqoNyRF8W.p11zchHdz7K', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 1),
+(2, 'Member Zensushi', 'member@zensushi.com', '$2y$10$oF1UeNX1MUQ0B7NuI1g0R.wDnrOoEXh7rviuSvq2sCb4Yuw0aa3K.', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 2),
+(3, 'AbingPj', 'abing.pj@gmail.com', '$2y$10$PD71PDcN1nIzFlYvBpMj3.9qCBb3lcYhJR8TCFtt1.o9YbtpHPF/W', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -449,11 +442,7 @@ ALTER TABLE `in_records`
 -- Indexes for table `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `items_unit_id_foreign` (`unit_id`),
-  ADD KEY `items_category_id_foreign` (`category_id`),
-  ADD KEY `items_item_type_id_foreign` (`item_type_id`),
-  ADD KEY `items_user_id_foreign` (`user_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `item_types`
@@ -471,8 +460,7 @@ ALTER TABLE `migrations`
 -- Indexes for table `not_raws`
 --
 ALTER TABLE `not_raws`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `not_raws_item_id_foreign` (`item_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `out_records`
@@ -490,15 +478,13 @@ ALTER TABLE `password_resets`
 -- Indexes for table `raws`
 --
 ALTER TABLE `raws`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `raws_item_id_foreign` (`item_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `raw_products`
 --
 ALTER TABLE `raw_products`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `raw_products_item_id_foreign` (`item_id`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `roles`
@@ -523,8 +509,7 @@ ALTER TABLE `units`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `users_email_unique` (`email`),
-  ADD KEY `users_role_id_foreign` (`role_id`);
+  ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -552,7 +537,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `in_records`
 --
 ALTER TABLE `in_records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -570,7 +555,7 @@ ALTER TABLE `item_types`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=128;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
 
 --
 -- AUTO_INCREMENT for table `not_raws`
@@ -619,43 +604,6 @@ ALTER TABLE `units`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `items`
---
-ALTER TABLE `items`
-  ADD CONSTRAINT `items_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `items_item_type_id_foreign` FOREIGN KEY (`item_type_id`) REFERENCES `item_types` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `items_unit_id_foreign` FOREIGN KEY (`unit_id`) REFERENCES `units` (`id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `items_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `not_raws`
---
-ALTER TABLE `not_raws`
-  ADD CONSTRAINT `not_raws_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `raws`
---
-ALTER TABLE `raws`
-  ADD CONSTRAINT `raws_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `raw_products`
---
-ALTER TABLE `raw_products`
-  ADD CONSTRAINT `raw_products_item_id_foreign` FOREIGN KEY (`item_id`) REFERENCES `items` (`id`) ON DELETE CASCADE;
-
---
--- Constraints for table `users`
---
-ALTER TABLE `users`
-  ADD CONSTRAINT `users_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
