@@ -15,13 +15,11 @@ class CreateScrapsTable extends Migration
     {
         Schema::create('scraps', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('record')->unsigned();
-            $table->bigInteger('item')->unsigned();
+            $table->bigInteger('item_id')->unsigned();
             $table->double('value', 10, 2)->nullable();
             $table->timestamps();
+            $table->bigInteger('user')->unsigned();
             $table->boolean('remove')->nullable()->default(false);
-            //$table->foreign('record')->references('id')->on('records')->onDelete('cascade');
-            // $table->foreign('item')->references('id')->on('items')->onDelete('cascade');
         });
     }
 

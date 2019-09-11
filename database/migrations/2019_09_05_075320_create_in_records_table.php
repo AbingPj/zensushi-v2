@@ -15,7 +15,7 @@ class CreateInRecordsTable extends Migration
     {
         Schema::create('in_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigIncrements('item_id');
+            $table->bigInteger('item_id')->unsigned();
             $table->double('value', 10, 2)->nullable();
             $table->timestamps();
             $table->bigInteger('user')->unsigned();
