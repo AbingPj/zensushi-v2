@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Events\ItemsEvent;
-
+use App\In_record;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
@@ -12,7 +12,6 @@ use App\Not_raw;
 use App\Raw;
 use App\Raw_product;
 use App\Unit;
-use App\record;
 use Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -202,44 +201,17 @@ class ItemsController extends Controller
 
     public function StockInRaw(Request $request)
     {
-
-        $item = Item::findOrFail($request->input('itemId'));
-
-
-        // $table->bigIncrements('id');
-        // $table->bigInteger('item')->unsigned();
-        // $table->double('beginning', 10, 2)->nullable();
-        // $table->double('additionals', 10, 2)->nullable();
-        // $table->double('in', 10, 2)->nullable();
-        // $table->double('out', 10, 2)->nullable();
-        // $table->double('stock_actual_count', 10, 2)->nullable();
-        // $table->date('date_record');
-        // $table->bigInteger('user')->unsigned();
-        // $table->boolean('remove')->nullable()->default(false);
-        // $table->timestamps();
-
-        // DB::transaction(function () use ($request) {
-
-        //     $item->category_id = $request->input('category');
-        //     $item->unit_id = $request->input('unit');
-        //     $item->description = $request->input('description');
-
-        //     if ($item->item_type_id ==  1) {
-        //         $item->raw->value = $request->input('rawValue');
-        //         $item->save();
-        //         $item->raw->save();
-        //         broadcast(new ItemsEvent($item->id));
-        //     } elseif ($item->item_type_id ==  2) {
-        //         $item->raw_product->value = $request->input('rawProductValue');
-        //         $item->raw_product->raw_id = $request->input('selectedRaw');
-        //         $item->save();
-        //         $item->raw_product->save();
-        //         broadcast(new ItemsEvent($item->id));
-        //     } elseif ($item->item_type_id ==  3) {
-        //         $item->save();
-        //         broadcast(new ItemsEvent($item->id));
-        //     }
-        // });
+        DB::transaction(function () use ($request) {
+            $value = $request->input('value');
+            $item = Item::findOrFail($request->input('itemId'));
+            if ($item->item_type_id ==  1) {
+                $in = new In_record;
+                $in->item_id = $item->id;
+                $in->value = $value;
+                $in->user = Auth::id();
+                $in->save();
+            }
+        });
     }
 
 
