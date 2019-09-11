@@ -31,9 +31,15 @@ class CreateItemsDisplayView extends Migration
                         items.unit_id,
                         ITEM_IN.IN,
                         ITEM_OUT.OUT,
+                        addi.addi,
+                        IFNULL
+						(
+							( 
+								( ITEM_IN.IN + IFNULL(addi.addi,0) )
+								 - IFNULL(ITEM_OUT.OUT,0)
+							)
+						,'0') as 'balance'
 
-                        IFNULL((ITEM_IN.IN - IFNULL(ITEM_OUT.OUT,0) ),'0') as 'balance'
-                        
                     FROM items
                     INNER JOIN categories ON categories.id = items.category_id
                     INNER JOIN units ON units.id = items.unit_id
@@ -50,6 +56,12 @@ class CreateItemsDisplayView extends Migration
                                 FROM `out_records`
                                 GROUP BY item_id ) 
                     as ITEM_OUT ON ITEM_OUT.item_id = items.id
+
+                    LEFT JOIN 
+                    (		SELECT item_id, SUM(value) AS 'addi'
+                                FROM `additionals`
+                                GROUP BY item_id ) 
+                    AS addi ON addi.item_id = items.id
        
       )
 
