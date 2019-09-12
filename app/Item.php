@@ -42,4 +42,25 @@ class Item extends Model
     {
         return $this->hasOne('App\Not_raw', 'item_id', 'id');
     }
+
+    public function in_records()
+    {
+        return $this->hasMany('App\In_record', 'item_id', 'id');
+    }
+    public function out_records()
+    {
+        return $this->hasMany('App\Out_record', 'item_id', 'id');
+    }
+    public function scraps()
+    {
+        return $this->hasMany('App\Scrap', 'item_id', 'id');
+    }
+    public function bones()
+    {
+        return $this->hasMany('App\Bones', 'item_id', 'id');
+    }
+    public function additionals()
+    {
+        return $this->hasMany('App\Additional', 'item_id', 'id');
+    }
 }

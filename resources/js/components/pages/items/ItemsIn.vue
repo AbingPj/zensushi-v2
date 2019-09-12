@@ -14,11 +14,7 @@
             <div class="form-group">
               <label for="title">Stock-in: {{ item.description }}</label>
               <div class="input-group">
-                <input
-                  type="number"
-                  class="form-control"
-                  aria-label="Amount (to the nearest dollar)"
-                />
+                <input type="number" class="form-control" placeholder="0" v-model="inStock" />
                 <div class="input-group-append">
                   <span class="input-group-text">{{ item.unit }}</span>
                 </div>
@@ -43,16 +39,32 @@
 export default {
   data() {
     return {
-      item: {}
+      item: {},
+      inStock: null
     };
   },
   methods: {
     stockIn() {
       LoadingOverlay();
-      setTimeout(() => {
-        LoadingOverlayHide();
-        $("#itemInModal").modal("hide");
-      }, 2000);
+      axios
+        .post("/items/stockin", {
+          itemId: this.item.id,
+          value: this.inStock
+        })
+        .then(res => {
+          $("#itemInModal").modal("hide");
+        })
+        .catch(err => {
+          alert(
+            "This function have an error, please contact the zensushi developer. \n" +
+              "Error: [" +
+              err.message +
+              " \n " +
+              err.response.data.message +
+              "]"
+          );
+          LoadingOverlayHide();
+        });
     }
   },
 
@@ -61,6 +73,12 @@ export default {
       "showItemInModal",
       data => ($("#itemInModal").modal("show"), (this.item = data))
     );
+  },
+  mounted() {
+    $("#itemInModal").on("show.bs.modal	", function(e) {
+      console.log("shit");
+      this.inStock = 0;
+    });
   }
 };
 </script>

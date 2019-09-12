@@ -23,7 +23,7 @@ class CreateRawProductsTable extends Migration
             $table->boolean('remove')->nullable()->default(false);
 
             $table->bigInteger('item_id')->unsigned();
-            $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
+            // $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
         });
     }
 

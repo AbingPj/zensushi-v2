@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->boolean('remove')->nullable()->default(false);
 
             $table->bigInteger('role_id')->unsigned()->nullable()->default(3);
-            $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
+            // $table->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
     }
 
