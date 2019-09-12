@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Sep 11, 2019 at 09:27 AM
+-- Generation Time: Sep 12, 2019 at 05:16 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.11
 
@@ -37,13 +37,6 @@ CREATE TABLE `additionals` (
   `user` bigint(20) UNSIGNED NOT NULL,
   `remove` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data for table `additionals`
---
-
-INSERT INTO `additionals` (`id`, `item_id`, `value`, `created_at`, `updated_at`, `user`, `remove`) VALUES
-(1, 1, 88.00, '2019-09-11 09:26:52', NULL, 3, 0);
 
 -- --------------------------------------------------------
 
@@ -79,13 +72,13 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Seafoods', '2019-09-11 01:26:14', NULL),
-(2, 'Meats', '2019-09-11 01:26:14', NULL),
-(3, 'Fresh', '2019-09-11 01:26:14', NULL),
-(4, 'Dry Goods', '2019-09-11 01:26:14', NULL),
-(5, 'Tea', '2019-09-11 01:26:14', NULL),
-(6, 'Souces', '2019-09-11 01:26:14', NULL),
-(7, 'Others', '2019-09-11 01:26:14', NULL);
+(1, 'Seafoods', '2019-09-11 19:25:57', NULL),
+(2, 'Meats', '2019-09-11 19:25:57', NULL),
+(3, 'Fresh', '2019-09-11 19:25:57', NULL),
+(4, 'Dry Goods', '2019-09-11 19:25:57', NULL),
+(5, 'Tea', '2019-09-11 19:25:57', NULL),
+(6, 'Souces', '2019-09-11 19:25:57', NULL),
+(7, 'Others', '2019-09-11 19:25:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -102,6 +95,13 @@ CREATE TABLE `in_records` (
   `user` bigint(20) UNSIGNED NOT NULL,
   `remove` tinyint(1) DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `in_records`
+--
+
+INSERT INTO `in_records` (`id`, `item_id`, `value`, `created_at`, `updated_at`, `user`, `remove`) VALUES
+(1, 1, 10.00, '2019-09-11 19:26:20', '2019-09-11 19:26:20', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -126,33 +126,10 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`id`, `description`, `created_at`, `updated_at`, `remove`, `unit_id`, `category_id`, `item_type_id`, `user_id`) VALUES
-(1, 'BEEF', '2019-09-11 01:26:15', NULL, 0, 4, 2, 1, 1),
-(2, 'PORK', '2019-09-11 01:26:15', NULL, 0, 4, 2, 1, 1),
-(3, 'PORK (80 Grams)', '2019-09-11 01:26:15', NULL, 0, 4, 2, 2, 2),
-(4, 'Dish Washing Liquid', '2019-09-11 01:26:15', NULL, 0, 1, 7, 3, 2);
-
--- --------------------------------------------------------
-
---
--- Stand-in structure for view `items_views`
--- (See below for the actual view)
---
-CREATE TABLE `items_views` (
-`id` bigint(20) unsigned
-,`description` varchar(191)
-,`unit` varchar(191)
-,`category` varchar(191)
-,`item_type` varchar(191)
-,`created_at` timestamp
-,`user_id` bigint(20) unsigned
-,`category_id` bigint(20) unsigned
-,`item_type_id` bigint(20) unsigned
-,`unit_id` bigint(20) unsigned
-,`IN` double(19,2)
-,`OUT` double(19,2)
-,`addi` double(19,2)
-,`balance` varchar(19)
-);
+(1, 'BEEF', '2019-09-11 19:25:57', NULL, 0, 4, 2, 1, 1),
+(2, 'PORK', '2019-09-11 19:25:57', NULL, 0, 4, 2, 1, 1),
+(3, 'PORK (80 Grams)', '2019-09-11 19:25:57', NULL, 0, 4, 2, 2, 2),
+(4, 'Dish Washing Liquid', '2019-09-11 19:25:57', NULL, 0, 1, 7, 3, 2);
 
 -- --------------------------------------------------------
 
@@ -172,9 +149,9 @@ CREATE TABLE `item_types` (
 --
 
 INSERT INTO `item_types` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Raw', '2019-09-11 01:26:14', NULL),
-(2, 'Product', '2019-09-11 01:26:15', NULL),
-(3, 'Other', '2019-09-11 01:26:15', NULL);
+(1, 'Raw', '2019-09-11 19:25:57', NULL),
+(2, 'Product', '2019-09-11 19:25:57', NULL),
+(3, 'Other', '2019-09-11 19:25:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -193,22 +170,21 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(128, '2019_07_19_183020_create_roles_table', 1),
-(129, '2019_07_19_183233_create_users_table', 1),
-(130, '2019_07_19_183420_create_password_resets_table', 1),
-(131, '2019_07_19_183725_create_categories_table', 1),
-(132, '2019_07_19_183747_create_item_types_table', 1),
-(133, '2019_07_19_183835_create_units_table', 1),
-(134, '2019_07_19_183857_create_items_table', 1),
-(135, '2019_07_19_184204_create_raws_table', 1),
-(136, '2019_07_19_184234_create_raw_products_table', 1),
-(137, '2019_07_19_184305_create_not_raws_table', 1),
-(138, '2019_07_19_184948_create_additionals_table', 1),
-(139, '2019_07_19_185015_create_bones_table', 1),
-(140, '2019_07_19_185034_create_scraps_table', 1),
-(141, '2019_09_05_075320_create_in_records_table', 1),
-(142, '2019_09_05_075449_create_out_records_table', 1),
-(143, '2019_09_11_072140_create_items_display_view', 1);
+(144, '2019_07_19_183020_create_roles_table', 1),
+(145, '2019_07_19_183233_create_users_table', 1),
+(146, '2019_07_19_183420_create_password_resets_table', 1),
+(147, '2019_07_19_183725_create_categories_table', 1),
+(148, '2019_07_19_183747_create_item_types_table', 1),
+(149, '2019_07_19_183835_create_units_table', 1),
+(150, '2019_07_19_183857_create_items_table', 1),
+(151, '2019_07_19_184204_create_raws_table', 1),
+(152, '2019_07_19_184234_create_raw_products_table', 1),
+(153, '2019_07_19_184305_create_not_raws_table', 1),
+(154, '2019_07_19_184948_create_additionals_table', 1),
+(155, '2019_07_19_185015_create_bones_table', 1),
+(156, '2019_07_19_185034_create_scraps_table', 1),
+(157, '2019_09_05_075320_create_in_records_table', 1),
+(158, '2019_09_05_075449_create_out_records_table', 1);
 
 -- --------------------------------------------------------
 
@@ -230,7 +206,7 @@ CREATE TABLE `not_raws` (
 --
 
 INSERT INTO `not_raws` (`id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, NULL, '2019-09-11 01:26:15', NULL, 0, 4);
+(1, NULL, '2019-09-11 19:25:57', NULL, 0, 4);
 
 -- --------------------------------------------------------
 
@@ -280,8 +256,8 @@ CREATE TABLE `raws` (
 --
 
 INSERT INTO `raws` (`id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, 1000.00, '2019-09-11 01:26:15', NULL, 0, 1),
-(2, 1000.00, '2019-09-11 01:26:15', NULL, 0, 2);
+(1, 1000.00, '2019-09-11 19:25:57', NULL, 0, 1),
+(2, 1000.00, '2019-09-11 19:25:57', NULL, 0, 2);
 
 -- --------------------------------------------------------
 
@@ -304,7 +280,7 @@ CREATE TABLE `raw_products` (
 --
 
 INSERT INTO `raw_products` (`id`, `raw_id`, `value`, `created_at`, `updated_at`, `remove`, `item_id`) VALUES
-(1, 2, 80.00, '2019-09-11 01:26:15', NULL, 0, 3);
+(1, 2, 80.00, '2019-09-11 19:25:57', NULL, 0, 3);
 
 -- --------------------------------------------------------
 
@@ -324,10 +300,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'admin', '2019-09-11 01:26:14', NULL),
-(2, 'member', '2019-09-11 01:26:14', NULL),
-(3, 'unconfirm', '2019-09-11 01:26:14', NULL),
-(4, 'inactive', '2019-09-11 01:26:14', NULL);
+(1, 'admin', '2019-09-11 19:25:56', NULL),
+(2, 'member', '2019-09-11 19:25:56', NULL),
+(3, 'unconfirm', '2019-09-11 19:25:56', NULL),
+(4, 'inactive', '2019-09-11 19:25:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -363,15 +339,15 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`id`, `description`, `created_at`, `updated_at`) VALUES
-(1, 'Pack', '2019-09-11 01:26:14', NULL),
-(2, 'Tab', '2019-09-11 01:26:14', NULL),
-(3, 'Roll', '2019-09-11 01:26:14', NULL),
-(4, 'Kilo', '2019-09-11 01:26:14', NULL),
-(5, 'Liter', '2019-09-11 01:26:14', NULL),
-(6, 'Bottle', '2019-09-11 01:26:14', NULL),
-(7, 'Box', '2019-09-11 01:26:14', NULL),
-(8, 'Bar', '2019-09-11 01:26:14', NULL),
-(9, 'Tray', '2019-09-11 01:26:14', NULL);
+(1, 'Pack', '2019-09-11 19:25:57', NULL),
+(2, 'Tab', '2019-09-11 19:25:57', NULL),
+(3, 'Roll', '2019-09-11 19:25:57', NULL),
+(4, 'Kilo', '2019-09-11 19:25:57', NULL),
+(5, 'Liter', '2019-09-11 19:25:57', NULL),
+(6, 'Bottle', '2019-09-11 19:25:57', NULL),
+(7, 'Box', '2019-09-11 19:25:57', NULL),
+(8, 'Bar', '2019-09-11 19:25:57', NULL),
+(9, 'Tray', '2019-09-11 19:25:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -397,18 +373,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `email_verified_at`, `remember_token`, `created_at`, `updated_at`, `remove`, `role_id`) VALUES
-(1, 'Admin Zensushi', 'admin@zensushi.com', '$2y$10$Bpqp4OgEnOT87fvC.YHI2.dz2RHcHSlDKqoNyRF8W.p11zchHdz7K', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 1),
-(2, 'Member Zensushi', 'member@zensushi.com', '$2y$10$oF1UeNX1MUQ0B7NuI1g0R.wDnrOoEXh7rviuSvq2sCb4Yuw0aa3K.', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 2),
-(3, 'AbingPj', 'abing.pj@gmail.com', '$2y$10$PD71PDcN1nIzFlYvBpMj3.9qCBb3lcYhJR8TCFtt1.o9YbtpHPF/W', NULL, NULL, '2019-09-11 01:26:14', NULL, 0, 1);
-
--- --------------------------------------------------------
-
---
--- Structure for view `items_views`
---
-DROP TABLE IF EXISTS `items_views`;
-
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `items_views`  AS  (select `items`.`id` AS `id`,`items`.`description` AS `description`,`units`.`description` AS `unit`,`categories`.`description` AS `category`,`item_types`.`description` AS `item_type`,`items`.`created_at` AS `created_at`,`items`.`user_id` AS `user_id`,`items`.`category_id` AS `category_id`,`items`.`item_type_id` AS `item_type_id`,`items`.`unit_id` AS `unit_id`,`item_in`.`IN` AS `IN`,`item_out`.`OUT` AS `OUT`,`addi`.`addi` AS `addi`,ifnull(((`item_in`.`IN` + ifnull(`addi`.`addi`,0)) - ifnull(`item_out`.`OUT`,0)),'0') AS `balance` from ((((((`items` join `categories` on((`categories`.`id` = `items`.`category_id`))) join `units` on((`units`.`id` = `items`.`unit_id`))) join `item_types` on((`item_types`.`id` = `items`.`item_type_id`))) left join (select `in_records`.`item_id` AS `item_id`,sum(`in_records`.`value`) AS `IN` from `in_records` group by `in_records`.`item_id`) `item_in` on((`item_in`.`item_id` = `items`.`id`))) left join (select `out_records`.`item_id` AS `item_id`,sum(`out_records`.`value`) AS `OUT` from `out_records` group by `out_records`.`item_id`) `item_out` on((`item_out`.`item_id` = `items`.`id`))) left join (select `additionals`.`item_id` AS `item_id`,sum(`additionals`.`value`) AS `addi` from `additionals` group by `additionals`.`item_id`) `addi` on((`addi`.`item_id` = `items`.`id`)))) ;
+(1, 'Admin Zensushi', 'admin@zensushi.com', '$2y$10$lmTtAKr9C0VV45blE66oo.4ehFlM3QD/SIy06tFKfawYVJfEQUGEO', NULL, NULL, '2019-09-11 19:25:56', NULL, 0, 1),
+(2, 'Member Zensushi', 'member@zensushi.com', '$2y$10$1VtDwQo3NK1QBL9hJjYxpO99JeSewjVFuHFqKaTh31YyJI21hy9b6', NULL, NULL, '2019-09-11 19:25:57', NULL, 0, 2),
+(3, 'AbingPj', 'abing.pj@gmail.com', '$2y$10$amsKAxTy8BLhhHql4F40euhFziQVtKu3fK71Hs7y3dO0nTzlpPKce', NULL, NULL, '2019-09-11 19:25:57', NULL, 0, 1);
 
 --
 -- Indexes for dumped tables
@@ -519,7 +486,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `additionals`
 --
 ALTER TABLE `additionals`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `bones`
@@ -537,7 +504,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `in_records`
 --
 ALTER TABLE `in_records`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `items`
@@ -555,7 +522,7 @@ ALTER TABLE `item_types`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=144;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=159;
 
 --
 -- AUTO_INCREMENT for table `not_raws`
