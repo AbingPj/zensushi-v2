@@ -6,5 +6,6 @@ use Illuminate\Http\Request;
 
 class RecordsController extends Controller
 {
-    //
+    public function getRecords()
+    { }
 }
