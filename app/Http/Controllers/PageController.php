@@ -10,10 +10,16 @@ class PageController extends Controller
     {
         $this->middleware('auth');
     }
-    public function home(){
+    public function home()
+    {
         return view('app.pages.home.home');
     }
-    public function items(){
+    public function items()
+    {
         return view('app.pages.items.items');
+    }
+    public function records()
+    {
+        return view('app.pages.records.records');
     }
 }
