@@ -1,8 +1,6 @@
 import VuetableFieldSwitch from "./VuetableFieldSwitch.vue";
 import VuetableFieldButtons from "./VuetableFieldButtons.vue";
 
-
-
 export default [
     {
         name: "id",
@@ -16,8 +14,8 @@ export default [
     },
     {
         name: "balance",
-        title: "Balance"
-
+        title: "Balance",
+        sortField: "balance"
     },
     {
         name: "unit",

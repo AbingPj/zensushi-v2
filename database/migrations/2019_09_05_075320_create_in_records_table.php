@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRawsTable extends Migration
+class CreateInRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class CreateRawsTable extends Migration
      */
     public function up()
     {
-        Schema::create('raws', function (Blueprint $table) {
+        Schema::create('in_records', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->double('value', 10, 2);
-            $table->timestamps();
-            $table->boolean('remove')->nullable()->default(false);
-
             $table->bigInteger('item_id')->unsigned();
-            // $table->foreign('item_id')->references('id')->on('items')->onDelete('cascade');
-
+            $table->double('value', 10, 2)->nullable();
+            $table->timestamps();
+            $table->bigInteger('user')->unsigned();
+            $table->boolean('remove')->nullable()->default(false);
         });
     }
 
@@ -32,6 +30,6 @@ class CreateRawsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('raws');
+        Schema::dropIfExists('in_records');
     }
 }
