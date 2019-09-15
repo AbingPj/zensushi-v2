@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateScrapsTable extends Migration
+class CreateInRecordsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateScrapsTable extends Migration
      */
     public function up()
     {
-        Schema::create('scraps', function (Blueprint $table) {
+        Schema::create('in_records', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('item_id')->unsigned();
             $table->double('value', 10, 2)->nullable();
@@ -30,6 +30,6 @@ class CreateScrapsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('scraps');
+        Schema::dropIfExists('in_records');
     }
 }

@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Category;
 use App\Events\ItemsEvent;
-
+use App\In_record;
 use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
+use App\Additional;
 use App\Not_raw;
+use App\Out_record;
 use App\Raw;
 use App\Raw_product;
 use App\Unit;
@@ -199,6 +201,22 @@ class ItemsController extends Controller
         });
     }
 
+    public function StockInRaw(Request $request)
+    {
+        DB::transaction(function () use ($request) {
+            $value = $request->input('value');
+            $item = Item::findOrFail($request->input('itemId'));
+            if ($item->item_type_id ==  1) {
+                $in = new In_record;
+                $in->item_id = $item->id;
+                $in->value = $value;
+                $in->user = Auth::id();
+                $in->save();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
+    }
+
 
 
 
@@ -207,14 +225,61 @@ class ItemsController extends Controller
     public function index()
     {
         $request = request();
+        // $additionals_data = Additional::select('item_id', DB::raw('SUM(value) as addi'))
+        //     ->groupBy('item_id');
+        // // $query = Item::joinSub($additionals_data, 'additionals', function ($join) {
+        // //     $join->on('items.id', '=', 'additionals.item_id');
+        // // })->newQuery();
+        // // $query = $query->paginate(2);
+        // // return response()->json(
+        // //     $query
+        // // );
+
+        $additionals_data = Additional::select('item_id', DB::raw('SUM(value) as addi'))
+            ->groupBy('item_id');
+
+        $in_record_data = In_record::select('item_id', DB::raw('SUM(value) as item_in'))
+            ->groupBy('item_id');
+
+        $out_record_data = Out_record::select('item_id', DB::raw('SUM(value) as item_out'))
+            ->groupBy('item_id');
+        $balance =
+            Item::leftJoinSub($additionals_data, 'additionals', function ($join) {
+                $join->on('items.id', '=', 'additionals.item_id');
+            })
+            ->leftJoinSub($in_record_data, 'in_records', function ($join) {
+                $join->on('items.id', '=', 'in_records.item_id');
+            })
+            ->leftJoinSub($out_record_data, 'out_records', function ($join) {
+                $join->on('items.id', '=', 'out_records.item_id');
+            })
+            ->select(
+                'items.id as balance_item_id',
+                'addi',
+                'item_in',
+                'item_out',
+                DB::raw('IFNULL(((item_in + IFNULL(addi,0))- IFNULL(item_out,0)),0) as balance')
+            )->newQuery();
+
         $query = Item::join('units', 'items.unit_id', 'units.id')
             ->join('users', 'items.user_id', 'users.id')
             ->join('categories', 'items.category_id', 'categories.id')
             ->join('item_types', 'items.item_type_id', 'item_types.id')
+            // ->leftJoinSub($additionals_data, 'additionals', function ($join) {
+            //     $join->on('items.id', '=', 'additionals.item_id');
+            // })
+            // ->leftJoinSub($in_record_data, 'in_records', function ($join) {
+            //     $join->on('items.id', '=', 'in_records.item_id');
+            // })
+            // ->leftJoinSub($out_record_data, 'out_records', function ($join) {
+            //     $join->on('items.id', '=', 'out_records.item_id');
+            // })
+            ->leftJoinSub($balance, 'balance', function ($join) {
+                $join->on('items.id', '=', 'balance.balance_item_id');
+            })
             ->select(
                 'items.id AS id',
                 'items.description AS description',
-                'items.remove AS remove',
                 'items.created_at AS created',
                 'users.name AS created_by',
                 'categories.description AS category',
@@ -222,9 +287,30 @@ class ItemsController extends Controller
                 'units.description AS unit',
                 'items.category_id',
                 'items.item_type_id',
-                'items.unit_id'
+                'items.unit_id',
+                'addi',
+                'item_in',
+                'item_out',
+                'balance'
             )
             ->newQuery();
+
+        // $query =
+        //     items_view::join('users', 'items_views.user_id', 'users.id')
+        //     ->select(
+        //         'items_views.id',
+        //         'items_views.description',
+        //         'items_views.category',
+        //         'items_views.item_type',
+        //         'items_views.unit',
+        //         'items_views.created_at AS created',
+        //         'items_views.balance',
+        //         'users.name AS created_by',
+        //         'items_views.category_id',
+        //         'items_views.item_type_id',
+        //         'items_views.unit_id'
+        //     )->newQuery();
+
         if (request('sort') != "") {
             // handle multisort
             $sorts = explode(',', request()->sort);
@@ -240,14 +326,15 @@ class ItemsController extends Controller
         if ($request->exists('filter')) {
             $query->where(function ($q) use ($request) {
                 $value = "%{$request->filter}%";
-                $q->where('items.id', 'like', $value)
+                $q->select(DB::raw('IFNULL(((item_in + IFNULL(addi,0))- IFNULL(item_out,0)),0) as balance'))
+                    ->where('items.id', 'like', $value)
                     ->orWhere('items.description', 'like', $value)
                     ->orWhere('categories.description', 'like', $value)
-                    ->orWhere('item_types.description', 'like', $value)
-                    ->orWhere('users.name', 'like', $value);
+                    ->orWhere('units.description', 'like', $value)
+                    ->orWhere('users.name', 'like', $value)
+                    ->orWhere('balance', 'like', $value);
             });
         }
-
 
         $perPage = request()->has('per_page') ? (int) request()->per_page : null;
         $pagination = $query->paginate($perPage);
@@ -257,13 +344,14 @@ class ItemsController extends Controller
             'per_page' => request()->per_page
         ]);
 
-        //   dd($pagination);
-
-
         return response()->json(
             $pagination
         )
             ->header('Access-Control-Allow-Origin', '*')
             ->header('Access-Control-Allow-Methods', 'GET');
     }
+
+
+
+    //End
 }

@@ -27,7 +27,7 @@ Route::get('/registerpage', 'WelcomeController@register')->name('page.register')
 // Page Controller
 Route::get('/zensushi', 'PageController@home')->name('page.home');
 Route::get('/zensushi-items', 'PageController@items')->name('page.items');
-
+Route::get('/zensushi-records', 'PageController@records')->name('page.records');
 // Items Controller
 Route::get('/items', 'ItemsController@index');
 Route::get('/items/item_types', 'ItemsController@item_types');
@@ -37,8 +37,7 @@ Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 
 Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
 Route::put('/items/update', 'ItemsController@updateItem');
-
-
+Route::post('/items/stockin', 'ItemsController@StockInRaw');
 Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
 
