@@ -80,11 +80,11 @@ export default {
       "showItemInModal",
       data => ($("#itemInModal").modal("show"), (this.item = data))
     );
-  },
-  mounted() {
-    $("#itemInModal").on("show.bs.modal	", function(e) {
-      this.inStock = 0;
-    });
   }
+  // mounted() {
+  //   $("#itemInModal").on("show.bs.modal	", function(e) {
+  //     this.inStock = 0;
+  //   });
+  // }
 };
 </script>

@@ -220,6 +220,25 @@ class ItemsController extends Controller
         });
     }
 
+    public function StockOutRaw(Request $request)
+    {
+
+        DB::transaction(function () use ($request) {
+            $value = $request->input('value');
+            $date = $request->input('date');
+            $item = Item::findOrFail($request->input('itemId'));
+            if ($item->item_type_id ==  1) {
+                $out = new Out_record();
+                $out->item_id = $item->id;
+                $out->value = $value;
+                $out->user = Auth::id();
+                $out->date = $date;
+                $out->save();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
+    }
+
 
 
 
