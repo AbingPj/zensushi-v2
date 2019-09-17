@@ -203,14 +203,17 @@ class ItemsController extends Controller
 
     public function StockInRaw(Request $request)
     {
+
         DB::transaction(function () use ($request) {
             $value = $request->input('value');
+            $date = $request->input('date');
             $item = Item::findOrFail($request->input('itemId'));
             if ($item->item_type_id ==  1) {
                 $in = new In_record;
                 $in->item_id = $item->id;
                 $in->value = $value;
                 $in->user = Auth::id();
+                $in->date = $date;
                 $in->save();
                 broadcast(new ItemsEvent($item->id));
             }

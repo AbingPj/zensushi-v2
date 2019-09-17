@@ -12,8 +12,8 @@
           <!-- Modal body -->
           <div class="modal-body">
             <div class="form-group">
-              <label for="date">Email Date</label>
-              <input type="date" class="form-control" id="date" />
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" v-model="date" />
             </div>
 
             <div class="form-group">
@@ -45,7 +45,8 @@ export default {
   data() {
     return {
       item: {},
-      inStock: null
+      inStock: null,
+      date: null
     };
   },
   methods: {
@@ -54,7 +55,8 @@ export default {
       axios
         .post("/items/stockin", {
           itemId: this.item.id,
-          value: this.inStock
+          value: this.inStock,
+          date: this.date
         })
         .then(res => {
           $("#itemInModal").modal("hide");
@@ -81,7 +83,6 @@ export default {
   },
   mounted() {
     $("#itemInModal").on("show.bs.modal	", function(e) {
-      console.log("shit");
       this.inStock = 0;
     });
   }
