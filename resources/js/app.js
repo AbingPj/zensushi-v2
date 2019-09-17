@@ -78,6 +78,11 @@ Vue.component(
 );
 
 Vue.component(
+    "vc-items-out-modal",
+    require("./components/pages/items/ItemsOut.vue").default
+);
+
+Vue.component(
     "vc-records",
     require("./components/pages/records/Records.vue").default
 );

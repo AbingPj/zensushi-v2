@@ -6,6 +6,7 @@
     <vc-items-delete-modal></vc-items-delete-modal>
     <vc-items-update-modal></vc-items-update-modal>
     <vc-items-in-modal></vc-items-in-modal>
+    <vc-items-out-modal></vc-items-out-modal>
   </div>
 </template>
 
