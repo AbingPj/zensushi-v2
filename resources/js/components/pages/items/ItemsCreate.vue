@@ -30,7 +30,11 @@
         <!-- Unit -->
         <div class="form-group">
           <label>Unit &nbsp;</label>
-          <select v-model="selectedUnit" class="form-control form-control-sm">
+          <select
+            v-model="selectedUnit"
+            class="form-control form-control-sm"
+            @change="onChangeUnitSelection(selectedUnit)"
+          >
             <option value="null" disabled>Select Unit</option>
             <option v-for="unit in parseUnits" :value="unit" :key="unit.id">{{ unit.description }}</option>
           </select>
@@ -56,8 +60,9 @@
               type="text"
               name="description"
               v-model="rawValue"
-              placeholder="ex. 1000 grams"
+              placeholder="ex. 100 grams"
               class="form-control"
+              :disabled="disabledValue"
             />
           </div>
         </div>
@@ -82,6 +87,7 @@
               v-model="rawProductValue"
               placeholder="ex. 100 grams"
               class="form-control"
+              :disabled="disabledValue"
             />
           </div>
         </div>
@@ -114,7 +120,8 @@ export default {
       selectedUnit: null,
       selectedRaw: null,
       rawValue: "",
-      rawProductValue: ""
+      rawProductValue: "",
+      disabledValue: false
     };
   },
   created() {
@@ -129,6 +136,26 @@ export default {
   //   });
   // },
   methods: {
+    onChangeUnitSelection(data) {
+      if (this.parseItemType.id == 1 || this.parseItemType.id == 2) {
+        if (data.id == 4) {
+          console.log(data);
+          this.rawValue = 1000;
+          this.rawProductValue = 1000;
+          this.disabledValue = true;
+        } else {
+          this.rawValue = "";
+          this.rawProductValue = "";
+          this.disabledValue = false;
+        }
+      }
+      // else {
+      //   this.rawValue = "";
+      //   this.rawProductValue = "";
+      //   this.disabledValue = false;
+      // }
+    },
+
     btnSave() {
       LoadingOverlay();
 
