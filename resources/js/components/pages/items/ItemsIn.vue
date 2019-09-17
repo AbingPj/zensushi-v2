@@ -12,6 +12,11 @@
           <!-- Modal body -->
           <div class="modal-body">
             <div class="form-group">
+              <label for="date">Email Date</label>
+              <input type="date" class="form-control" id="date" />
+            </div>
+
+            <div class="form-group">
               <label for="title">Stock-in: {{ item.description }}</label>
               <div class="input-group">
                 <input type="number" class="form-control" placeholder="0" v-model="inStock" />
@@ -19,8 +24,8 @@
                   <span class="input-group-text">{{ item.unit }}</span>
                 </div>
               </div>
-              <br />
 
+              <br />
               <div class="text-center">
                 <button @click="stockIn()" class="btn btn-info">Stock-IN</button>
               </div>
