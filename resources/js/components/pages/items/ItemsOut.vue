@@ -26,7 +26,7 @@
                   </div>
                 </div>
 
-                <label for="validationCustomUsername">Username</label>
+                <!-- <label for="validationCustomUsername">Username</label>
                 <div class="input-group">
                   <div class="input-group-prepend">
                     <span class="input-group-text" id="inputGroupPrepend">@</span>
@@ -40,7 +40,7 @@
                     required
                   />
                   <div class="invalid-feedback">Please choose a username.</div>
-                </div>
+                </div> -->
 
                 <br />
                 <div class="text-center">
