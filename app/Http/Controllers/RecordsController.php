@@ -96,38 +96,6 @@ class RecordsController extends Controller
             ->union($bones)
             ->newQuery();;
 
-        // $query = Scrap::join('users', 'scraps.user', 'users.id')
-        //     ->join('items', 'scraps.item_id', 'items.id')
-        //     ->select(DB::raw(" items.description as 'item',
-        //                                    users.name as 'user',
-        //                                    '' as 'ADD',
-        //                                    '' as 'IN',
-        //                                    '' as 'OUT',
-        //                                    '' as 'BONES',
-        //                                    scraps.value as 'SCRAPS'
-        //                                 "))->get();
-
-
-        // dd($query);
-        // $query = Scrap::join('users', 'scraps.user', 'users.id')
-        //     ->join('items', 'scraps.item_id', 'items.id')
-        //     ->select(DB::raw(" items.description as 'item',
-        //                                    users.name as 'user',
-        //                                    '' as 'ADD',
-        //                                    '' as 'IN',
-        //                                    '' as 'OUT',
-        //                                    '' as 'BONES',
-        //                                    scraps.value as 'SCRAPS'
-        //                                 "))
-        //     ->union($add)
-        //     ->union($in)
-        //     ->union($out)
-        //     // ->union($bones)
-        //     ->newQuery();
-
-
-
-
 
 
         if (request('sort') != "") {
