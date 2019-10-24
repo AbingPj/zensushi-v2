@@ -177,7 +177,7 @@ export default {
           // category: selectedCategoryId,
           // unit: selectedUnitId,
           category: this.selectedCategory.id,
-          unit: his.selectedUnit.id,
+          unit: this.selectedUnit.id,
           description: this.description,
           selectedRaw: selectedRawId,
           rawValue: this.rawValue,
