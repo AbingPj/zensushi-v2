@@ -43,6 +43,8 @@ Route::post('/items/stockout', 'ItemsController@StockOutRaw');
 
 Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
+Route::get('/records', 'RecordsController@getRecords');
+
 
 
 
