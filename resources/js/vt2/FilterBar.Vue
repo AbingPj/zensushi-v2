@@ -2,15 +2,6 @@
   <div class="filter-bar">
     <div class="form-inline">
       <div class="form-group">
-        <!-- Button trigger modal -->
-        <button
-          type="button"
-          class="btn btn-primary btn-sm"
-          data-toggle="modal"
-          data-target="#chooseItemTypeModal"
-        >
-          <i class="fa fa-plus-square-o" aria-hidden="true"></i> &nbsp; Create Item
-        </button>
         &nbsp; &nbsp; &nbsp; &nbsp;
         <label>
           Search: &nbsp;
@@ -22,7 +13,6 @@
           />
           <!-- placeholder="name, nickname, or email" -->
         </label>
-
         <!-- <button class="btn btn-primary btn-sm" @click="doFilter">Go</button>
         <button class="btn btn-secondary btn-sm" @click="resetFilter">Reset</button>-->
       </div>

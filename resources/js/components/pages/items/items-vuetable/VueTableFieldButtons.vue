@@ -36,7 +36,7 @@
             <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; IN
           </a>
 
-          <a class="dropdown-item" href="#">
+          <a @click="itemOut(rowData)" class="dropdown-item" href="#">
             <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;OUT
           </a>
           <a class="dropdown-item" href="#">
@@ -83,6 +83,13 @@ export default {
 
       if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
         this.$events.fire("showItemInModal", dataToIn);
+      }
+    },
+
+    itemOut(data) {
+      let dataToOut = { ...data };
+      if (dataToOut.item_type_id == 1 || dataToOut.item_type_id == 3) {
+        this.$events.fire("showItemOutModal", dataToOut);
       }
     },
     deleteAction(data, index) {

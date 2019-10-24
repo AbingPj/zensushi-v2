@@ -38,7 +38,12 @@ Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
 Route::put('/items/update', 'ItemsController@updateItem');
 Route::post('/items/stockin', 'ItemsController@StockInRaw');
+Route::post('/items/stockout', 'ItemsController@StockOutRaw');
+
+
 Route::post('/triggerPusher', 'ItemsController@triggerPusher');
+
+Route::get('/records', 'RecordsController@getRecords');
 
 
 

@@ -11,6 +11,26 @@ import VueEvents from "vue-events";
 Vue.use(VueEvents);
 
 /**
+ * VueTable2 (Bootstrap Styles) Import Components
+ *
+ */
+
+import Vuetable from "vuetable-2";
+Vue.component("vuetable", Vuetable);
+
+import VueTableCssForBootstrap4 from "./vt2/VuetableCssBootstrap4.js";
+Vue.prototype.$VueTableCssForBootstrap4 = VueTableCssForBootstrap4;
+
+import VuetablePagination from "./vt2/VuetablePaginationBootstrap4.vue";
+Vue.component("vuetable-pagination", VuetablePagination);
+
+Vue.component("filter-bar", require("./vt2/FilterBar.vue").default);
+Vue.component("per-page-option", require("./vt2/PerPageOption.vue").default);
+
+import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
+Vue.component("vuetable-pagination-info", VuetablePaginationInfo);
+
+/**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
  * components and automatically register them with their "basename".
@@ -55,6 +75,21 @@ Vue.component(
 Vue.component(
     "vc-items-in-modal",
     require("./components/pages/items/ItemsIn.vue").default
+);
+
+Vue.component(
+    "vc-items-out-modal",
+    require("./components/pages/items/ItemsOut.vue").default
+);
+
+Vue.component(
+    "vc-records",
+    require("./components/pages/records/Records.vue").default
+);
+
+Vue.component(
+    "vc-records-table",
+    require("./components/pages/records/RecordsTable.vue").default
 );
 
 /**

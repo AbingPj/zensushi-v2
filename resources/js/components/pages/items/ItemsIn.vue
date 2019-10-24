@@ -12,6 +12,11 @@
           <!-- Modal body -->
           <div class="modal-body">
             <div class="form-group">
+              <label for="date">Date</label>
+              <input type="date" class="form-control" id="date" v-model="date" />
+            </div>
+
+            <div class="form-group">
               <label for="title">Stock-in: {{ item.description }}</label>
               <div class="input-group">
                 <input type="number" class="form-control" placeholder="0" v-model="inStock" />
@@ -19,8 +24,8 @@
                   <span class="input-group-text">{{ item.unit }}</span>
                 </div>
               </div>
-              <br />
 
+              <br />
               <div class="text-center">
                 <button @click="stockIn()" class="btn btn-info">Stock-IN</button>
               </div>
@@ -40,7 +45,8 @@ export default {
   data() {
     return {
       item: {},
-      inStock: null
+      inStock: null,
+      date: null
     };
   },
   methods: {
@@ -49,7 +55,8 @@ export default {
       axios
         .post("/items/stockin", {
           itemId: this.item.id,
-          value: this.inStock
+          value: this.inStock,
+          date: this.date
         })
         .then(res => {
           $("#itemInModal").modal("hide");
@@ -73,12 +80,11 @@ export default {
       "showItemInModal",
       data => ($("#itemInModal").modal("show"), (this.item = data))
     );
-  },
-  mounted() {
-    $("#itemInModal").on("show.bs.modal	", function(e) {
-      console.log("shit");
-      this.inStock = 0;
-    });
   }
+  // mounted() {
+  //   $("#itemInModal").on("show.bs.modal	", function(e) {
+  //     this.inStock = 0;
+  //   });
+  // }
 };
 </script>

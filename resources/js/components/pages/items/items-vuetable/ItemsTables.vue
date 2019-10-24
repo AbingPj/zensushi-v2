@@ -57,28 +57,14 @@
 </template>
 
 <script>
-// import Vue from "vue";
-import Vuetable from "vuetable-2";
-import CssForBootstrap4 from "./VuetableCssBootstrap4.js";
-import VuetablePagination from "./VuetablePaginationBootstrap4.vue";
-import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 import FilterBar from "./FilterBar";
-import FieldsDef from "./FieldsDef.js";
-
-// import VueEvents from "vue-events";
-// Vue.use(VueEvents);
-
+import ItemsFields from "./ItemsFields.js";
 export default {
   props: {
     baseUrl: String
   },
   components: {
-    Vuetable,
-    VuetablePagination,
-    VuetablePaginationInfo,
     FilterBar
-
-    // CustomActions
   },
 
   data() {
@@ -88,8 +74,8 @@ export default {
       perPageOption: [1, 5, 10, 25, 50, 100],
       perPage: 25,
       moreParams: {},
-      css: CssForBootstrap4,
-      fields: FieldsDef
+      css: this.$VueTableCssForBootstrap4,
+      fields: ItemsFields
     };
   },
   created() {
