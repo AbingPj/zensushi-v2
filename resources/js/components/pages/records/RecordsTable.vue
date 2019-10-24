@@ -54,7 +54,7 @@ export default {
     data() {
         return {
             base_Url: "",
-            perPage: 5,
+            perPage: 10,
             moreParams: {},
             css: this.$VueTableCssForBootstrap4,
             fields: RecordsFields
