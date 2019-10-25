@@ -39,7 +39,7 @@
           <a @click="itemOut(rowData)" class="dropdown-item" href="#">
             <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;OUT
           </a>
-          <a class="dropdown-item" href="#">
+          <a @click=" itemAdditional(rowData)" class="dropdown-item" href="#">
             <i class="fa fa-plus fa-lg" aria-hidden="true"></i> &nbsp; Additional
           </a>
         </div>
@@ -84,6 +84,13 @@ export default {
       if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
         this.$events.fire("showItemInModal", dataToIn);
       }
+
+      showItemAdditionalModal
+    },
+
+    itemAdditional(data){
+      let dataToAdditional = { ...data };
+       this.$events.fire("showItemAdditionalModal", dataToAdditional);
     },
 
     itemOut(data) {

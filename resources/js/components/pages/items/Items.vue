@@ -7,6 +7,7 @@
     <vc-items-update-modal></vc-items-update-modal>
     <vc-items-in-modal></vc-items-in-modal>
     <vc-items-out-modal></vc-items-out-modal>
+    <vc-items-additional-modal></vc-items-additional-modal>
   </div>
 </template>
 

@@ -39,9 +39,11 @@ Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
 Route::put('/items/update', 'ItemsController@updateItem');
 Route::post('/items/stockin', 'ItemsController@StockInRaw');
 Route::post('/items/stockout', 'ItemsController@StockOutRaw');
+Route::post('/items/additional', 'ItemsController@AdditionalItem');
 
 
-Route::post('/triggerPusher', 'ItemsController@triggerPusher');
+
+Route::post('/triggerPusher', 'ItemsController@triggerPusher'); 
 
 Route::get('/records', 'RecordsController@getRecords');
 

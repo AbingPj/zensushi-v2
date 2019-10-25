@@ -216,7 +216,7 @@ class ItemsController extends Controller
                 $in->date = $date;
                 $in->save();
                 broadcast(new ItemsEvent($item->id));
-            }elseif($item->item_type_id ==  3) {
+            } elseif ($item->item_type_id ==  3) {
                 $in = new In_record;
                 $in->item_id = $item->id;
                 $in->value = $value;
@@ -228,13 +228,35 @@ class ItemsController extends Controller
         });
     }
 
+    public function  AdditionalItem(Request $request)
+    {
+
+
+        DB::transaction(function () use ($request) {
+            $value = $request->input('value');
+            $date = $request->input('date');
+            $item = Item::findOrFail($request->input('itemId'));
+
+            $add = new Additional;
+            $add->item_id = $item->id;
+            $add->value = $value;
+            $add->user = Auth::id();
+            $add->date = $date;
+            $add->save();
+            broadcast(new ItemsEvent($item->id));
+        });
+    }
+
+
+
+
     public function StockOutRaw(Request $request)
     {
         DB::transaction(function () use ($request) {
             $value = $request->input('value');
             $date = $request->input('date');
             $item = Item::findOrFail($request->input('itemId'));
-            
+
             if ($item->item_type_id ==  1) {
                 $out = new Out_record();
                 $out->item_id = $item->id;
@@ -243,7 +265,7 @@ class ItemsController extends Controller
                 $out->date = $date;
                 $out->save();
                 broadcast(new ItemsEvent($item->id));
-            }elseif($item->item_type_id == 3){
+            } elseif ($item->item_type_id == 3) {
                 $out = new Out_record();
                 $out->item_id = $item->id;
                 $out->value = $value;
@@ -252,7 +274,6 @@ class ItemsController extends Controller
                 $out->save();
                 broadcast(new ItemsEvent($item->id));
             }
-
         });
     }
 
@@ -297,7 +318,7 @@ class ItemsController extends Controller
                 'addi',
                 'item_in',
                 'item_out',
-                DB::raw('IFNULL(((item_in + IFNULL(addi,0))- IFNULL(item_out,0)),0) as balance')
+                DB::raw('IFNULL((( IFNULL(addi,0) + IFNULL(item_in,0) ) - IFNULL(item_out,0)),0) as balance')
             )->newQuery();
 
         $query = Item::join('units', 'items.unit_id', 'units.id')
@@ -365,7 +386,7 @@ class ItemsController extends Controller
         if ($request->exists('filter')) {
             $query->where(function ($q) use ($request) {
                 $value = "%{$request->filter}%";
-                $q->select(DB::raw('IFNULL(((item_in + IFNULL(addi,0))- IFNULL(item_out,0)),0) as balance'))
+                $q->select(DB::raw('IFNULL(( ( IFNULL(addi,0) + IFNULL(item_in,0) )- IFNULL(item_out,0)),0) as balance'))
                     ->where('items.id', 'like', $value)
                     ->orWhere('items.description', 'like', $value)
                     ->orWhere('categories.description', 'like', $value)
