@@ -11,7 +11,7 @@ class Raw extends Model
         return $this->belongsTo('App\Item', 'item_id', 'id');
     }
 
-    public function raw_product()
+    public function raw_products()
     {
         return $this->hasMany('App\Raw_product', 'raw_id', 'id');
     }
