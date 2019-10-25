@@ -106,17 +106,27 @@ class ItemsController extends Controller
         return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
-    public function StockInRawProduct($id)
+    public function StockInRawProduct($item_id)
     {
-
-        $item = Item::findOrFail($id);
+        $item = Item::findOrFail($item_id);
         $raw = Raw::findOrFail($item->raw->id);
         $raw_products = $raw->raw_products;
         $raw_products->map(function ($row) {
             return $row->item = $row->item;
         });
         dd($raw_products);
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+    }
+
+    public function StockInRawProduct2($item_id, $raw_product_id)
+    {
+        $item = Item::findOrFail($item_id);
+        $raw = Raw::findOrFail($item->raw->id);
+        $raw_products = $raw->raw_products;
+        $raw_products->map(function ($row) {
+            return $row->item = $row->item;
+        });
+        $selected_raw_product = Raw_product::findORFail($raw_product_id);
+        dd($selected_raw_product);
     }
 
     public function createItemSave(Request $request)
