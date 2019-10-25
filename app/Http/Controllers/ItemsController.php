@@ -44,16 +44,16 @@ class ItemsController extends Controller
         $item =  Item::find($id);
 
         $item->selected_category = $item->category;
-        $item->selected_unit = $item->unit;
-        $categories = Category::all();
-        $units = Unit::all();
-        $raws = Raw::all();
+        $item->selected_unit     = $item->unit;
+        $categories              = Category::all();
+        $units                   = Unit::all();
+        $raws                    = Raw::all();
         if ($item->item_type_id == 1) {
             $data = array(
-                "item" =>  $item,
+                "item"       => $item,
                 "categories" => $categories,
-                "units" =>  $units,
-                "raw_value" =>  $item->raw->value
+                "units"      => $units,
+                "raw_value"  => $item->raw->value
             );
         } elseif ($item->item_type_id == 2) {
             if ($raws->isNotEmpty()) {
@@ -63,19 +63,19 @@ class ItemsController extends Controller
             }
             $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
             $data = array(
-                "item" =>  $item,
-                "categories" => $categories,
-                "units" =>  $units,
-                "raws" =>  $raws,
-                "raw_product_value" =>  $item->raw_product->value,
-                "selected_raw" =>    $selectedRaw
+                "item"              => $item,
+                "categories"        => $categories,
+                "units"             => $units,
+                "raws"              => $raws,
+                "raw_product_value" => $item->raw_product->value,
+                "selected_raw"      => $selectedRaw
 
             );
         } elseif ($item->item_type_id == 3) {
             $data = array(
-                "item" =>  $item,
+                "item"       => $item,
                 "categories" => $categories,
-                "units" =>  $units
+                "units"      => $units
             );
         }
 
@@ -90,9 +90,9 @@ class ItemsController extends Controller
         if (!($id >= 1 && $id <= 3)) {
             return view('app.pages.items.items');
         }
-        $itemType = Item_type::find($id);
+        $itemType   = Item_type::find($id);
         $categories = Category::all();
-        $units = Unit::all();
+        $units      = Unit::all();
         // $rawItems = Item::All()->where('item_type_id', '1');
         $rawItems = Raw::all();
         // foreach ($rawItems as $key => $raw) {
@@ -106,33 +106,47 @@ class ItemsController extends Controller
         return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
+    public function StockInRawProduct($id)
+    {
+
+        $item = Item::findOrFail($id);
+        $raw = Raw::findOrFail($item->raw->id);
+        $raw_products = $raw->raw_products;
+        $raw_products->map(function ($row) {
+            return $row->item = $row->item;
+        });
+        dd($raw_products);
+        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+    }
+
     public function createItemSave(Request $request)
     {
 
         // item
         DB::transaction(function () use ($request) {
-            $item = new Item;
+            $item               = new Item;
             $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
-            $item->description = $request->input('description');
-            $item->user_id = Auth::user()->id;
+            $item->category_id  = $request->input('category');
+            $item->unit_id      = $request->input('unit');
+            $item->description  = $request->input('description');
+            $item->user_id      = Auth::user()->id;
             if ($request->input('itemTypeId') ==  1) {
                 //SaveItem
                 $item->save();
                 //Raw
-                $raw = new Raw;
-                $raw->value = $request->input('rawValue');
+                $raw          = new Raw;
+                $raw->value   = $request->input('rawValue');
                 $raw->item_id = $item->id;
                 $raw->save();
                 broadcast(new ItemsEvent($item->id));
             } elseif ($request->input('itemTypeId') ==  2) {
+
                 //SaveItem
                 $item->save();
                 // Raw Product
-                $rawProduct = new Raw_product;
-                $rawProduct->value = $request->input('rawProductValue');
-                $rawProduct->raw_id = $request->input('selectedRaw');
+                $rawProduct          = new Raw_product;
+                $rawProduct->value   = $request->input('rawProductValue');
+                $rawProduct->raw_id  = $request->input('selectedRaw');
                 $rawProduct->item_id = $item->id;
                 $rawProduct->save();
                 broadcast(new ItemsEvent($item->id));
@@ -140,7 +154,7 @@ class ItemsController extends Controller
                 //SaveItem
                 $item->save();
                 //Not Raw
-                $not_raw = new Not_raw;
+                $not_raw          = new Not_raw;
                 $not_raw->item_id = $item->id;
                 $not_raw->save();
                 broadcast(new ItemsEvent($item->id));
@@ -177,10 +191,10 @@ class ItemsController extends Controller
 
         DB::transaction(function () use ($request) {
 
-            $id = $request->input('id');
-            $item = Item::find($id);
+            $id                = $request->input('id');
+            $item              = Item::find($id);
             $item->category_id = $request->input('category');
-            $item->unit_id = $request->input('unit');
+            $item->unit_id     = $request->input('unit');
             $item->description = $request->input('description');
 
             if ($item->item_type_id ==  1) {
@@ -189,7 +203,7 @@ class ItemsController extends Controller
                 $item->raw->save();
                 broadcast(new ItemsEvent($item->id));
             } elseif ($item->item_type_id ==  2) {
-                $item->raw_product->value = $request->input('rawProductValue');
+                $item->raw_product->value  = $request->input('rawProductValue');
                 $item->raw_product->raw_id = $request->input('selectedRaw');
                 $item->save();
                 $item->raw_product->save();
@@ -209,19 +223,19 @@ class ItemsController extends Controller
             $date = $request->input('date');
             $item = Item::findOrFail($request->input('itemId'));
             if ($item->item_type_id ==  1) {
-                $in = new In_record;
+                $in          = new In_record;
                 $in->item_id = $item->id;
-                $in->value = $value;
-                $in->user = Auth::id();
-                $in->date = $date;
+                $in->value   = $value;
+                $in->user    = Auth::id();
+                $in->date    = $date;
                 $in->save();
                 broadcast(new ItemsEvent($item->id));
             } elseif ($item->item_type_id ==  3) {
-                $in = new In_record;
+                $in          = new In_record;
                 $in->item_id = $item->id;
-                $in->value = $value;
-                $in->user = Auth::id();
-                $in->date = $date;
+                $in->value   = $value;
+                $in->user    = Auth::id();
+                $in->date    = $date;
                 $in->save();
                 broadcast(new ItemsEvent($item->id));
             }
@@ -230,25 +244,19 @@ class ItemsController extends Controller
 
     public function  AdditionalItem(Request $request)
     {
-
-
         DB::transaction(function () use ($request) {
-            $value = $request->input('value');
-            $date = $request->input('date');
-            $item = Item::findOrFail($request->input('itemId'));
-
-            $add = new Additional;
+            $value        = $request->input('value');
+            $date         = $request->input('date');
+            $item         = Item::findOrFail($request->input('itemId'));
+            $add          = new Additional;
             $add->item_id = $item->id;
-            $add->value = $value;
-            $add->user = Auth::id();
-            $add->date = $date;
+            $add->value   = $value;
+            $add->user    = Auth::id();
+            $add->date    = $date;
             $add->save();
             broadcast(new ItemsEvent($item->id));
         });
     }
-
-
-
 
     public function StockOutRaw(Request $request)
     {
@@ -258,19 +266,19 @@ class ItemsController extends Controller
             $item = Item::findOrFail($request->input('itemId'));
 
             if ($item->item_type_id ==  1) {
-                $out = new Out_record();
+                $out          = new Out_record();
                 $out->item_id = $item->id;
-                $out->value = $value;
-                $out->user = Auth::id();
-                $out->date = $date;
+                $out->value   = $value;
+                $out->user    = Auth::id();
+                $out->date    = $date;
                 $out->save();
                 broadcast(new ItemsEvent($item->id));
             } elseif ($item->item_type_id == 3) {
-                $out = new Out_record();
+                $out          = new Out_record();
                 $out->item_id = $item->id;
-                $out->value = $value;
-                $out->user = Auth::id();
-                $out->date = $date;
+                $out->value   = $value;
+                $out->user    = Auth::id();
+                $out->date    = $date;
                 $out->save();
                 broadcast(new ItemsEvent($item->id));
             }
@@ -282,18 +290,23 @@ class ItemsController extends Controller
 
 
 
+
+
     public function index()
     {
         $request = request();
-        // $additionals_data = Additional::select('item_id', DB::raw('SUM(value) as addi'))
-        //     ->groupBy('item_id');
-        // // $query = Item::joinSub($additionals_data, 'additionals', function ($join) {
-        // //     $join->on('items.id', '=', 'additionals.item_id');
-        // // })->newQuery();
-        // // $query = $query->paginate(2);
-        // // return response()->json(
-        // //     $query
-        // // );
+
+        /*
+         $additionals_data = Additional::select('item_id', DB::raw('SUM(value) as addi'))
+            ->groupBy('item_id');
+         // $query = Item::joinSub($additionals_data, 'additionals', function ($join) {
+         //     $join->on('items.id', '=', 'additionals.item_id');
+         // })->newQuery();
+         // $query = $query->paginate(2);
+         // return response()->json(
+         //     $query
+         // );
+        */
 
         $additionals_data = Additional::select('item_id', DB::raw('SUM(value) as addi'))
             ->groupBy('item_id');
@@ -399,8 +412,8 @@ class ItemsController extends Controller
         $perPage = request()->has('per_page') ? (int) request()->per_page : null;
         $pagination = $query->paginate($perPage);
         $pagination->appends([
-            'sort' => request()->sort,
-            'filter' => request()->filter,
+            'sort'     => request()->sort,
+            'filter'   => request()->filter,
             'per_page' => request()->per_page
         ]);
 
