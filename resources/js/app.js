@@ -83,6 +83,13 @@ Vue.component(
 );
 
 Vue.component(
+    "vc-items-additional-modal",
+    require("./components/pages/items/ItemsAdditional.vue").default
+);
+
+
+
+Vue.component(
     "vc-records",
     require("./components/pages/records/Records.vue").default
 );
