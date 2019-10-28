@@ -41,9 +41,10 @@ Route::post('/items/stockin', 'ItemsController@StockInRaw');
 Route::post('/items/stockout', 'ItemsController@StockOutRaw');
 Route::post('/items/additional', 'ItemsController@AdditionalItem');
 
+Route::get('/items/stockin/rawproduct/{id}', 'ItemsController@StockInRawProduct');
 
 
-Route::post('/triggerPusher', 'ItemsController@triggerPusher'); 
+Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
 Route::get('/records', 'RecordsController@getRecords');
 
