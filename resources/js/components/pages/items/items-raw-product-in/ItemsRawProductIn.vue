@@ -15,7 +15,7 @@
                         <option>Pork</option>
                         <option>Chicken</option>
                         <option>Beef</option>
-                      </select> -->
+                      </select>-->
                       <label for>Selected Raw</label>
                       <select v-model="selectedRaw" class="form-control" disabled>
                         <option
@@ -85,10 +85,18 @@
                         <strong>Select Products of Chicken</strong>
                       </label>
                       <div class="form-inline">
-                        <select class="form-control" style="width:80%;" id="raws">
+                        <!-- <select class="form-control" style="width:80%;" id="raws">
                           <option>Chicken 80 Grams</option>
                           <option>Chicken 40 Grams</option>
                           <option>Chicken 1 Kilo</option>
+                        </select> -->
+                        <select v-model="selectedProduct" class="form-control" style="width:80%;">
+                          <option disabled :value=null >Please select product</option>
+                          <option
+                            v-for="prod in products"
+                            :value="prod"
+                            :key="prod.id"
+                          >{{ prod.item.description }}</option>
                         </select>
                         <button class="btn btn-primary" style="width:20%;">Select</button>
                       </div>
@@ -175,7 +183,9 @@ export default {
   data() {
     return {
       raws: [],
-      selectedRaw
+      products: [],
+      selectedRaw: null,
+      selectedProduct:  null,
     };
   },
   methods: {
@@ -184,10 +194,17 @@ export default {
         console.log(res);
         this.raws = res.data;
       });
+    },
+    getProducts() {
+      axios.get("/items/products").then(res => {
+        console.log(res);
+        this.products = res.data;
+      });
     }
   },
   mounted() {
     this.getRaws();
+    this.getProducts();
   }
 };
 </script>
