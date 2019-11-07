@@ -106,6 +106,48 @@ class ItemsController extends Controller
         return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
+
+    public function getRawItems(){
+        $rawItems = Raw::all();
+        // foreach ($rawItems as $key => $raw) {
+        //     $raw->item = $raw->item;
+        // }
+        if ($rawItems->isNotEmpty()) {
+            $rawItems->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        return response()->json($rawItems);
+    }
+
+
+    public function getProductItems(){
+        
+        $products = Raw_product::all();
+        // foreach ($rawItems as $key => $raw) {
+        //     $raw->item = $raw->item;
+        // }
+        if ($products->isNotEmpty()) {
+            $products->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        return response()->json($products);
+    }
+    
+    public function getProductItemsByRaw($items_id){
+        
+        $item = Item::findOrFail($items_id);
+        $raw = Raw::findOrFail($item->raw->id);
+        $raw_products = $raw->raw_products;
+        $raw_products->map(function ($row) {
+            return $row->item = $row->item;
+        });
+        return response()->json(
+            $raw_products
+        );
+    }
+
     public function StockInRawProduct($item_id)
     {
         $item = Item::findOrFail($item_id);
@@ -114,7 +156,12 @@ class ItemsController extends Controller
         $raw_products->map(function ($row) {
             return $row->item = $row->item;
         });
-        dd($raw_products);
+      
+        return response()->json(
+            $raw_products
+        );
+
+        // dd($raw_products);
     }
 
     public function StockInRawProduct2($item_id, $raw_product_id)
@@ -126,6 +173,9 @@ class ItemsController extends Controller
             return $row->item = $row->item;
         });
         $selected_raw_product = Raw_product::findORFail($raw_product_id);
+        return response()->json(
+            $selected_raw_product
+        );
         dd($selected_raw_product);
     }
 

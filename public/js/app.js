@@ -2669,6 +2669,211 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js&":
+/*!*************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js& ***!
+  \*************************************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {},
+  data: function data() {
+    return {
+      raws: [],
+      selectedRaw: selectedRaw
+    };
+  },
+  methods: {
+    getRaws: function getRaws() {
+      var _this = this;
+
+      axios.get("/items/raw").then(function (res) {
+        console.log(res);
+        _this.raws = res.data;
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.getRaws();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/items/items-vuetable/FilterBar.vue?vue&type=script&lang=js&":
 /*!***********************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/pages/items/items-vuetable/FilterBar.vue?vue&type=script&lang=js& ***!
@@ -52837,218 +53042,283 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", [_vm._v("Stockin Raw Products")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "container mb-4" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-12" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table table-striped" }, [
+              _c("thead", [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "col" } }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "" } }, [
+                        _vm._v("Selected Raw")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.selectedRaw,
+                              expression: "selectedRaw"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { disabled: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.selectedRaw = $event.target.multiple
+                                ? $$selectedVal
+                                : $$selectedVal[0]
+                            }
+                          }
+                        },
+                        _vm._l(_vm.raws, function(raw) {
+                          return _c(
+                            "option",
+                            { key: raw.id, domProps: { value: raw } },
+                            [_vm._v(_vm._s(raw.item.description))]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("th", {
+                    staticClass: "text-center",
+                    attrs: { scope: "col" }
+                  }),
+                  _vm._v(" "),
+                  _c("th", {
+                    staticClass: "text-right",
+                    attrs: { scope: "col" }
+                  }),
+                  _vm._v(" "),
+                  _c("th")
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ]),
+              _vm._v(" "),
+              _vm._m(2)
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _vm._m(3)
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c("h1", [_vm._v("Stockin Raw Products")]),
+    return _c("th", { attrs: { scope: "col" } }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "out" } }, [
+          _vm._v("Raw Stock-out Weight")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "number", id: "stock-out" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Product")]),
       _vm._v(" "),
-      _c("div", { staticClass: "container mb-4" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-12" }, [
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table table-striped" }, [
-                _c("thead", [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "raws" } }, [
-                          _vm._v("Selected Raw")
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "select",
-                          {
-                            staticClass: "form-control",
-                            attrs: { id: "raws" }
-                          },
-                          [
-                            _c("option", [_vm._v("Pork")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Chicken")]),
-                            _vm._v(" "),
-                            _c("option", [_vm._v("Beef")])
-                          ]
-                        )
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "out" } }, [
-                          _vm._v("Raw Stock-out Weight")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          staticClass: "form-control",
-                          attrs: { type: "number", id: "stock-out" }
-                        })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("th", {
-                      staticClass: "text-center",
-                      attrs: { scope: "col" }
-                    }),
-                    _vm._v(" "),
-                    _c("th", {
-                      staticClass: "text-right",
-                      attrs: { scope: "col" }
-                    }),
-                    _vm._v(" "),
-                    _c("th")
-                  ]),
+      _c("th", { attrs: { scope: "col" } }, [_vm._v("Weight")]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-center", attrs: { scope: "col" } }, [
+        _vm._v("Quantity")
+      ]),
+      _vm._v(" "),
+      _c("th", { staticClass: "text-right", attrs: { scope: "col" } }, [
+        _vm._v("Total Weight")
+      ]),
+      _vm._v(" "),
+      _c("th")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tbody", [
+      _c("tr", [
+        _c("td", [_vm._v("Product Name Titi")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("In stock")]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            staticClass: "form-control",
+            attrs: { type: "text", value: "1" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [_vm._v("70,00 €")]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("button", { staticClass: "btn btn-sm btn-danger" }, [
+            _c("i", { staticClass: "fa fa-trash" })
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", { staticClass: "bg-secondary" }, [
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { attrs: { colspan: "3" } }, [
+          _c("div", { staticClass: "form-group" }, [
+            _c("label", { staticClass: "text-light", attrs: { for: "raws" } }, [
+              _c("strong", [_vm._v("Select Products of Chicken")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-inline" }, [
+              _c(
+                "select",
+                {
+                  staticClass: "form-control",
+                  staticStyle: { width: "80%" },
+                  attrs: { id: "raws" }
+                },
+                [
+                  _c("option", [_vm._v("Chicken 80 Grams")]),
                   _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Product")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Weight")]),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      { staticClass: "text-center", attrs: { scope: "col" } },
-                      [_vm._v("Quantity")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "th",
-                      { staticClass: "text-right", attrs: { scope: "col" } },
-                      [_vm._v("Total Weight")]
-                    ),
-                    _vm._v(" "),
-                    _c("th")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("td", [_vm._v("Product Name Titi")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("In stock")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: { type: "text", value: "1" }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _vm._v("70,00 €")
-                    ]),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _c("button", { staticClass: "btn btn-sm btn-danger" }, [
-                        _c("i", { staticClass: "fa fa-trash" })
-                      ])
-                    ])
-                  ]),
+                  _c("option", [_vm._v("Chicken 40 Grams")]),
                   _vm._v(" "),
-                  _c("tr", [
-                    _c(
-                      "td",
-                      { staticClass: "bg-dark", attrs: { colspan: "5" } },
-                      [
-                        _c("div", { staticClass: "form-group " }, [
-                          _c("label", { attrs: { for: "raws" } }, [
-                            _vm._v("Select Products of Chicken")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              staticClass: "form-control",
-                              attrs: { id: "raws" }
-                            },
-                            [
-                              _c("option", [_vm._v("Chicken 80 Grams")]),
-                              _vm._v(" "),
-                              _c("option", [_vm._v("Chicken 40 Grams")]),
-                              _vm._v(" "),
-                              _c("option", [_vm._v("Chicken 1 Kilo")])
-                            ]
-                          )
-                        ])
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_c("strong", [_vm._v("Sub-Total")])]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _vm._v("255,90 €")
-                    ]),
-                    _vm._v(" "),
-                    _c("td")
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_c("strong", [_vm._v("Scrap")])]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [_vm._v("6,90 €")]),
-                    _vm._v(" "),
-                    _c("td")
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_c("strong", [_vm._v("Bones")])]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [_vm._v("6,90 €")]),
-                    _vm._v(" "),
-                    _c("td")
-                  ]),
-                  _vm._v(" "),
-                  _c("tr", [
-                    _c("td", [_c("strong", [_vm._v("Total")])]),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _c("strong", [_vm._v("346,90 €")])
-                    ]),
-                    _vm._v(" "),
-                    _c("td")
-                  ])
-                ])
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col mb-2" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-sm-12 col-md-6" }),
+                  _c("option", [_vm._v("Chicken 1 Kilo")])
+                ]
+              ),
               _vm._v(" "),
-              _c("div", { staticClass: "col-sm-12 col-md-6 text-right" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass:
-                      "btn btn-lg btn-block btn-success text-uppercase"
-                  },
-                  [_vm._v("Stock-in")]
-                )
-              ])
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary",
+                  staticStyle: { width: "20%" }
+                },
+                [_vm._v("Select")]
+              )
             ])
           ])
+        ]),
+        _vm._v(" "),
+        _c("td")
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_c("strong", [_vm._v("Sub-Total")])]),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [_vm._v("255,90 €")]),
+        _vm._v(" "),
+        _c("td")
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td"),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", [
+          _c("div", { staticClass: "form-inline pull-right" }, [
+            _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
+              _c("b", [_vm._v("Scrap:")])
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control mb-2 mr-sm-2",
+              attrs: { type: "text", id: "scrap" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [_vm._v("6,90")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Grams")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td"),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", [
+          _c("div", { staticClass: "form-inline pull-right" }, [
+            _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
+              _c("b", [_vm._v("Bones:")])
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              staticClass: "form-control mb-2 mr-sm-2",
+              attrs: { type: "text", id: "scrap" }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [_vm._v("123")]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Grams")])
+      ]),
+      _vm._v(" "),
+      _c("tr", [
+        _c("td", [_c("strong", [_vm._v("Total")])]),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td"),
+        _vm._v(" "),
+        _c("td", { staticClass: "text-right" }, [
+          _c("strong", [_vm._v("346,90")])
+        ]),
+        _vm._v(" "),
+        _c("td", [_vm._v("Grams")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col mb-2" }, [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-sm-12 col-md-6" }),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-sm-12 col-md-6 text-right" }, [
+          _c(
+            "button",
+            { staticClass: "btn btn-lg btn-block btn-success text-uppercase" },
+            [_vm._v("Stock-in")]
+          )
         ])
       ])
     ])
@@ -67053,15 +67323,17 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ItemsRawProductIn_vue_vue_type_template_id_b1f87892___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemsRawProductIn.vue?vue&type=template&id=b1f87892& */ "./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=template&id=b1f87892&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemsRawProductIn.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _ItemsRawProductIn_vue_vue_type_template_id_b1f87892___WEBPACK_IMPORTED_MODULE_0__["render"],
   _ItemsRawProductIn_vue_vue_type_template_id_b1f87892___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
@@ -67075,6 +67347,20 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 if (false) { var api; }
 component.options.__file = "resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../../node_modules/vue-loader/lib??vue-loader-options!./ItemsRawProductIn.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

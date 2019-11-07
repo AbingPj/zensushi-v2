@@ -54,7 +54,10 @@ Route::get('/in_raw_products', function () {
 });
 
 
-
+// API
+Route::get('/items/raw', 'ItemsController@getRawItems');
+Route::get('/items/products', 'ItemsController@getProductItems');
+Route::get('/items/products/{item_id}', 'ItemsController@getProductItemsByRaw');
 
 
 ///Loading Sample page

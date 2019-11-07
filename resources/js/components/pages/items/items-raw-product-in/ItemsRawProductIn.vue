@@ -10,11 +10,19 @@
                 <tr>
                   <th scope="col">
                     <div class="form-group">
-                      <label for="raws">Selected Raw</label>
+                      <!-- <label for="raws">Selected Raw</label>
                       <select class="form-control" id="raws">
                         <option>Pork</option>
                         <option>Chicken</option>
                         <option>Beef</option>
+                      </select> -->
+                      <label for>Selected Raw</label>
+                      <select v-model="selectedRaw" class="form-control" disabled>
+                        <option
+                          v-for="raw in raws"
+                          :value="raw"
+                          :key="raw.id"
+                        >{{ raw.item.description }}</option>
                       </select>
                     </div>
                   </th>
@@ -67,18 +75,29 @@
                     </button>
                   </td>
                 </tr>
-                <tr>
-                  <td colspan="5" class="bg-dark">
-                    <div class="form-group ">
-                      <label for="raws">Select Products of Chicken</label>
-                      <select class="form-control" id="raws">
-                        <option>Chicken 80 Grams</option>
-                        <option>Chicken 40 Grams</option>
-                        <option>Chicken 1 Kilo</option>
-                      </select>
+
+                <!-- Choose Products -->
+                <tr class="bg-secondary">
+                  <td></td>
+                  <td colspan="3">
+                    <div class="form-group">
+                      <label for="raws" class="text-light">
+                        <strong>Select Products of Chicken</strong>
+                      </label>
+                      <div class="form-inline">
+                        <select class="form-control" style="width:80%;" id="raws">
+                          <option>Chicken 80 Grams</option>
+                          <option>Chicken 40 Grams</option>
+                          <option>Chicken 1 Kilo</option>
+                        </select>
+                        <button class="btn btn-primary" style="width:20%;">Select</button>
+                      </div>
                     </div>
                   </td>
+                  <td></td>
                 </tr>
+
+                <!-- Subtotal -->
                 <tr>
                   <td>
                     <strong>Sub-Total</strong>
@@ -88,27 +107,38 @@
                   <td class="text-right">255,90 €</td>
                   <td></td>
                 </tr>
-
+                <!-- Scrap -->
                 <tr>
+                  <td></td>
+                  <td></td>
                   <td>
-                    <strong>Scrap</strong>
+                    <div class="form-inline pull-right">
+                      <label for="scrap" class="mr-sm-2">
+                        <b>Scrap:</b>
+                      </label>
+                      <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
+                    </div>
                   </td>
-                  <td></td>
-                  <td></td>
 
-                  <td class="text-right">6,90 €</td>
-                  <td></td>
+                  <td class="text-right">6,90</td>
+                  <td>Grams</td>
                 </tr>
+                <!-- BOnes -->
                 <tr>
+                  <td></td>
+                  <td></td>
                   <td>
-                    <strong>Bones</strong>
+                    <div class="form-inline pull-right">
+                      <label for="scrap" class="mr-sm-2">
+                        <b>Bones:</b>
+                      </label>
+                      <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
+                    </div>
                   </td>
-                  <td></td>
-                  <td></td>
-
-                  <td class="text-right">6,90 €</td>
-                  <td></td>
+                  <td class="text-right">123</td>
+                  <td>Grams</td>
                 </tr>
+                <!-- TOTAl -->
                 <tr>
                   <td>
                     <strong>Total</strong>
@@ -116,9 +146,9 @@
                   <td></td>
                   <td></td>
                   <td class="text-right">
-                    <strong>346,90 €</strong>
+                    <strong>346,90</strong>
                   </td>
-                  <td></td>
+                  <td>Grams</td>
                 </tr>
               </tbody>
             </table>
@@ -138,3 +168,26 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {},
+  data() {
+    return {
+      raws: [],
+      selectedRaw
+    };
+  },
+  methods: {
+    getRaws() {
+      axios.get("/items/raw").then(res => {
+        console.log(res);
+        this.raws = res.data;
+      });
+    }
+  },
+  mounted() {
+    this.getRaws();
+  }
+};
+</script>
