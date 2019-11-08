@@ -1,21 +1,16 @@
 <template>
   <div>
     <h1>Stockin Raw Products</h1>
-    <div class="container mb-4">
+    <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
-                <tr>
+                <!-- <tr>
                   <th scope="col">
                     <div class="form-group">
-                      <!-- <label for="raws">Selected Raw</label>
-                      <select class="form-control" id="raws">
-                        <option>Pork</option>
-                        <option>Chicken</option>
-                        <option>Beef</option>
-                      </select>-->
+                      
                       <label for>Selected Raw</label>
                       <select v-model="selectedRaw" class="form-control" disabled>
                         <option
@@ -35,11 +30,15 @@
                   <th scope="col" class="text-center"></th>
                   <th scope="col" class="text-right"></th>
                   <th></th>
-                </tr>
+                  <th></th>
+                  <th></th>
+                </tr> -->
                 <tr>
+                  <th scope="col">id</th>
                   <th scope="col">Product</th>
-                  <th scope="col">Weight</th>
                   <th scope="col" class="text-center">Quantity</th>
+                  <th scope="col" style="margin:0px 0px 0px 0px;" class="text-center bg-danger">x</th>
+                  <th scope="col" class="text-center">Weight</th>
                   <th scope="col" class="text-right">Total Weight</th>
                   <th></th>
                 </tr>
@@ -62,12 +61,21 @@
                   </td>
                 </tr>-->
 
-                <tr>
-                  <td>Product Name Titi</td>
-                  <td>In stock</td>
+                <tr v-for="product in products" :key="product.id">
+                  <td>{{product.item.id}}</td>
+                  <td>{{product.item.description}}</td>
                   <td>
-                    <input class="form-control" type="text" value="1" />
+                    <!-- <input class="form-control" type="text" value="1" /> -->
+                    <div class="input-group">
+                      <input type="number" class="form-control" placeholder="0" value="1" />
+                      <div class="input-group-append">
+                        <span class="input-group-text">{{product.item.unit.description}}</span>
+                      </div>
+                    </div>
                   </td>
+                  <!-- <td class="bg-danger text-center" >X</td> -->
+                  <td></td>
+                  <td class="text-center">{{product.value}} &nbsp; grams</td>
                   <td class="text-right">70,00 €</td>
                   <td class="text-right">
                     <button class="btn btn-sm btn-danger">
@@ -77,21 +85,16 @@
                 </tr>
 
                 <!-- Choose Products -->
-                <tr class="bg-secondary">
+                <!-- <tr class="bg-secondary">
                   <td></td>
-                  <td colspan="3">
+                  <td colspan="4">
                     <div class="form-group">
                       <label for="raws" class="text-light">
                         <strong>Select Products of Chicken</strong>
                       </label>
                       <div class="form-inline">
-                        <!-- <select class="form-control" style="width:80%;" id="raws">
-                          <option>Chicken 80 Grams</option>
-                          <option>Chicken 40 Grams</option>
-                          <option>Chicken 1 Kilo</option>
-                        </select> -->
                         <select v-model="selectedProduct" class="form-control" style="width:80%;">
-                          <option disabled :value=null >Please select product</option>
+                          <option disabled :value="null">Please select product</option>
                           <option
                             v-for="prod in products"
                             :value="prod"
@@ -103,7 +106,7 @@
                     </div>
                   </td>
                   <td></td>
-                </tr>
+                </tr> -->
 
                 <!-- Subtotal -->
                 <tr>
@@ -112,11 +115,14 @@
                   </td>
                   <td></td>
                   <td></td>
+                  <td></td>
+                   <td></td>
                   <td class="text-right">255,90 €</td>
                   <td></td>
                 </tr>
                 <!-- Scrap -->
                 <tr>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td>
@@ -127,12 +133,14 @@
                       <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
                     </div>
                   </td>
+                   <td></td>
 
                   <td class="text-right">6,90</td>
                   <td>Grams</td>
                 </tr>
                 <!-- BOnes -->
                 <tr>
+                  <td></td>
                   <td></td>
                   <td></td>
                   <td>
@@ -143,6 +151,7 @@
                       <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
                     </div>
                   </td>
+                   <td></td>
                   <td class="text-right">123</td>
                   <td>Grams</td>
                 </tr>
@@ -153,6 +162,8 @@
                   </td>
                   <td></td>
                   <td></td>
+                  <td></td>
+                   <td></td>
                   <td class="text-right">
                     <strong>346,90</strong>
                   </td>
@@ -185,20 +196,22 @@ export default {
       raws: [],
       products: [],
       selectedRaw: null,
-      selectedProduct:  null,
+      selectedProduct: null,
+      selectedProducts: null
     };
   },
   methods: {
     getRaws() {
       axios.get("/items/raw").then(res => {
-        console.log(res);
+        // console.log(res);
         this.raws = res.data;
       });
     },
     getProducts() {
       axios.get("/items/products").then(res => {
-        console.log(res);
-        this.products = res.data;
+        // console.log({res});
+        this.products = { ...res.data };
+        // console.log(this.products);
       });
     }
   },

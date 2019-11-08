@@ -132,6 +132,10 @@ class ItemsController extends Controller
                 return $row->item = $row->item;
             });
         }
+        $products->map(function ($row) {
+            return $row->item->unit = $row->item->unit;
+        });
+      
         return response()->json($products);
     }
     
@@ -142,6 +146,9 @@ class ItemsController extends Controller
         $raw_products = $raw->raw_products;
         $raw_products->map(function ($row) {
             return $row->item = $row->item;
+        });
+        $raw_products->map(function ($row) {
+            return $row->item->unit = $row->item->unit;
         });
         return response()->json(
             $raw_products
