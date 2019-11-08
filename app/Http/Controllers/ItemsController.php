@@ -129,12 +129,13 @@ class ItemsController extends Controller
         // }
         if ($products->isNotEmpty()) {
             $products->map(function ($row) {
-                return $row->item = $row->item;
+                $row->item = $row->item;
+                $row->unit = $row->item->unit;
+                $row->selected = false;
+                return $row;
             });
         }
-        $products->map(function ($row) {
-            return $row->item->unit = $row->item->unit;
-        });
+     
       
         return response()->json($products);
     }
@@ -148,7 +149,7 @@ class ItemsController extends Controller
             return $row->item = $row->item;
         });
         $raw_products->map(function ($row) {
-            return $row->item->unit = $row->item->unit;
+            return $row->unit = $row->item->unit;
         });
         return response()->json(
             $raw_products

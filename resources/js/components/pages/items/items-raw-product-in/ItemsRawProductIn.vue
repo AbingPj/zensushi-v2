@@ -7,10 +7,9 @@
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
-                <!-- <tr>
+                <tr>
                   <th scope="col">
                     <div class="form-group">
-                      
                       <label for>Selected Raw</label>
                       <select v-model="selectedRaw" class="form-control" disabled>
                         <option
@@ -27,87 +26,75 @@
                       <input type="number" class="form-control" id="stock-out" />
                     </div>
                   </th>
-                  <th scope="col" class="text-center"></th>
-                  <th scope="col" class="text-right"></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                </tr> -->
+                  <th colspan="5"></th>
+                </tr>
                 <tr>
                   <th scope="col">id</th>
                   <th scope="col">Product</th>
-                  <th scope="col" class="text-center">Quantity</th>
-                  <th scope="col" style="margin:0px 0px 0px 0px;" class="text-center bg-danger">x</th>
-                  <th scope="col" class="text-center">Weight</th>
+                  <th scope="col" style="width: 150px;" class="text-center">Quantity</th>
+                  <th scope="col"></th>
+                  <th scope="col" style="width: 200px;" class="text-center">Weight</th>
                   <th scope="col" class="text-right">Total Weight</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr>
-                  <td>
-                    <img src="https://dummyimage.com/50x50/55595c/fff" />
-                  </td>
-                  <td>Product Name Dada</td>
-                  <td>In stock</td>
-                  <td>
-                    <input class="form-control" type="text" value="1" />
-                  </td>
-                  <td class="text-right">124,90 €</td>
-                  <td class="text-right">
-                    <button class="btn btn-sm btn-danger">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </td>
-                </tr>-->
-
-                <tr v-for="product in products" :key="product.id">
+                <tr v-for="product in selectedProducts" :key="product.id">
                   <td>{{product.item.id}}</td>
                   <td>{{product.item.description}}</td>
-                  <td>
+                  <td class="text-center">
                     <!-- <input class="form-control" type="text" value="1" /> -->
-                    <div class="input-group">
-                      <input type="number" class="form-control" placeholder="0" value="1" />
+                    <div class="input-group input-group-sm">
+                      <input
+                        type="text"
+                        style="text-align:center;"
+                        class="form-control"
+                        placeholder="0"
+                        value="1"
+                      />
                       <div class="input-group-append">
-                        <span class="input-group-text">{{product.item.unit.description}}</span>
+                        <span class="input-group-text">{{product.unit.description}}</span>
                       </div>
                     </div>
                   </td>
-                  <!-- <td class="bg-danger text-center" >X</td> -->
-                  <td></td>
+                  <td class="text-center">X</td>
                   <td class="text-center">{{product.value}} &nbsp; grams</td>
                   <td class="text-right">70,00 €</td>
                   <td class="text-right">
-                    <button class="btn btn-sm btn-danger">
-                      <i class="fa fa-trash"></i>
+                    <button class="btn btn-sm btn-danger" @click="removeSelection(product)">
+                      <i class="fa fa-eraser" aria-hidden="true"></i>
                     </button>
                   </td>
                 </tr>
 
                 <!-- Choose Products -->
-                <!-- <tr class="bg-secondary">
-                  <td></td>
-                  <td colspan="4">
-                    <div class="form-group">
-                      <label for="raws" class="text-light">
+                <tr style="background-color:#d9d9d9;">
+                  <td colspan="7">
+                    <div style="padding: 0px 200px 0px 200px;" class="form-group">
+                      <label for="raws" class="text-dark">
                         <strong>Select Products of Chicken</strong>
                       </label>
-                      <div class="form-inline">
-                        <select v-model="selectedProduct" class="form-control" style="width:80%;">
+                      <div class="input-group mb-3">
+                        <select v-model="selectedProduct" class="form-control">
                           <option disabled :value="null">Please select product</option>
                           <option
-                            v-for="prod in products"
+                            v-for="prod in newProducts"
                             :value="prod"
                             :key="prod.id"
                           >{{ prod.item.description }}</option>
                         </select>
-                        <button class="btn btn-primary" style="width:20%;">Select</button>
+                        <div class="input-group-append">
+                          <button
+                            @click="btnSelectProduct()"
+                            class="btn btn-primary"
+                            style="width: 200px;"
+                            type="button "
+                          >Select</button>
+                        </div>
                       </div>
                     </div>
                   </td>
-                  <td></td>
-                </tr> -->
-
+                </tr>
                 <!-- Subtotal -->
                 <tr>
                   <td>
@@ -116,24 +103,25 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                   <td></td>
-                  <td class="text-right">255,90 €</td>
+                  <td></td>
+                  <td class="text-right">255,90 Grams</td>
                   <td></td>
                 </tr>
+
                 <!-- Scrap -->
                 <tr>
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>
-                    <div class="form-inline pull-right">
+                  <td></td>
+                  <td class="text-center">
+                    <div class="form-inline">
                       <label for="scrap" class="mr-sm-2">
                         <b>Scrap:</b>
                       </label>
-                      <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
+                      <input type="text" class="form-control" style="width: 100px;" id="scrap" />
                     </div>
                   </td>
-                   <td></td>
 
                   <td class="text-right">6,90</td>
                   <td>Grams</td>
@@ -143,15 +131,16 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td>
-                    <div class="form-inline pull-right">
+                  <td></td>
+                  <td class="text-center">
+                    <div class="form-inline">
                       <label for="scrap" class="mr-sm-2">
                         <b>Bones:</b>
                       </label>
-                      <input type="text" class="form-control mb-2 mr-sm-2" id="scrap" />
+                      <input type="text" class="form-control" style="width: 100px;" id="scrap" />
                     </div>
                   </td>
-                   <td></td>
+
                   <td class="text-right">123</td>
                   <td>Grams</td>
                 </tr>
@@ -163,7 +152,7 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                   <td></td>
+                  <td></td>
                   <td class="text-right">
                     <strong>346,90</strong>
                   </td>
@@ -197,8 +186,30 @@ export default {
       products: [],
       selectedRaw: null,
       selectedProduct: null,
-      selectedProducts: null
+      // selectedProducts: []
     };
+  },
+  computed: {
+    newProducts() {
+      return this.products.filter(obj => {
+        if (obj.selected == false) {
+          return obj;
+        }
+      });
+    },
+    selectedProducts(){
+       return this.products.filter(obj => {
+        if (obj.selected == true) {
+          return obj;
+        }
+      });
+    }
+    // computedProducts: function() {
+    //   return this.products.map(obj => {
+    //     obj.selected = "false";
+    //     return obj;
+    //   });
+    // }
   },
   methods: {
     getRaws() {
@@ -209,13 +220,35 @@ export default {
     },
     getProducts() {
       axios.get("/items/products").then(res => {
-        // console.log({res});
-        this.products = { ...res.data };
-        // console.log(this.products);
+        // this.products = { ...res.data };
+        this.products = res.data;
+        // this.products.map(obj => {
+        //   obj.selected = false;
+        //   return obj;
+        // });
+      });
+    },
+    btnSelectProduct() {
+      //this.selectedProducts.push(this.selectedProduct);
+      //let selected = this.selectedProduct;
+      this.products.map(obj => {
+        if (obj.id == this.selectedProduct.id) {
+          return (obj.selected = true);
+        }
+      });
+    },
+    removeSelection(data){
+      this.products.map(obj => {
+        if (obj.id == data.id) {
+          return (obj.selected = false);
+        }
       });
     }
+    
   },
+
   mounted() {
+    console.log(this.newProducts);
     this.getRaws();
     this.getProducts();
   }
