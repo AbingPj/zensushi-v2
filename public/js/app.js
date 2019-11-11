@@ -2857,6 +2857,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -2864,7 +2866,9 @@ __webpack_require__.r(__webpack_exports__);
       raws: [],
       products: [],
       selectedRaw: null,
-      selectedProduct: null // selectedProducts: []
+      selectedProduct: null,
+      scrap: 0,
+      bones: 0 // selectedProducts: []
 
     };
   },
@@ -2879,16 +2883,32 @@ __webpack_require__.r(__webpack_exports__);
     selectedProducts: function selectedProducts() {
       return this.products.filter(function (obj) {
         if (obj.selected == true) {
+          obj.total_weight = obj.quantity * obj.value;
           return obj;
         }
       });
-    } // computedProducts: function() {
-    //   return this.products.map(obj => {
-    //     obj.selected = "false";
-    //     return obj;
-    //   });
-    // }
+    },
+    totalWieghtOfSelectedProduct: function totalWieghtOfSelectedProduct() {
+      var selectedProducts = this.products.filter(function (obj) {
+        if (obj.selected == true) {
+          return obj;
+        }
+      });
 
+      if (selectedProducts === undefined || selectedProducts.length == 0) {
+        return 0;
+      } else {
+        var sum = selectedProducts.map(function (obj) {
+          return obj.total_weight;
+        }).reduce(function (a, c) {
+          return a + c;
+        });
+        return sum;
+      }
+    },
+    finalWeight: function finalWeight() {
+      return parseFloat(this.scrap) + parseFloat(this.bones) + parseFloat(this.totalWieghtOfSelectedProduct);
+    }
   },
   methods: {
     getRaws: function getRaws() {
@@ -2917,14 +2937,20 @@ __webpack_require__.r(__webpack_exports__);
       //let selected = this.selectedProduct;
       this.products.map(function (obj) {
         if (obj.id == _this3.selectedProduct.id) {
-          return obj.selected = true;
+          // return (obj.selected = true);
+          obj.selected = true;
+          return obj;
         }
       });
+      this.selectedProduct = null;
     },
     removeSelection: function removeSelection(data) {
       this.products.map(function (obj) {
         if (obj.id == data.id) {
-          return obj.selected = false;
+          obj.selected = false;
+          obj.quantity = 1;
+          obj.total_weight = obj.value;
+          return obj;
         }
       });
     }
@@ -53186,12 +53212,29 @@ var render = function() {
                           { staticClass: "input-group input-group-sm" },
                           [
                             _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: product.quantity,
+                                  expression: "product.quantity"
+                                }
+                              ],
                               staticClass: "form-control",
                               staticStyle: { "text-align": "center" },
-                              attrs: {
-                                type: "text",
-                                placeholder: "0",
-                                value: "1"
+                              attrs: { type: "number", min: "1", max: "100" },
+                              domProps: { value: product.quantity },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    product,
+                                    "quantity",
+                                    $event.target.value
+                                  )
+                                }
                               }
                             }),
                             _vm._v(" "),
@@ -53207,11 +53250,11 @@ var render = function() {
                       _c("td", { staticClass: "text-center" }, [_vm._v("X")]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-center" }, [
-                        _vm._v(_vm._s(product.value) + "   grams")
+                        _vm._v(_vm._s(product.value) + "g")
                       ]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-right" }, [
-                        _vm._v("70,00 €")
+                        _vm._v(_vm._s(product.total_weight) + "g")
                       ]),
                       _vm._v(" "),
                       _c("td", { staticClass: "text-right" }, [
@@ -53320,13 +53363,131 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
-                  _vm._m(3),
+                  _c("tr", [
+                    _vm._m(3),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(_vm.totalWieghtOfSelectedProduct) + "g")
+                    ]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
                   _vm._v(" "),
-                  _vm._m(4),
+                  _c("tr", [
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c("div", { staticClass: "form-inline" }, [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.scrap,
+                              expression: "scrap"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          staticStyle: { width: "100px" },
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.scrap },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.scrap = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(_vm.scrap) + "g")
+                    ]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
                   _vm._v(" "),
-                  _vm._m(5),
+                  _c("tr", [
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-center" }, [
+                      _c("div", { staticClass: "form-inline" }, [
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.bones,
+                              expression: "bones"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          staticStyle: { width: "100px" },
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.bones },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.bones = $event.target.value
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-right" }, [
+                      _vm._v(_vm._s(_vm.bones) + "g")
+                    ]),
+                    _vm._v(" "),
+                    _c("td")
+                  ]),
                   _vm._v(" "),
-                  _vm._m(6)
+                  _c("tr", [
+                    _vm._m(6),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td"),
+                    _vm._v(" "),
+                    _c("td", { staticClass: "text-right" }, [
+                      _c("strong", [_vm._v(_vm._s(_vm.finalWeight))])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Grams")])
+                  ])
                 ],
                 2
               )
@@ -53407,107 +53568,29 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_c("strong", [_vm._v("Sub-Total")])]),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-right" }, [_vm._v("255,90 Grams")]),
-      _vm._v(" "),
-      _c("td")
+    return _c("td", [_c("strong", [_vm._v("Sub-Total")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
+      _c("b", [_vm._v("Scrap:")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-center" }, [
-        _c("div", { staticClass: "form-inline" }, [
-          _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
-            _c("b", [_vm._v("Scrap:")])
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            staticStyle: { width: "100px" },
-            attrs: { type: "text", id: "scrap" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-right" }, [_vm._v("6,90")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Grams")])
+    return _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
+      _c("b", [_vm._v("Bones:")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-center" }, [
-        _c("div", { staticClass: "form-inline" }, [
-          _c("label", { staticClass: "mr-sm-2", attrs: { for: "scrap" } }, [
-            _c("b", [_vm._v("Bones:")])
-          ]),
-          _vm._v(" "),
-          _c("input", {
-            staticClass: "form-control",
-            staticStyle: { width: "100px" },
-            attrs: { type: "text", id: "scrap" }
-          })
-        ])
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-right" }, [_vm._v("123")]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Grams")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", [_c("strong", [_vm._v("Total")])]),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td"),
-      _vm._v(" "),
-      _c("td", { staticClass: "text-right" }, [
-        _c("strong", [_vm._v("346,90")])
-      ]),
-      _vm._v(" "),
-      _c("td", [_vm._v("Grams")])
-    ])
+    return _c("td", [_c("strong", [_vm._v("Total")])])
   },
   function() {
     var _vm = this

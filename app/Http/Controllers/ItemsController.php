@@ -132,6 +132,8 @@ class ItemsController extends Controller
                 $row->item = $row->item;
                 $row->unit = $row->item->unit;
                 $row->selected = false;
+                $row->quantity = 1;
+                $row->total_weight = $row->value;
                 return $row;
             });
         }
