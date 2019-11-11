@@ -52,6 +52,7 @@
                         v-model="product.quantity"
                         min="1"
                         max="100"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                       />
                       <!-- :value="product.quantity" -->
                       <div class="input-group-append">
@@ -121,11 +122,18 @@
                       <label for="scrap" class="mr-sm-2">
                         <b>Scrap:</b>
                       </label>
-                      <input type="text" class="form-control" style="width: 100px;" v-model="scrap" />
+                      <input
+                        type="text"
+                        maxlength="10"
+                        class="form-control"
+                        style="width: 100px;"
+                        v-model="scrap"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                      />
                     </div>
                   </td>
 
-                  <td class="text-right">{{scrap}}g</td>
+                  <td class="text-right">{{scrap == ""? 0 : scrap }}g</td>
                   <td></td>
                 </tr>
                 <!-- BOnes -->
@@ -139,11 +147,18 @@
                       <label for="scrap" class="mr-sm-2">
                         <b>Bones:</b>
                       </label>
-                      <input type="text" class="form-control" style="width: 100px;" v-model="bones" />
+                      <input
+                        type="text"
+                        maxlength="10"
+                        class="form-control"
+                        style="width: 100px;"
+                        v-model="bones"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                      />
                     </div>
                   </td>
 
-                  <td class="text-right">{{bones}}g</td>
+                  <td class="text-right">{{bones == ""? 0 : bones}}g</td>
                   <td></td>
                 </tr>
                 <!-- TOTAl -->
@@ -170,7 +185,10 @@
               <!-- <button class="btn btn-block btn-light">Back to Items</button> -->
             </div>
             <div class="col-sm-12 col-md-6 text-right">
-              <button class="btn btn-lg btn-block btn-success text-uppercase">Stock-in</button>
+              <button
+                @click="sendSelelectedProducts()"
+                class="btn btn-lg btn-block btn-success text-uppercase"
+              >Stock-in</button>
             </div>
           </div>
         </div>
@@ -187,6 +205,7 @@ export default {
       raws: [],
       products: [],
       selectedRaw: null,
+      selectedRawOut: 0,
       selectedProduct: null,
       scrap: 0,
       bones: 0
@@ -228,15 +247,34 @@ export default {
       }
     },
     finalWeight() {
-     
-      return (
-        parseFloat(this.scrap) +
-        parseFloat(this.bones) +
-        parseFloat(this.totalWieghtOfSelectedProduct)
-      );
+      let scrap = this.scrap;
+      scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
+      let bones = this.bones;
+      bones == "" ? (bones = 0) : (bones = parseFloat(bones));
+
+      return scrap + bones + parseFloat(this.totalWieghtOfSelectedProduct);
     }
   },
   methods: {
+    sendSelelectedProducts() {
+      let params = {
+        selected_products: this.selectedProducts,
+        bones: this.bones,
+        scrap: this.scrap,
+        total: this.finalWeight,
+        selected_raw: this.selectedRaw,
+        selected_raw_out: this.selectedRawOut
+      };
+
+      axios
+        .post("/products/in", params)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     getRaws() {
       axios.get("/items/raw").then(res => {
         // console.log(res);
