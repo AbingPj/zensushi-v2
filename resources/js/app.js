@@ -99,6 +99,11 @@ Vue.component(
     require("./components/pages/records/RecordsTable.vue").default
 );
 
+Vue.component(
+    "vc-items-raw-product-in",
+    require("./components/pages/items/items-raw-product-in/ItemsRawProductIn.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

@@ -41,15 +41,23 @@ Route::post('/items/stockin', 'ItemsController@StockInRaw');
 Route::post('/items/stockout', 'ItemsController@StockOutRaw');
 Route::post('/items/additional', 'ItemsController@AdditionalItem');
 
-Route::get('/items/stockin/rawproduct/{id}', 'ItemsController@StockInRawProduct');
+Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsController@StockInRawProduct');
+Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsController@StockInRawProduct2');
 
 
 Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
 Route::get('/records', 'RecordsController@getRecords');
 
+Route::get('/in_raw_products', function () {
+    return view('app.pages.items.items-raw-product-in');
+});
 
 
+// API
+Route::get('/items/raw', 'ItemsController@getRawItems');
+Route::get('/items/products', 'ItemsController@getProductItems');
+Route::get('/items/products/{item_id}', 'ItemsController@getProductItemsByRaw');
 
 
 ///Loading Sample page
