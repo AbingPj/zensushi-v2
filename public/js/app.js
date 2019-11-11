@@ -2859,6 +2859,24 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {},
   data: function data() {
@@ -2866,6 +2884,7 @@ __webpack_require__.r(__webpack_exports__);
       raws: [],
       products: [],
       selectedRaw: null,
+      selectedRawOut: 0,
       selectedProduct: null,
       scrap: 0,
       bones: 0 // selectedProducts: []
@@ -2907,10 +2926,29 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     finalWeight: function finalWeight() {
-      return parseFloat(this.scrap) + parseFloat(this.bones) + parseFloat(this.totalWieghtOfSelectedProduct);
+      var scrap = this.scrap;
+      scrap == "" ? scrap = 0 : scrap = parseFloat(scrap);
+      var bones = this.bones;
+      bones == "" ? bones = 0 : bones = parseFloat(bones);
+      return scrap + bones + parseFloat(this.totalWieghtOfSelectedProduct);
     }
   },
   methods: {
+    sendSelelectedProducts: function sendSelelectedProducts() {
+      var params = {
+        selected_products: this.selectedProducts,
+        bones: this.bones,
+        scrap: this.scrap,
+        total: this.finalWeight,
+        selected_raw: this.selectedRaw,
+        selected_raw_out: this.selectedRawOut
+      };
+      axios.post("/products/in", params).then(function (res) {
+        console.log(res);
+      })["catch"](function (err) {
+        console.error(err);
+      });
+    },
     getRaws: function getRaws() {
       var _this = this;
 
@@ -53222,7 +53260,13 @@ var render = function() {
                               ],
                               staticClass: "form-control",
                               staticStyle: { "text-align": "center" },
-                              attrs: { type: "number", min: "1", max: "100" },
+                              attrs: {
+                                type: "number",
+                                min: "1",
+                                max: "100",
+                                onkeypress:
+                                  "return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                              },
                               domProps: { value: product.quantity },
                               on: {
                                 input: function($event) {
@@ -53405,7 +53449,12 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           staticStyle: { width: "100px" },
-                          attrs: { type: "text" },
+                          attrs: {
+                            type: "text",
+                            maxlength: "10",
+                            onkeypress:
+                              "return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                          },
                           domProps: { value: _vm.scrap },
                           on: {
                             input: function($event) {
@@ -53420,7 +53469,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(_vm.scrap) + "g")
+                      _vm._v(_vm._s(_vm.scrap == "" ? 0 : _vm.scrap) + "g")
                     ]),
                     _vm._v(" "),
                     _c("td")
@@ -53450,7 +53499,12 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           staticStyle: { width: "100px" },
-                          attrs: { type: "text" },
+                          attrs: {
+                            type: "text",
+                            maxlength: "10",
+                            onkeypress:
+                              "return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                          },
                           domProps: { value: _vm.bones },
                           on: {
                             input: function($event) {
@@ -53465,7 +53519,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("td", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(_vm.bones) + "g")
+                      _vm._v(_vm._s(_vm.bones == "" ? 0 : _vm.bones) + "g")
                     ]),
                     _vm._v(" "),
                     _c("td")
@@ -53495,7 +53549,27 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _vm._m(7)
+        _c("div", { staticClass: "col mb-2" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-sm-12 col-md-6" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-sm-12 col-md-6 text-right" }, [
+              _c(
+                "button",
+                {
+                  staticClass:
+                    "btn btn-lg btn-block btn-success text-uppercase",
+                  on: {
+                    click: function($event) {
+                      return _vm.sendSelelectedProducts()
+                    }
+                  }
+                },
+                [_vm._v("Stock-in")]
+              )
+            ])
+          ])
+        ])
       ])
     ])
   ])
@@ -53591,24 +53665,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("td", [_c("strong", [_vm._v("Total")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col mb-2" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-12 col-md-6" }),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-sm-12 col-md-6 text-right" }, [
-          _c(
-            "button",
-            { staticClass: "btn btn-lg btn-block btn-success text-uppercase" },
-            [_vm._v("Stock-in")]
-          )
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true

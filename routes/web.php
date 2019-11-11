@@ -28,37 +28,39 @@ Route::get('/registerpage', 'WelcomeController@register')->name('page.register')
 Route::get('/zensushi', 'PageController@home')->name('page.home');
 Route::get('/zensushi-items', 'PageController@items')->name('page.items');
 Route::get('/zensushi-records', 'PageController@records')->name('page.records');
+
+
 // Items Controller
-Route::get('/items', 'ItemsController@index');
 Route::get('/items/item_types', 'ItemsController@item_types');
 Route::get('/items/create/{id}', 'ItemsController@createItem');
 Route::post('/items/create/item', 'ItemsController@createItemSave');
-Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
-
 Route::get('/items/update/data/{id}', 'ItemsController@showUpdateItemModal');
 Route::put('/items/update', 'ItemsController@updateItem');
-Route::post('/items/stockin', 'ItemsController@StockInRaw');
-Route::post('/items/stockout', 'ItemsController@StockOutRaw');
+Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 Route::post('/items/additional', 'ItemsController@AdditionalItem');
+Route::get('/items', 'ItemsController@index');
+// Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
-Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsController@StockInRawProduct');
-Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsController@StockInRawProduct2');
-
-
-Route::post('/triggerPusher', 'ItemsController@triggerPusher');
-
+// Records Controller
 Route::get('/records', 'RecordsController@getRecords');
+
+// Raw Controller
+Route::get('/items/raw', 'ItemsRawController@getRawItems');
+Route::post('/items/stockin', 'ItemsRawController@StockInRaw');
+Route::post('/items/stockout', 'ItemsRawController@StockOutRaw');
+
+// Products Controller
+Route::get('/items/products', 'ItemsProductController@getProductItems');
+Route::get('/items/products/{item_id}', 'ItemsProductController@getProductItemsByRaw');
+Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsProductController@StockInRawProduct');
+Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsProductController@StockInRawProduct2');
+
+
+
 
 Route::get('/in_raw_products', function () {
     return view('app.pages.items.items-raw-product-in');
 });
-
-
-// API
-Route::get('/items/raw', 'ItemsController@getRawItems');
-Route::get('/items/products', 'ItemsController@getProductItems');
-Route::get('/items/products/{item_id}', 'ItemsController@getProductItemsByRaw');
-
 
 ///Loading Sample page
 Route::get('loading', function () {
