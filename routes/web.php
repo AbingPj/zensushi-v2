@@ -54,6 +54,7 @@ Route::get('/items/products', 'ItemsProductController@getProductItems');
 Route::get('/items/products/{item_id}', 'ItemsProductController@getProductItemsByRaw');
 Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsProductController@StockInRawProduct');
 Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsProductController@StockInRawProduct2');
+Route::post('/items/products/stockin', 'ItemsProductController@saveProductsIn');
 
 
 

@@ -228,6 +228,18 @@ export default {
         }
       });
     },
+
+    selectedProducts2() {
+      return this.selectedProducts.map(obj => {
+        delete obj.selected;
+        delete obj.unit;
+        delete obj.item;
+        delete obj.created_at;
+        delete obj.updated_at;
+        delete obj.remove;
+        return obj;
+      });
+    },
     totalWieghtOfSelectedProduct() {
       let selectedProducts = this.products.filter(obj => {
         if (obj.selected == true) {
@@ -258,16 +270,16 @@ export default {
   methods: {
     sendSelelectedProducts() {
       let params = {
-        selected_products: this.selectedProducts,
+        selected_products: this.selectedProducts2,
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,
         selected_raw: this.selectedRaw,
-        selected_raw_out: this.selectedRawOut
+        selected_raw_out_value: this.selectedRawOut
       };
 
       axios
-        .post("/products/in", params)
+        .post("/items/products/stockin", params)
         .then(res => {
           console.log(res);
         })
