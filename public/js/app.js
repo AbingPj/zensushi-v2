@@ -2907,6 +2907,17 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    selectedProducts2: function selectedProducts2() {
+      return this.selectedProducts.map(function (obj) {
+        delete obj.selected;
+        delete obj.unit;
+        delete obj.item;
+        delete obj.created_at;
+        delete obj.updated_at;
+        delete obj.remove;
+        return obj;
+      });
+    },
     totalWieghtOfSelectedProduct: function totalWieghtOfSelectedProduct() {
       var selectedProducts = this.products.filter(function (obj) {
         if (obj.selected == true) {
@@ -2936,14 +2947,14 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     sendSelelectedProducts: function sendSelelectedProducts() {
       var params = {
-        selected_products: this.selectedProducts,
+        selected_products: this.selectedProducts2,
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,
         selected_raw: this.selectedRaw,
-        selected_raw_out: this.selectedRawOut
+        selected_raw_out_value: this.selectedRawOut
       };
-      axios.post("/products/in", params).then(function (res) {
+      axios.post("/items/products/stockin", params).then(function (res) {
         console.log(res);
       })["catch"](function (err) {
         console.error(err);
