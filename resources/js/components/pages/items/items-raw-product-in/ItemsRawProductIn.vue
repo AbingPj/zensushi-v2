@@ -8,10 +8,21 @@
             <table class="table table-striped">
               <thead>
                 <tr>
+                  <th>
+                    <div class="form-group">
+                      <label for="date">Date</label>
+                      <input type="date" class="form-control" id="date" v-model="date" />
+                    </div>
+                  </th>
                   <th scope="col">
                     <div class="form-group">
                       <label for>Selected Raw</label>
-                      <select v-model="selectedRaw" class="form-control" disabled>
+                      <select
+                        v-model="selectedRaw"
+                        class="form-control"
+                        @change="rawSelectionChange()"
+                      >
+                        <option disabled :value="null">Please select raw</option>
                         <option
                           v-for="raw in raws"
                           :value="raw"
@@ -26,7 +37,7 @@
                       <input type="number" class="form-control" id="stock-out" />
                     </div>
                   </th>
-                  <th colspan="5"></th>
+                  <th colspan="4"></th>
                 </tr>
                 <tr>
                   <th scope="col">id</th>
@@ -199,7 +210,11 @@
 
 <script>
 export default {
-  props: {},
+  props: {
+    item_id: String,
+    item_raw_stock_out: String,
+    item_product_id: String
+  },
   data() {
     return {
       raws: [],
@@ -208,7 +223,8 @@ export default {
       selectedRawOut: 0,
       selectedProduct: null,
       scrap: 0,
-      bones: 0
+      bones: 0,
+      date: null
       // selectedProducts: []
     };
   },
@@ -268,6 +284,11 @@ export default {
     }
   },
   methods: {
+ 
+    rawSelectionChange() {
+      LoadingOverlay();
+      window.location = "/zensushi-production/" + this.selectedRaw.item_id;
+    },
     sendSelelectedProducts() {
       let params = {
         selected_products: this.selectedProducts2,
@@ -275,7 +296,8 @@ export default {
         scrap: this.scrap,
         total: this.finalWeight,
         selected_raw: this.selectedRaw,
-        selected_raw_out_value: this.selectedRawOut
+        selected_raw_out_value: this.selectedRawOut,
+        date: this.date
       };
 
       axios
@@ -289,19 +311,39 @@ export default {
     },
     getRaws() {
       axios.get("/items/raw").then(res => {
-        // console.log(res);
         this.raws = res.data;
+        this.setSelectedRaw();
       });
+
+      
+    },
+    setSelectedRaw() {
+      let self = this;
+      if (!this.item_id == "") {
+        self.selectedRaw = this.raws.find(obj => {
+          if (obj.item_id == this.item_id) {
+            return obj;
+          }
+        });
+      } else {
+        self.selectedRaw = null;
+      }
+      this.getProducts();
     },
     getProducts() {
-      axios.get("/items/products").then(res => {
-        // this.products = { ...res.data };
-        this.products = res.data;
-        // this.products.map(obj => {
-        //   obj.selected = false;
-        //   return obj;
-        // });
-      });
+      // let url = "/items/products"
+      if (!this.item_id == "") {
+        let url = "/items/products/" + this.item_id;
+        axios.get(url).then(res => {
+          // this.products = { ...res.data };
+          this.products = res.data;
+          // this.products.map(obj => {
+          //   obj.selected = false;
+          //   return obj;
+          // });
+          LoadingOverlayHide();
+        });
+      }
     },
     btnSelectProduct() {
       //this.selectedProducts.push(this.selectedProduct);
@@ -329,8 +371,12 @@ export default {
 
   mounted() {
     console.log(this.newProducts);
+    console.log("mounted");
     this.getRaws();
-    this.getProducts();
-  }
+  },
+  created() {
+    console.log("created");
+    LoadingOverlay();
+  },
 };
 </script>
