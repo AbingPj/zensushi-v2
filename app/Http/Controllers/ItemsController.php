@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Events\ItemsEvent;
 use App\In_record;
-use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
 use App\Additional;
@@ -14,18 +12,15 @@ use App\Out_record;
 use App\Raw;
 use App\Raw_product;
 use App\Unit;
+
+use App\Events\ItemsEvent;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 
 class ItemsController extends Controller
 {
-    public function triggerPusher()
-    {
-        broadcast(new ItemsEvent('HELLO WORLD'));
-    }
-
-
     public function items()
     {
         $items = Item::all();
@@ -36,6 +31,70 @@ class ItemsController extends Controller
     {
         $items = Item_type::all();
         return response()->json($items);
+    }
+
+    public function createItem($id)
+    {
+        if (!($id >= 1 && $id <= 3)) {
+            return view('app.pages.items.items');
+        }
+        $itemType   = Item_type::find($id);
+        $categories = Category::all();
+        $units      = Unit::all();
+        // $rawItems = Item::All()->where('item_type_id', '1');
+        $rawItems = Raw::all();
+        // foreach ($rawItems as $key => $raw) {
+        //     $raw->item = $raw->item;
+        // }
+        if ($rawItems->isNotEmpty()) {
+            $rawItems->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+    }
+
+    public function createItemSave(Request $request)
+    {
+
+        // item
+        DB::transaction(function () use ($request) {
+            $item               = new Item;
+            $item->item_type_id = $request->input('itemTypeId');
+            $item->category_id  = $request->input('category');
+            $item->unit_id      = $request->input('unit');
+            $item->description  = $request->input('description');
+            $item->user_id      = Auth::user()->id;
+            if ($request->input('itemTypeId') ==  1) {
+                //SaveItem
+                $item->save();
+                //Raw
+                $raw          = new Raw;
+                $raw->value   = $request->input('rawValue');
+                $raw->item_id = $item->id;
+                $raw->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($request->input('itemTypeId') ==  2) {
+
+                //SaveItem
+                $item->save();
+                // Raw Product
+                $rawProduct          = new Raw_product;
+                $rawProduct->value   = $request->input('rawProductValue');
+                $rawProduct->raw_id  = $request->input('selectedRaw');
+                $rawProduct->item_id = $item->id;
+                $rawProduct->save();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($request->input('itemTypeId') ==  3) {
+                //SaveItem
+                $item->save();
+                //Not Raw
+                $not_raw          = new Not_raw;
+                $not_raw->item_id = $item->id;
+                $not_raw->save();
+                broadcast(new ItemsEvent($item->id));
+            }
+        });
     }
 
     public function showUpdateItemModal($id)
@@ -82,178 +141,6 @@ class ItemsController extends Controller
         return response()->json($data);
     }
 
-
-
-
-    public function createItem($id)
-    {
-        if (!($id >= 1 && $id <= 3)) {
-            return view('app.pages.items.items');
-        }
-        $itemType   = Item_type::find($id);
-        $categories = Category::all();
-        $units      = Unit::all();
-        // $rawItems = Item::All()->where('item_type_id', '1');
-        $rawItems = Raw::all();
-        // foreach ($rawItems as $key => $raw) {
-        //     $raw->item = $raw->item;
-        // }
-        if ($rawItems->isNotEmpty()) {
-            $rawItems->map(function ($row) {
-                return $row->item = $row->item;
-            });
-        }
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
-    }
-
-
-    public function getRawItems(){
-        $rawItems = Raw::all();
-        // foreach ($rawItems as $key => $raw) {
-        //     $raw->item = $raw->item;
-        // }
-        if ($rawItems->isNotEmpty()) {
-            $rawItems->map(function ($row) {
-                return $row->item = $row->item;
-            });
-        }
-        return response()->json($rawItems);
-    }
-
-
-    public function getProductItems(){
-        
-        $products = Raw_product::all();
-        // foreach ($rawItems as $key => $raw) {
-        //     $raw->item = $raw->item;
-        // }
-        if ($products->isNotEmpty()) {
-            $products->map(function ($row) {
-                $row->item = $row->item;
-                $row->unit = $row->item->unit;
-                $row->selected = false;
-                return $row;
-            });
-        }
-     
-      
-        return response()->json($products);
-    }
-    
-    public function getProductItemsByRaw($items_id){
-        
-        $item = Item::findOrFail($items_id);
-        $raw = Raw::findOrFail($item->raw->id);
-        $raw_products = $raw->raw_products;
-        $raw_products->map(function ($row) {
-            return $row->item = $row->item;
-        });
-        $raw_products->map(function ($row) {
-            return $row->unit = $row->item->unit;
-        });
-        return response()->json(
-            $raw_products
-        );
-    }
-
-    public function StockInRawProduct($item_id)
-    {
-        $item = Item::findOrFail($item_id);
-        $raw = Raw::findOrFail($item->raw->id);
-        $raw_products = $raw->raw_products;
-        $raw_products->map(function ($row) {
-            return $row->item = $row->item;
-        });
-      
-        return response()->json(
-            $raw_products
-        );
-
-        // dd($raw_products);
-    }
-
-    public function StockInRawProduct2($item_id, $raw_product_id)
-    {
-        $item = Item::findOrFail($item_id);
-        $raw = Raw::findOrFail($item->raw->id);
-        $raw_products = $raw->raw_products;
-        $raw_products->map(function ($row) {
-            return $row->item = $row->item;
-        });
-        $selected_raw_product = Raw_product::findORFail($raw_product_id);
-        return response()->json(
-            $selected_raw_product
-        );
-        dd($selected_raw_product);
-    }
-
-    public function createItemSave(Request $request)
-    {
-
-        // item
-        DB::transaction(function () use ($request) {
-            $item               = new Item;
-            $item->item_type_id = $request->input('itemTypeId');
-            $item->category_id  = $request->input('category');
-            $item->unit_id      = $request->input('unit');
-            $item->description  = $request->input('description');
-            $item->user_id      = Auth::user()->id;
-            if ($request->input('itemTypeId') ==  1) {
-                //SaveItem
-                $item->save();
-                //Raw
-                $raw          = new Raw;
-                $raw->value   = $request->input('rawValue');
-                $raw->item_id = $item->id;
-                $raw->save();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($request->input('itemTypeId') ==  2) {
-
-                //SaveItem
-                $item->save();
-                // Raw Product
-                $rawProduct          = new Raw_product;
-                $rawProduct->value   = $request->input('rawProductValue');
-                $rawProduct->raw_id  = $request->input('selectedRaw');
-                $rawProduct->item_id = $item->id;
-                $rawProduct->save();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($request->input('itemTypeId') ==  3) {
-                //SaveItem
-                $item->save();
-                //Not Raw
-                $not_raw          = new Not_raw;
-                $not_raw->item_id = $item->id;
-                $not_raw->save();
-                broadcast(new ItemsEvent($item->id));
-            }
-        });
-    }
-
-    public function deleteItem($id)
-    {
-        $item =  Item::find($id);
-        $itemType =  $item->item_type_id;
-        DB::transaction(function () use ($itemType, $item) {
-            if ($itemType == 1) {
-                $raw_id = $item->raw->id;
-                Raw::destroy($raw_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($itemType == 2) {
-                $raw_product_id = $item->raw_product->id;
-                Raw_product::destroy($raw_product_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($itemType == 3) {
-                $not_raw_id = $item->not_raw->id;
-                Not_raw::destroy($not_raw_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
-            }
-        });
-    }
-
     public function updateItem(Request $request)
     {
 
@@ -283,28 +170,25 @@ class ItemsController extends Controller
         });
     }
 
-    public function StockInRaw(Request $request)
+    public function deleteItem($id)
     {
-
-        DB::transaction(function () use ($request) {
-            $value = $request->input('value');
-            $date = $request->input('date');
-            $item = Item::findOrFail($request->input('itemId'));
-            if ($item->item_type_id ==  1) {
-                $in          = new In_record;
-                $in->item_id = $item->id;
-                $in->value   = $value;
-                $in->user    = Auth::id();
-                $in->date    = $date;
-                $in->save();
+        $item =  Item::find($id);
+        $itemType =  $item->item_type_id;
+        DB::transaction(function () use ($itemType, $item) {
+            if ($itemType == 1) {
+                $raw_id = $item->raw->id;
+                Raw::destroy($raw_id);
+                $item->delete();
                 broadcast(new ItemsEvent($item->id));
-            } elseif ($item->item_type_id ==  3) {
-                $in          = new In_record;
-                $in->item_id = $item->id;
-                $in->value   = $value;
-                $in->user    = Auth::id();
-                $in->date    = $date;
-                $in->save();
+            } elseif ($itemType == 2) {
+                $raw_product_id = $item->raw_product->id;
+                Raw_product::destroy($raw_product_id);
+                $item->delete();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($itemType == 3) {
+                $not_raw_id = $item->not_raw->id;
+                Not_raw::destroy($not_raw_id);
+                $item->delete();
                 broadcast(new ItemsEvent($item->id));
             }
         });
@@ -325,40 +209,6 @@ class ItemsController extends Controller
             broadcast(new ItemsEvent($item->id));
         });
     }
-
-    public function StockOutRaw(Request $request)
-    {
-        DB::transaction(function () use ($request) {
-            $value = $request->input('value');
-            $date = $request->input('date');
-            $item = Item::findOrFail($request->input('itemId'));
-
-            if ($item->item_type_id ==  1) {
-                $out          = new Out_record();
-                $out->item_id = $item->id;
-                $out->value   = $value;
-                $out->user    = Auth::id();
-                $out->date    = $date;
-                $out->save();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($item->item_type_id == 3) {
-                $out          = new Out_record();
-                $out->item_id = $item->id;
-                $out->value   = $value;
-                $out->user    = Auth::id();
-                $out->date    = $date;
-                $out->save();
-                broadcast(new ItemsEvent($item->id));
-            }
-        });
-    }
-
-
-
-
-
-
-
 
     public function index()
     {
@@ -492,7 +342,8 @@ class ItemsController extends Controller
             ->header('Access-Control-Allow-Methods', 'GET');
     }
 
-
-
-    //End
+    // public function triggerPusher()
+    // {
+    //     broadcast(new ItemsEvent('HELLO WORLD'));
+    // }
 }

@@ -46,20 +46,23 @@
                     <!-- <input class="form-control" type="text" value="1" /> -->
                     <div class="input-group input-group-sm">
                       <input
-                        type="text"
+                        type="number"
                         style="text-align:center;"
                         class="form-control"
-                        placeholder="0"
-                        value="1"
+                        v-model="product.quantity"
+                        min="1"
+                        max="100"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
                       />
+                      <!-- :value="product.quantity" -->
                       <div class="input-group-append">
                         <span class="input-group-text">{{product.unit.description}}</span>
                       </div>
                     </div>
                   </td>
                   <td class="text-center">X</td>
-                  <td class="text-center">{{product.value}} &nbsp; grams</td>
-                  <td class="text-right">70,00 €</td>
+                  <td class="text-center">{{product.value}}g</td>
+                  <td class="text-right">{{product.total_weight}}g</td>
                   <td class="text-right">
                     <button class="btn btn-sm btn-danger" @click="removeSelection(product)">
                       <i class="fa fa-eraser" aria-hidden="true"></i>
@@ -104,7 +107,7 @@
                   <td></td>
                   <td></td>
                   <td></td>
-                  <td class="text-right">255,90 Grams</td>
+                  <td class="text-right">{{totalWieghtOfSelectedProduct}}g</td>
                   <td></td>
                 </tr>
 
@@ -119,12 +122,19 @@
                       <label for="scrap" class="mr-sm-2">
                         <b>Scrap:</b>
                       </label>
-                      <input type="text" class="form-control" style="width: 100px;" id="scrap" />
+                      <input
+                        type="text"
+                        maxlength="10"
+                        class="form-control"
+                        style="width: 100px;"
+                        v-model="scrap"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                      />
                     </div>
                   </td>
 
-                  <td class="text-right">6,90</td>
-                  <td>Grams</td>
+                  <td class="text-right">{{scrap == ""? 0 : scrap }}g</td>
+                  <td></td>
                 </tr>
                 <!-- BOnes -->
                 <tr>
@@ -137,12 +147,19 @@
                       <label for="scrap" class="mr-sm-2">
                         <b>Bones:</b>
                       </label>
-                      <input type="text" class="form-control" style="width: 100px;" id="scrap" />
+                      <input
+                        type="text"
+                        maxlength="10"
+                        class="form-control"
+                        style="width: 100px;"
+                        v-model="bones"
+                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                      />
                     </div>
                   </td>
 
-                  <td class="text-right">123</td>
-                  <td>Grams</td>
+                  <td class="text-right">{{bones == ""? 0 : bones}}g</td>
+                  <td></td>
                 </tr>
                 <!-- TOTAl -->
                 <tr>
@@ -154,7 +171,7 @@
                   <td></td>
                   <td></td>
                   <td class="text-right">
-                    <strong>346,90</strong>
+                    <strong>{{finalWeight}}</strong>
                   </td>
                   <td>Grams</td>
                 </tr>
@@ -168,7 +185,10 @@
               <!-- <button class="btn btn-block btn-light">Back to Items</button> -->
             </div>
             <div class="col-sm-12 col-md-6 text-right">
-              <button class="btn btn-lg btn-block btn-success text-uppercase">Stock-in</button>
+              <button
+                @click="sendSelelectedProducts()"
+                class="btn btn-lg btn-block btn-success text-uppercase"
+              >Stock-in</button>
             </div>
           </div>
         </div>
@@ -185,7 +205,10 @@ export default {
       raws: [],
       products: [],
       selectedRaw: null,
+      selectedRawOut: 0,
       selectedProduct: null,
+      scrap: 0,
+      bones: 0
       // selectedProducts: []
     };
   },
@@ -197,21 +220,73 @@ export default {
         }
       });
     },
-    selectedProducts(){
-       return this.products.filter(obj => {
+    selectedProducts() {
+      return this.products.filter(obj => {
+        if (obj.selected == true) {
+          obj.total_weight = obj.quantity * obj.value;
+          return obj;
+        }
+      });
+    },
+
+    selectedProducts2() {
+      return this.selectedProducts.map(obj => {
+        delete obj.selected;
+        delete obj.unit;
+        delete obj.item;
+        delete obj.created_at;
+        delete obj.updated_at;
+        delete obj.remove;
+        return obj;
+      });
+    },
+    totalWieghtOfSelectedProduct() {
+      let selectedProducts = this.products.filter(obj => {
         if (obj.selected == true) {
           return obj;
         }
       });
+
+      if (selectedProducts === undefined || selectedProducts.length == 0) {
+        return 0;
+      } else {
+        let sum = selectedProducts
+          .map(obj => obj.total_weight)
+          .reduce((a, c) => {
+            return a + c;
+          });
+        return sum;
+      }
+    },
+    finalWeight() {
+      let scrap = this.scrap;
+      scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
+      let bones = this.bones;
+      bones == "" ? (bones = 0) : (bones = parseFloat(bones));
+
+      return scrap + bones + parseFloat(this.totalWieghtOfSelectedProduct);
     }
-    // computedProducts: function() {
-    //   return this.products.map(obj => {
-    //     obj.selected = "false";
-    //     return obj;
-    //   });
-    // }
   },
   methods: {
+    sendSelelectedProducts() {
+      let params = {
+        selected_products: this.selectedProducts2,
+        bones: this.bones,
+        scrap: this.scrap,
+        total: this.finalWeight,
+        selected_raw: this.selectedRaw,
+        selected_raw_out_value: this.selectedRawOut
+      };
+
+      axios
+        .post("/items/products/stockin", params)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.error(err);
+        });
+    },
     getRaws() {
       axios.get("/items/raw").then(res => {
         // console.log(res);
@@ -233,18 +308,23 @@ export default {
       //let selected = this.selectedProduct;
       this.products.map(obj => {
         if (obj.id == this.selectedProduct.id) {
-          return (obj.selected = true);
+          // return (obj.selected = true);
+          obj.selected = true;
+          return obj;
         }
       });
+      this.selectedProduct = null;
     },
-    removeSelection(data){
+    removeSelection(data) {
       this.products.map(obj => {
         if (obj.id == data.id) {
-          return (obj.selected = false);
+          obj.selected = false;
+          obj.quantity = 1;
+          obj.total_weight = obj.value;
+          return obj;
         }
       });
     }
-    
   },
 
   mounted() {
