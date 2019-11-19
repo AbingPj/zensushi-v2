@@ -82,7 +82,7 @@
                 </tr>
 
                 <!-- Choose Products -->
-                <tr style="background-color:#d9d9d9;">
+                <tr v-if="notSelectedProductsLength !== 0" style="background-color:#d9d9d9;">
                   <td colspan="7">
                     <div style="padding: 0px 200px 0px 200px;" class="form-group">
                       <label for="raws" class="text-dark">
@@ -92,7 +92,7 @@
                         <select v-model="selectedProduct" class="form-control">
                           <option disabled :value="null">Please select product</option>
                           <option
-                            v-for="prod in newProducts"
+                            v-for="prod in notSelectedProducts"
                             :value="prod"
                             :key="prod.id"
                           >{{ prod.item.description }}</option>
@@ -222,6 +222,7 @@ export default {
       selectedRaw: null,
       selectedRawOut: 0,
       selectedProduct: null,
+      selectedProductsNew: [],
       scrap: 0,
       bones: 0,
       date: null
@@ -229,23 +230,38 @@ export default {
     };
   },
   computed: {
-    newProducts() {
+    notSelectedProducts() {
       return this.products.filter(obj => {
         if (obj.selected == false) {
           return obj;
         }
       });
     },
-    selectedProducts() {
-      return this.products.filter(obj => {
-        if (obj.selected == true) {
-          obj.total_weight = obj.quantity * obj.value;
+
+    notSelectedProductsLength() {
+      let notSelected = this.products.filter(obj => {
+        if (obj.selected == false) {
           return obj;
         }
       });
+      return notSelected.length;
     },
 
-    selectedProducts2() {
+    selectedProducts() {
+      // return this.products.filter(obj => {
+      //   if (obj.selected == true) {
+      //     obj.total_weight = obj.quantity * obj.value;
+      //     return obj;
+      //   }
+      // });
+      return this.selectedProductsNew.map(obj => {
+        obj.total_weight = obj.quantity * obj.value;
+        return obj;
+      });
+    },
+
+    
+    cleaningSelectedProducts() {
       return this.selectedProducts.map(obj => {
         delete obj.selected;
         delete obj.unit;
@@ -257,16 +273,13 @@ export default {
       });
     },
     totalWieghtOfSelectedProduct() {
-      let selectedProducts = this.products.filter(obj => {
-        if (obj.selected == true) {
-          return obj;
-        }
-      });
-
-      if (selectedProducts === undefined || selectedProducts.length == 0) {
+      if (
+        this.selectedProducts === undefined ||
+        this.selectedProducts.length == 0
+      ) {
         return 0;
       } else {
-        let sum = selectedProducts
+        let sum = this.selectedProducts
           .map(obj => obj.total_weight)
           .reduce((a, c) => {
             return a + c;
@@ -284,14 +297,40 @@ export default {
     }
   },
   methods: {
- 
+    btnSelectProduct() {
+      if (this.selectedProduct !== null) {
+        this.selectedProductsNew.push(this.selectedProduct);
+        this.products.map(obj => {
+          if (obj.id == this.selectedProduct.id) {
+            obj.selected = true;
+            return obj;
+          }
+        });
+        this.selectedProduct = null;
+      }
+    },
+    removeSelection(data) {
+      this.products.map(obj => {
+        if (obj.id == data.id) {
+          obj.selected = false;
+          obj.quantity = 1;
+          obj.total_weight = obj.value;
+          return obj;
+        }
+      });
+
+      let index = this.selectedProductsNew.indexOf(data);
+      if (index !== -1) this.selectedProductsNew.splice(index, 1);
+    },
+
+    ////////////////
     rawSelectionChange() {
       LoadingOverlay();
       window.location = "/zensushi-production/" + this.selectedRaw.item_id;
     },
     sendSelelectedProducts() {
       let params = {
-        selected_products: this.selectedProducts2,
+        selected_products: this.cleaningSelectedProducts,
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,
@@ -314,8 +353,6 @@ export default {
         this.raws = res.data;
         this.setSelectedRaw();
       });
-
-      
     },
     setSelectedRaw() {
       let self = this;
@@ -343,29 +380,9 @@ export default {
           // });
           LoadingOverlayHide();
         });
+      } else {
+        LoadingOverlayHide();
       }
-    },
-    btnSelectProduct() {
-      //this.selectedProducts.push(this.selectedProduct);
-      //let selected = this.selectedProduct;
-      this.products.map(obj => {
-        if (obj.id == this.selectedProduct.id) {
-          // return (obj.selected = true);
-          obj.selected = true;
-          return obj;
-        }
-      });
-      this.selectedProduct = null;
-    },
-    removeSelection(data) {
-      this.products.map(obj => {
-        if (obj.id == data.id) {
-          obj.selected = false;
-          obj.quantity = 1;
-          obj.total_weight = obj.value;
-          return obj;
-        }
-      });
     }
   },
 
@@ -377,6 +394,6 @@ export default {
   created() {
     console.log("created");
     LoadingOverlay();
-  },
+  }
 };
 </script>
