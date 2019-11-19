@@ -239,12 +239,7 @@ export default {
     },
 
     notSelectedProductsLength() {
-      let notSelected = this.products.filter(obj => {
-        if (obj.selected == false) {
-          return obj;
-        }
-      });
-      return notSelected.length;
+      return this.notSelectedProducts.length;
     },
 
     selectedProducts() {
@@ -254,23 +249,12 @@ export default {
       //     return obj;
       //   }
       // });
-      return this.selectedProductsNew.map(obj => {
-        obj.total_weight = obj.quantity * obj.value;
-        return obj;
-      });
-    },
-
-    
-    cleaningSelectedProducts() {
-      return this.selectedProducts.map(obj => {
-        delete obj.selected;
-        delete obj.unit;
-        delete obj.item;
-        delete obj.created_at;
-        delete obj.updated_at;
-        delete obj.remove;
-        return obj;
-      });
+      if (this.selectedProductsNew !== null) {
+        return this.selectedProductsNew.map(obj => {
+          obj.total_weight = obj.quantity * obj.value;
+          return obj;
+        });
+      }
     },
     totalWieghtOfSelectedProduct() {
       if (
@@ -299,16 +283,42 @@ export default {
   methods: {
     btnSelectProduct() {
       if (this.selectedProduct !== null) {
-        this.selectedProductsNew.push(this.selectedProduct);
         this.products.map(obj => {
           if (obj.id == this.selectedProduct.id) {
             obj.selected = true;
             return obj;
           }
         });
+        // let sproduct = {...this.selectedProduct};
+        // this.selectedProductsNew.push(sproduct);
+        this.selectedProductsNew.push(this.selectedProduct);
+        //  this.pushToSelected();
         this.selectedProduct = null;
       }
     },
+
+    // cleaningSelectedProducts(data) {
+    //   return data.map(obj => {
+    //     delete obj.selected;
+    //     delete obj.unit;
+    //     delete obj.item;
+    //     delete obj.created_at;
+    //     delete obj.updated_at;
+    //     delete obj.remove;
+    //     return obj;
+    //   });
+    // },
+
+
+    // pushToSelected() {
+    //   console.log(this.selectedProduct);
+    //   let sproduct = this.selectedProduct;
+    //   this.selectedProductsNew.push(sproduct);
+    //   this.selectedProduct = null;
+    //   console.log(this.selectedProductsNew);
+    //   console.log(this.products);
+    // },
+
     removeSelection(data) {
       this.products.map(obj => {
         if (obj.id == data.id) {
@@ -318,7 +328,6 @@ export default {
           return obj;
         }
       });
-
       let index = this.selectedProductsNew.indexOf(data);
       if (index !== -1) this.selectedProductsNew.splice(index, 1);
     },
@@ -329,8 +338,10 @@ export default {
       window.location = "/zensushi-production/" + this.selectedRaw.item_id;
     },
     sendSelelectedProducts() {
+      LoadingOverlay();
+      let self = this;
       let params = {
-        selected_products: this.cleaningSelectedProducts,
+        // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,
@@ -343,9 +354,21 @@ export default {
         .post("/items/products/stockin", params)
         .then(res => {
           console.log(res);
+          self.selectedProductsNew = [];
+          self.products.map(obj => {
+            obj.selected = false;
+            obj.quantity = 1;
+            obj.total_weight = obj.value;
+            return obj;
+          });
+          self.scrap = 0;
+          self.bones = 0;
+          self.selectedRawOut = 0;
+          LoadingOverlayHide();
         })
         .catch(err => {
           console.error(err);
+          LoadingOverlayHide();
         });
     },
     getRaws() {
@@ -387,7 +410,6 @@ export default {
   },
 
   mounted() {
-    console.log(this.newProducts);
     console.log("mounted");
     this.getRaws();
   },
