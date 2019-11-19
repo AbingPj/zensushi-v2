@@ -342,6 +342,7 @@ export default {
       let self = this;
       let params = {
         // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
+        selected_products: this.selectedProductsNew,
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,

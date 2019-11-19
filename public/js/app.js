@@ -2901,6 +2901,7 @@ __webpack_require__.r(__webpack_exports__);
       selectedRaw: null,
       selectedRawOut: 0,
       selectedProduct: null,
+      selectedProductsNew: [],
       scrap: 0,
       bones: 0,
       date: null // selectedProducts: []
@@ -2908,43 +2909,35 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   computed: {
-    newProducts: function newProducts() {
+    notSelectedProducts: function notSelectedProducts() {
       return this.products.filter(function (obj) {
         if (obj.selected == false) {
           return obj;
         }
       });
     },
+    notSelectedProductsLength: function notSelectedProductsLength() {
+      return this.notSelectedProducts.length;
+    },
     selectedProducts: function selectedProducts() {
-      return this.products.filter(function (obj) {
-        if (obj.selected == true) {
+      // return this.products.filter(obj => {
+      //   if (obj.selected == true) {
+      //     obj.total_weight = obj.quantity * obj.value;
+      //     return obj;
+      //   }
+      // });
+      if (this.selectedProductsNew !== null) {
+        return this.selectedProductsNew.map(function (obj) {
           obj.total_weight = obj.quantity * obj.value;
           return obj;
-        }
-      });
-    },
-    selectedProducts2: function selectedProducts2() {
-      return this.selectedProducts.map(function (obj) {
-        delete obj.selected;
-        delete obj.unit;
-        delete obj.item;
-        delete obj.created_at;
-        delete obj.updated_at;
-        delete obj.remove;
-        return obj;
-      });
+        });
+      }
     },
     totalWieghtOfSelectedProduct: function totalWieghtOfSelectedProduct() {
-      var selectedProducts = this.products.filter(function (obj) {
-        if (obj.selected == true) {
-          return obj;
-        }
-      });
-
-      if (selectedProducts === undefined || selectedProducts.length == 0) {
+      if (this.selectedProducts === undefined || this.selectedProducts.length == 0) {
         return 0;
       } else {
-        var sum = selectedProducts.map(function (obj) {
+        var sum = this.selectedProducts.map(function (obj) {
           return obj.total_weight;
         }).reduce(function (a, c) {
           return a + c;
@@ -2961,13 +2954,65 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    btnSelectProduct: function btnSelectProduct() {
+      var _this = this;
+
+      if (this.selectedProduct !== null) {
+        this.products.map(function (obj) {
+          if (obj.id == _this.selectedProduct.id) {
+            obj.selected = true;
+            return obj;
+          }
+        }); // let sproduct = {...this.selectedProduct};
+        // this.selectedProductsNew.push(sproduct);
+
+        this.selectedProductsNew.push(this.selectedProduct); //  this.pushToSelected();
+
+        this.selectedProduct = null;
+      }
+    },
+    // cleaningSelectedProducts(data) {
+    //   return data.map(obj => {
+    //     delete obj.selected;
+    //     delete obj.unit;
+    //     delete obj.item;
+    //     delete obj.created_at;
+    //     delete obj.updated_at;
+    //     delete obj.remove;
+    //     return obj;
+    //   });
+    // },
+    // pushToSelected() {
+    //   console.log(this.selectedProduct);
+    //   let sproduct = this.selectedProduct;
+    //   this.selectedProductsNew.push(sproduct);
+    //   this.selectedProduct = null;
+    //   console.log(this.selectedProductsNew);
+    //   console.log(this.products);
+    // },
+    removeSelection: function removeSelection(data) {
+      this.products.map(function (obj) {
+        if (obj.id == data.id) {
+          obj.selected = false;
+          obj.quantity = 1;
+          obj.total_weight = obj.value;
+          return obj;
+        }
+      });
+      var index = this.selectedProductsNew.indexOf(data);
+      if (index !== -1) this.selectedProductsNew.splice(index, 1);
+    },
+    ////////////////
     rawSelectionChange: function rawSelectionChange() {
       LoadingOverlay();
       window.location = "/zensushi-production/" + this.selectedRaw.item_id;
     },
     sendSelelectedProducts: function sendSelelectedProducts() {
+      LoadingOverlay();
+      var self = this;
       var params = {
-        selected_products: this.selectedProducts2,
+        // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
+        selected_products: this.selectedProductsNew,
         bones: this.bones,
         scrap: this.scrap,
         total: this.finalWeight,
@@ -2977,27 +3022,39 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post("/items/products/stockin", params).then(function (res) {
         console.log(res);
+        self.selectedProductsNew = [];
+        self.products.map(function (obj) {
+          obj.selected = false;
+          obj.quantity = 1;
+          obj.total_weight = obj.value;
+          return obj;
+        });
+        self.scrap = 0;
+        self.bones = 0;
+        self.selectedRawOut = 0;
+        LoadingOverlayHide();
       })["catch"](function (err) {
         console.error(err);
+        LoadingOverlayHide();
       });
     },
     getRaws: function getRaws() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/items/raw").then(function (res) {
-        _this.raws = res.data;
+        _this2.raws = res.data;
 
-        _this.setSelectedRaw();
+        _this2.setSelectedRaw();
       });
     },
     setSelectedRaw: function setSelectedRaw() {
-      var _this2 = this;
+      var _this3 = this;
 
       var self = this;
 
       if (!this.item_id == "") {
         self.selectedRaw = this.raws.find(function (obj) {
-          if (obj.item_id == _this2.item_id) {
+          if (obj.item_id == _this3.item_id) {
             return obj;
           }
         });
@@ -3008,49 +3065,26 @@ __webpack_require__.r(__webpack_exports__);
       this.getProducts();
     },
     getProducts: function getProducts() {
-      var _this3 = this;
+      var _this4 = this;
 
       // let url = "/items/products"
       if (!this.item_id == "") {
         var url = "/items/products/" + this.item_id;
         axios.get(url).then(function (res) {
           // this.products = { ...res.data };
-          _this3.products = res.data; // this.products.map(obj => {
+          _this4.products = res.data; // this.products.map(obj => {
           //   obj.selected = false;
           //   return obj;
           // });
 
           LoadingOverlayHide();
         });
+      } else {
+        LoadingOverlayHide();
       }
-    },
-    btnSelectProduct: function btnSelectProduct() {
-      var _this4 = this;
-
-      //this.selectedProducts.push(this.selectedProduct);
-      //let selected = this.selectedProduct;
-      this.products.map(function (obj) {
-        if (obj.id == _this4.selectedProduct.id) {
-          // return (obj.selected = true);
-          obj.selected = true;
-          return obj;
-        }
-      });
-      this.selectedProduct = null;
-    },
-    removeSelection: function removeSelection(data) {
-      this.products.map(function (obj) {
-        if (obj.id == data.id) {
-          obj.selected = false;
-          obj.quantity = 1;
-          obj.total_weight = obj.value;
-          return obj;
-        }
-      });
     }
   },
   mounted: function mounted() {
-    console.log(this.newProducts);
     console.log("mounted");
     this.getRaws();
   },
@@ -53426,89 +53460,114 @@ var render = function() {
                     ])
                   }),
                   _vm._v(" "),
-                  _c("tr", { staticStyle: { "background-color": "#d9d9d9" } }, [
-                    _c("td", { attrs: { colspan: "7" } }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass: "form-group",
-                          staticStyle: { padding: "0px 200px 0px 200px" }
-                        },
+                  _vm.notSelectedProductsLength !== 0
+                    ? _c(
+                        "tr",
+                        { staticStyle: { "background-color": "#d9d9d9" } },
                         [
-                          _vm._m(2),
-                          _vm._v(" "),
-                          _c("div", { staticClass: "input-group mb-3" }, [
+                          _c("td", { attrs: { colspan: "7" } }, [
                             _c(
-                              "select",
+                              "div",
                               {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.selectedProduct,
-                                    expression: "selectedProduct"
-                                  }
-                                ],
-                                staticClass: "form-control",
-                                on: {
-                                  change: function($event) {
-                                    var $$selectedVal = Array.prototype.filter
-                                      .call($event.target.options, function(o) {
-                                        return o.selected
-                                      })
-                                      .map(function(o) {
-                                        var val =
-                                          "_value" in o ? o._value : o.value
-                                        return val
-                                      })
-                                    _vm.selectedProduct = $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  }
-                                }
+                                staticClass: "form-group",
+                                staticStyle: { padding: "0px 200px 0px 200px" }
                               },
                               [
-                                _c(
-                                  "option",
-                                  {
-                                    attrs: { disabled: "" },
-                                    domProps: { value: null }
-                                  },
-                                  [_vm._v("Please select product")]
-                                ),
+                                _vm._m(2),
                                 _vm._v(" "),
-                                _vm._l(_vm.newProducts, function(prod) {
-                                  return _c(
-                                    "option",
-                                    { key: prod.id, domProps: { value: prod } },
-                                    [_vm._v(_vm._s(prod.item.description))]
+                                _c("div", { staticClass: "input-group mb-3" }, [
+                                  _c(
+                                    "select",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.selectedProduct,
+                                          expression: "selectedProduct"
+                                        }
+                                      ],
+                                      staticClass: "form-control",
+                                      on: {
+                                        change: function($event) {
+                                          var $$selectedVal = Array.prototype.filter
+                                            .call(
+                                              $event.target.options,
+                                              function(o) {
+                                                return o.selected
+                                              }
+                                            )
+                                            .map(function(o) {
+                                              var val =
+                                                "_value" in o
+                                                  ? o._value
+                                                  : o.value
+                                              return val
+                                            })
+                                          _vm.selectedProduct = $event.target
+                                            .multiple
+                                            ? $$selectedVal
+                                            : $$selectedVal[0]
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c(
+                                        "option",
+                                        {
+                                          attrs: { disabled: "" },
+                                          domProps: { value: null }
+                                        },
+                                        [_vm._v("Please select product")]
+                                      ),
+                                      _vm._v(" "),
+                                      _vm._l(_vm.notSelectedProducts, function(
+                                        prod
+                                      ) {
+                                        return _c(
+                                          "option",
+                                          {
+                                            key: prod.id,
+                                            domProps: { value: prod }
+                                          },
+                                          [
+                                            _vm._v(
+                                              _vm._s(prod.item.description)
+                                            )
+                                          ]
+                                        )
+                                      })
+                                    ],
+                                    2
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    { staticClass: "input-group-append" },
+                                    [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass: "btn btn-primary",
+                                          staticStyle: { width: "200px" },
+                                          attrs: { type: "button " },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.btnSelectProduct()
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Select")]
+                                      )
+                                    ]
                                   )
-                                })
-                              ],
-                              2
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "input-group-append" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass: "btn btn-primary",
-                                  staticStyle: { width: "200px" },
-                                  attrs: { type: "button " },
-                                  on: {
-                                    click: function($event) {
-                                      return _vm.btnSelectProduct()
-                                    }
-                                  }
-                                },
-                                [_vm._v("Select")]
-                              )
-                            ])
+                                ])
+                              ]
+                            )
                           ])
                         ]
                       )
-                    ])
-                  ]),
+                    : _vm._e(),
                   _vm._v(" "),
                   _c("tr", [
                     _vm._m(3),
