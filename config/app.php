@@ -28,6 +28,13 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    // for 000webhost configuration
+      /*
+        'env' => env('production'),
+        or
+        'env' => env('APP_ENV', 'production'),
+    */
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode

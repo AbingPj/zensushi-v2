@@ -14,7 +14,14 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        /*  
+        Uncomment this for 000webhost config
+
+         $this -> app -> bind('path.public', function()
+        {
+        return base_path('public_html');
+        });
+        */ 
     }
 
     /**

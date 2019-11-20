@@ -64,6 +64,14 @@ return [
             'url' => env('AWS_URL'),
         ],
 
+        // Uncomment This for 000webhostConfig
+         /*
+        'public_resources' => [
+             'driver' => 'local',
+             'root' => base_path('public_html'),
+        ],
+        */
+
     ],
 
 ];
