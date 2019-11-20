@@ -12,10 +12,16 @@
                 </a>
             </li>
             <li class="nav-item dropdown">
+                <a class="nav-link" href="{{ route('page.production') }}" id="navbardrop">
+                    Production
+                </a>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link" href="{{ route('page.records') }}" id="navbardrop">
                     Records
                 </a>
             </li>
+           
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item" id="Notification_navItem">
