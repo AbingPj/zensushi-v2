@@ -8,39 +8,48 @@
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>
-                    <div class="form-group">
-                      <label for="date">Date</label>
-                      <input type="date" class="form-control" id="date" v-model="date" />
+                  <th colspan="7">
+                    <div class="row">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="date">Date</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            :class=" dateIsValid? '' : 'is-invalid'"
+                            id="date"
+                            v-model="date"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for>Selected Raw</label>
+                          <select
+                            v-model="selectedRaw"
+                            class="form-control"
+                            @change="rawSelectionChange()"
+                          >
+                            <option disabled :value="null">Please select raw</option>
+                            <option
+                              v-for="raw in raws"
+                              :value="raw"
+                              :key="raw.id"
+                            >{{ raw.item.description }}</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="out">Raw Stock-out Weight</label>
+                          <input type="number" class="form-control" id="stock-out" />
+                        </div>
+                      </div>
                     </div>
                   </th>
-                  <th scope="col">
-                    <div class="form-group">
-                      <label for>Selected Raw</label>
-                      <select
-                        v-model="selectedRaw"
-                        class="form-control"
-                        @change="rawSelectionChange()"
-                      >
-                        <option disabled :value="null">Please select raw</option>
-                        <option
-                          v-for="raw in raws"
-                          :value="raw"
-                          :key="raw.id"
-                        >{{ raw.item.description }}</option>
-                      </select>
-                    </div>
-                  </th>
-                  <th scope="col">
-                    <div class="form-group">
-                      <label for="out">Raw Stock-out Weight</label>
-                      <input type="number" class="form-control" id="stock-out" />
-                    </div>
-                  </th>
-                  <th colspan="4"></th>
                 </tr>
                 <tr>
-                  <th scope="col">id</th>
+                  <th scope="col" style="width: 90px;">id</th>
                   <th scope="col">Product</th>
                   <th scope="col" style="width: 150px;" class="text-center">Quantity</th>
                   <th scope="col"></th>
@@ -85,12 +94,15 @@
                 <tr v-if="notSelectedProductsLength !== 0" style="background-color:#d9d9d9;">
                   <td colspan="7">
                     <div style="padding: 0px 200px 0px 200px;" class="form-group">
-                      <label for="raws" class="text-dark">
-                        <strong>Select Products of Chicken</strong>
-                      </label>
-                      <div class="input-group mb-3">
+                      <!-- <label for="raws" class="text-dark">
+                        <strong>Select Products of {{selectedRaw.description}}}</strong>
+                      </label>-->
+                      <div class="input-group mb-3 mt-3">
                         <select v-model="selectedProduct" class="form-control">
-                          <option disabled :value="null">Please select product</option>
+                          <option
+                            disabled
+                            :value="null"
+                          >Select products of {{selectedRaw.item.description}}</option>
                           <option
                             v-for="prod in notSelectedProducts"
                             :value="prod"
@@ -213,7 +225,7 @@ export default {
   props: {
     item_id: String,
     item_raw_stock_out: String,
-    item_product_id: String
+    product_item_id: String
   },
   data() {
     return {
@@ -225,7 +237,8 @@ export default {
       selectedProductsNew: [],
       scrap: 0,
       bones: 0,
-      date: null
+      date: null,
+      dateIsValid: true
       // selectedProducts: []
     };
   },
@@ -256,6 +269,8 @@ export default {
         });
       }
     },
+
+    // Select products of {{selectedRaw.item.description}}
     totalWieghtOfSelectedProduct() {
       if (
         this.selectedProducts === undefined ||
@@ -276,7 +291,6 @@ export default {
       scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
       let bones = this.bones;
       bones == "" ? (bones = 0) : (bones = parseFloat(bones));
-
       return scrap + bones + parseFloat(this.totalWieghtOfSelectedProduct);
     }
   },
@@ -289,35 +303,11 @@ export default {
             return obj;
           }
         });
-        // let sproduct = {...this.selectedProduct};
-        // this.selectedProductsNew.push(sproduct);
+
         this.selectedProductsNew.push(this.selectedProduct);
-        //  this.pushToSelected();
         this.selectedProduct = null;
       }
     },
-
-    // cleaningSelectedProducts(data) {
-    //   return data.map(obj => {
-    //     delete obj.selected;
-    //     delete obj.unit;
-    //     delete obj.item;
-    //     delete obj.created_at;
-    //     delete obj.updated_at;
-    //     delete obj.remove;
-    //     return obj;
-    //   });
-    // },
-
-
-    // pushToSelected() {
-    //   console.log(this.selectedProduct);
-    //   let sproduct = this.selectedProduct;
-    //   this.selectedProductsNew.push(sproduct);
-    //   this.selectedProduct = null;
-    //   console.log(this.selectedProductsNew);
-    //   console.log(this.products);
-    // },
 
     removeSelection(data) {
       this.products.map(obj => {
@@ -340,37 +330,44 @@ export default {
     sendSelelectedProducts() {
       LoadingOverlay();
       let self = this;
-      let params = {
-        // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
-        selected_products: this.selectedProductsNew,
-        bones: this.bones,
-        scrap: this.scrap,
-        total: this.finalWeight,
-        selected_raw: this.selectedRaw,
-        selected_raw_out_value: this.selectedRawOut,
-        date: this.date
-      };
+      console.log(this.date);
+      if (this.date == null || this.date == undefined || this.date == "") {
+        console.log("date is required");
+        this.dateIsValid = false;
+        LoadingOverlayHide();
+      } else {
+        let params = {
+          // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
+          selected_products: this.selectedProductsNew,
+          bones: this.bones,
+          scrap: this.scrap,
+          total: this.finalWeight,
+          selected_raw: this.selectedRaw,
+          selected_raw_out_value: this.selectedRawOut,
+          date: this.date
+        };
 
-      axios
-        .post("/items/products/stockin", params)
-        .then(res => {
-          console.log(res);
-          self.selectedProductsNew = [];
-          self.products.map(obj => {
-            obj.selected = false;
-            obj.quantity = 1;
-            obj.total_weight = obj.value;
-            return obj;
+        axios
+          .post("/items/products/stockin", params)
+          .then(res => {
+            console.log(res);
+            self.selectedProductsNew = [];
+            self.products.map(obj => {
+              obj.selected = false;
+              obj.quantity = 1;
+              obj.total_weight = obj.value;
+              return obj;
+            });
+            self.scrap = 0;
+            self.bones = 0;
+            self.selectedRawOut = 0;
+            LoadingOverlayHide();
+          })
+          .catch(err => {
+            console.error(err);
+            LoadingOverlayHide();
           });
-          self.scrap = 0;
-          self.bones = 0;
-          self.selectedRawOut = 0;
-          LoadingOverlayHide();
-        })
-        .catch(err => {
-          console.error(err);
-          LoadingOverlayHide();
-        });
+      }
     },
     getRaws() {
       axios.get("/items/raw").then(res => {
@@ -379,44 +376,79 @@ export default {
       });
     },
     setSelectedRaw() {
-      let self = this;
       if (!this.item_id == "") {
-        self.selectedRaw = this.raws.find(obj => {
+        let raw = this.raws.find(obj => {
           if (obj.item_id == this.item_id) {
             return obj;
           }
         });
+
+        if (raw == undefined) {
+          this.selectedRaw = null;
+          LoadingOverlayHide();
+        } else {
+          this.selectedRaw = raw;
+          this.getProducts();
+        }
       } else {
-        self.selectedRaw = null;
+        this.selectedRaw = null;
+        LoadingOverlayHide();
       }
-      this.getProducts();
     },
     getProducts() {
       // let url = "/items/products"
       if (!this.item_id == "") {
         let url = "/items/products/" + this.item_id;
         axios.get(url).then(res => {
-          // this.products = { ...res.data };
           this.products = res.data;
-          // this.products.map(obj => {
-          //   obj.selected = false;
-          //   return obj;
-          // });
-          LoadingOverlayHide();
+          this.ifProductItemIdIsNotNull();
         });
       } else {
         LoadingOverlayHide();
       }
+    },
+    ifProductItemIdIsNotNull() {
+      if (this.product_item_id !== "") {
+        let prod = this.products.find(obj => {
+          if (obj.item_id == this.product_item_id) {
+            return obj;
+          }
+        });
+        console.log({ prod });
+        if (prod == undefined) {
+          console.log({ prod });
+          LoadingOverlayHide();
+        } else {
+          this.selectedProduct = prod;
+          this.btnSelectProduct();
+          setTimeout(() => {
+            LoadingOverlayHide();
+          }, 500);
+        }
+      } else {
+        LoadingOverlayHide();
+      }
     }
+    // cleaningSelectedProducts(data) {
+    //   return data.map(obj => {
+    //     delete obj.selected;
+    //     delete obj.unit;
+    //     delete obj.item;
+    //     delete obj.created_at;
+    //     delete obj.updated_at;
+    //     delete obj.remove;
+    //     return obj;
+    //   });
+    // },
   },
 
   mounted() {
+    LoadingOverlay();
     console.log("mounted");
     this.getRaws();
   },
   created() {
     console.log("created");
-    LoadingOverlay();
   }
 };
 </script>
