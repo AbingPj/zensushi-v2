@@ -256,6 +256,8 @@ class ItemsController extends Controller
             ->join('users', 'items.user_id', 'users.id')
             ->join('categories', 'items.category_id', 'categories.id')
             ->join('item_types', 'items.item_type_id', 'item_types.id')
+            ->leftJoin('raw_products', 'items.id', 'raw_products.item_id')
+            ->leftJoin('raws', 'raw_products.raw_id', 'raws.id')
             // ->leftJoinSub($additionals_data, 'additionals', function ($join) {
             //     $join->on('items.id', '=', 'additionals.item_id');
             // })
@@ -279,6 +281,8 @@ class ItemsController extends Controller
                 'items.category_id',
                 'items.item_type_id',
                 'items.unit_id',
+                'raw_products.raw_id',
+                'raws.item_id AS product_raw_item_id',
                 'addi',
                 'item_in',
                 'item_out',
@@ -323,6 +327,7 @@ class ItemsController extends Controller
                     ->orWhere('categories.description', 'like', $value)
                     ->orWhere('units.description', 'like', $value)
                     ->orWhere('users.name', 'like', $value)
+                    ->orWhere('item_types.description', 'like', $value)
                     ->orWhere('balance', 'like', $value);
             });
         }
