@@ -1,16 +1,16 @@
 <template>
   <div>
-    <h1>Stockin Raw Products</h1>
+    <h1 class="text-center mb-5 mt-5">Production</h1>
     <div class="container">
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
-                <tr>
+                <tr style=" border-bottom: 4px solid gray; border-top: 4px solid black;">
                   <th colspan="7">
                     <div class="row">
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="date">Date</label>
                           <input
@@ -22,7 +22,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for>Selected Raw</label>
                           <select
@@ -39,7 +39,7 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-3">
+                      <div class="col-md-4">
                         <div class="form-group">
                           <label for="out">Raw Stock-out Weight</label>
                           <input type="number" class="form-control" id="stock-out" />
@@ -122,7 +122,7 @@
                   </td>
                 </tr>
                 <!-- Subtotal -->
-                <tr>
+                <tr  style="border-top: 3px solid gray;">
                   <td>
                     <strong>Sub-Total</strong>
                   </td>
@@ -185,7 +185,7 @@
                   <td></td>
                 </tr>
                 <!-- TOTAl -->
-                <tr>
+                <tr style="border-top: 4px solid black;">
                   <td>
                     <strong>Total</strong>
                   </td>

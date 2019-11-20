@@ -2888,11 +2888,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     item_id: String,
     item_raw_stock_out: String,
-    item_product_id: String
+    product_item_id: String
   },
   data: function data() {
     return {
@@ -2904,7 +2916,8 @@ __webpack_require__.r(__webpack_exports__);
       selectedProductsNew: [],
       scrap: 0,
       bones: 0,
-      date: null // selectedProducts: []
+      date: null,
+      dateIsValid: true // selectedProducts: []
 
     };
   },
@@ -2933,6 +2946,7 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     },
+    // Select products of {{selectedRaw.item.description}}
     totalWieghtOfSelectedProduct: function totalWieghtOfSelectedProduct() {
       if (this.selectedProducts === undefined || this.selectedProducts.length == 0) {
         return 0;
@@ -2963,33 +2977,11 @@ __webpack_require__.r(__webpack_exports__);
             obj.selected = true;
             return obj;
           }
-        }); // let sproduct = {...this.selectedProduct};
-        // this.selectedProductsNew.push(sproduct);
-
-        this.selectedProductsNew.push(this.selectedProduct); //  this.pushToSelected();
-
+        });
+        this.selectedProductsNew.push(this.selectedProduct);
         this.selectedProduct = null;
       }
     },
-    // cleaningSelectedProducts(data) {
-    //   return data.map(obj => {
-    //     delete obj.selected;
-    //     delete obj.unit;
-    //     delete obj.item;
-    //     delete obj.created_at;
-    //     delete obj.updated_at;
-    //     delete obj.remove;
-    //     return obj;
-    //   });
-    // },
-    // pushToSelected() {
-    //   console.log(this.selectedProduct);
-    //   let sproduct = this.selectedProduct;
-    //   this.selectedProductsNew.push(sproduct);
-    //   this.selectedProduct = null;
-    //   console.log(this.selectedProductsNew);
-    //   console.log(this.products);
-    // },
     removeSelection: function removeSelection(data) {
       this.products.map(function (obj) {
         if (obj.id == data.id) {
@@ -3010,33 +3002,41 @@ __webpack_require__.r(__webpack_exports__);
     sendSelelectedProducts: function sendSelelectedProducts() {
       LoadingOverlay();
       var self = this;
-      var params = {
-        // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
-        selected_products: this.selectedProductsNew,
-        bones: this.bones,
-        scrap: this.scrap,
-        total: this.finalWeight,
-        selected_raw: this.selectedRaw,
-        selected_raw_out_value: this.selectedRawOut,
-        date: this.date
-      };
-      axios.post("/items/products/stockin", params).then(function (res) {
-        console.log(res);
-        self.selectedProductsNew = [];
-        self.products.map(function (obj) {
-          obj.selected = false;
-          obj.quantity = 1;
-          obj.total_weight = obj.value;
-          return obj;
+      console.log(this.date);
+
+      if (this.date == null || this.date == undefined || this.date == "") {
+        console.log("date is required");
+        this.dateIsValid = false;
+        LoadingOverlayHide();
+      } else {
+        var params = {
+          // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
+          selected_products: this.selectedProductsNew,
+          bones: this.bones,
+          scrap: this.scrap,
+          total: this.finalWeight,
+          selected_raw: this.selectedRaw,
+          selected_raw_out_value: this.selectedRawOut,
+          date: this.date
+        };
+        axios.post("/items/products/stockin", params).then(function (res) {
+          console.log(res);
+          self.selectedProductsNew = [];
+          self.products.map(function (obj) {
+            obj.selected = false;
+            obj.quantity = 1;
+            obj.total_weight = obj.value;
+            return obj;
+          });
+          self.scrap = 0;
+          self.bones = 0;
+          self.selectedRawOut = 0;
+          LoadingOverlayHide();
+        })["catch"](function (err) {
+          console.error(err);
+          LoadingOverlayHide();
         });
-        self.scrap = 0;
-        self.bones = 0;
-        self.selectedRawOut = 0;
-        LoadingOverlayHide();
-      })["catch"](function (err) {
-        console.error(err);
-        LoadingOverlayHide();
-      });
+      }
     },
     getRaws: function getRaws() {
       var _this2 = this;
@@ -3050,19 +3050,24 @@ __webpack_require__.r(__webpack_exports__);
     setSelectedRaw: function setSelectedRaw() {
       var _this3 = this;
 
-      var self = this;
-
       if (!this.item_id == "") {
-        self.selectedRaw = this.raws.find(function (obj) {
+        var raw = this.raws.find(function (obj) {
           if (obj.item_id == _this3.item_id) {
             return obj;
           }
         });
-      } else {
-        self.selectedRaw = null;
-      }
 
-      this.getProducts();
+        if (raw == undefined) {
+          this.selectedRaw = null;
+          LoadingOverlayHide();
+        } else {
+          this.selectedRaw = raw;
+          this.getProducts();
+        }
+      } else {
+        this.selectedRaw = null;
+        LoadingOverlayHide();
+      }
     },
     getProducts: function getProducts() {
       var _this4 = this;
@@ -3071,26 +3076,62 @@ __webpack_require__.r(__webpack_exports__);
       if (!this.item_id == "") {
         var url = "/items/products/" + this.item_id;
         axios.get(url).then(function (res) {
-          // this.products = { ...res.data };
-          _this4.products = res.data; // this.products.map(obj => {
-          //   obj.selected = false;
-          //   return obj;
-          // });
+          _this4.products = res.data;
 
-          LoadingOverlayHide();
+          _this4.ifProductItemIdIsNotNull();
         });
       } else {
         LoadingOverlayHide();
       }
-    }
+    },
+    ifProductItemIdIsNotNull: function ifProductItemIdIsNotNull() {
+      var _this5 = this;
+
+      if (this.product_item_id !== "") {
+        var prod = this.products.find(function (obj) {
+          if (obj.item_id == _this5.product_item_id) {
+            return obj;
+          }
+        });
+        console.log({
+          prod: prod
+        });
+
+        if (prod == undefined) {
+          console.log({
+            prod: prod
+          });
+          LoadingOverlayHide();
+        } else {
+          this.selectedProduct = prod;
+          this.btnSelectProduct();
+          setTimeout(function () {
+            LoadingOverlayHide();
+          }, 500);
+        }
+      } else {
+        LoadingOverlayHide();
+      }
+    } // cleaningSelectedProducts(data) {
+    //   return data.map(obj => {
+    //     delete obj.selected;
+    //     delete obj.unit;
+    //     delete obj.item;
+    //     delete obj.created_at;
+    //     delete obj.updated_at;
+    //     delete obj.remove;
+    //     return obj;
+    //   });
+    // },
+
   },
   mounted: function mounted() {
+    LoadingOverlay();
     console.log("mounted");
     this.getRaws();
   },
   created: function created() {
     console.log("created");
-    LoadingOverlay();
   }
 });
 
@@ -3389,9 +3430,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
         this.$events.fire("showItemInModal", dataToIn);
+      } else {
+        console.log(data);
+        LoadingOverlay();
+        window.location = "/zensushi-production/" + data.product_raw_item_id + "/" + data.id;
       }
-
-      showItemAdditionalModal;
     },
     itemAdditional: function itemAdditional(data) {
       var dataToAdditional = _objectSpread({}, data);
@@ -3401,8 +3444,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     itemOut: function itemOut(data) {
       var dataToOut = _objectSpread({}, data);
 
-      if (dataToOut.item_type_id == 1 || dataToOut.item_type_id == 3) {
+      if (dataToOut.item_type_id == 2 || dataToOut.item_type_id == 3) {
         this.$events.fire("showItemOutModal", dataToOut);
+      } else {
+        console.log(data);
+        LoadingOverlay();
+        window.location = "/zensushi-production/" + data.id;
       }
     },
     deleteAction: function deleteAction(data, index) {
@@ -53265,7 +53312,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Stockin Raw Products")]),
+    _c("h1", { staticClass: "text-center mb-5 mt-5" }, [_vm._v("Production")]),
     _vm._v(" "),
     _c("div", { staticClass: "container" }, [
       _c("div", { staticClass: "row" }, [
@@ -53273,101 +53320,118 @@ var render = function() {
           _c("div", { staticClass: "table-responsive" }, [
             _c("table", { staticClass: "table table-striped" }, [
               _c("thead", [
-                _c("tr", [
-                  _c("th", [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "date" } }, [_vm._v("Date")]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.date,
-                            expression: "date"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "date", id: "date" },
-                        domProps: { value: _vm.date },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.date = $event.target.value
-                          }
-                        }
-                      })
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("th", { attrs: { scope: "col" } }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "" } }, [
-                        _vm._v("Selected Raw")
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "select",
-                        {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.selectedRaw,
-                              expression: "selectedRaw"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          on: {
-                            change: [
-                              function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.selectedRaw = $event.target.multiple
-                                  ? $$selectedVal
-                                  : $$selectedVal[0]
-                              },
-                              function($event) {
-                                return _vm.rawSelectionChange()
+                _c(
+                  "tr",
+                  {
+                    staticStyle: {
+                      "border-bottom": "4px solid gray",
+                      "border-top": "4px solid black"
+                    }
+                  },
+                  [
+                    _c("th", { attrs: { colspan: "7" } }, [
+                      _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "date" } }, [
+                              _vm._v("Date")
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.date,
+                                  expression: "date"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: _vm.dateIsValid ? "" : "is-invalid",
+                              attrs: { type: "date", id: "date" },
+                              domProps: { value: _vm.date },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.date = $event.target.value
+                                }
                               }
-                            ]
-                          }
-                        },
-                        [
-                          _c(
-                            "option",
-                            {
-                              attrs: { disabled: "" },
-                              domProps: { value: null }
-                            },
-                            [_vm._v("Please select raw")]
-                          ),
-                          _vm._v(" "),
-                          _vm._l(_vm.raws, function(raw) {
-                            return _c(
-                              "option",
-                              { key: raw.id, domProps: { value: raw } },
-                              [_vm._v(_vm._s(raw.item.description))]
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-4" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c("label", { attrs: { for: "" } }, [
+                              _vm._v("Selected Raw")
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select",
+                              {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.selectedRaw,
+                                    expression: "selectedRaw"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                on: {
+                                  change: [
+                                    function($event) {
+                                      var $$selectedVal = Array.prototype.filter
+                                        .call($event.target.options, function(
+                                          o
+                                        ) {
+                                          return o.selected
+                                        })
+                                        .map(function(o) {
+                                          var val =
+                                            "_value" in o ? o._value : o.value
+                                          return val
+                                        })
+                                      _vm.selectedRaw = $event.target.multiple
+                                        ? $$selectedVal
+                                        : $$selectedVal[0]
+                                    },
+                                    function($event) {
+                                      return _vm.rawSelectionChange()
+                                    }
+                                  ]
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  {
+                                    attrs: { disabled: "" },
+                                    domProps: { value: null }
+                                  },
+                                  [_vm._v("Please select raw")]
+                                ),
+                                _vm._v(" "),
+                                _vm._l(_vm.raws, function(raw) {
+                                  return _c(
+                                    "option",
+                                    { key: raw.id, domProps: { value: raw } },
+                                    [_vm._v(_vm._s(raw.item.description))]
+                                  )
+                                })
+                              ],
+                              2
                             )
-                          })
-                        ],
-                        2
-                      )
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(0)
+                      ])
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _c("th", { attrs: { colspan: "4" } })
-                ]),
+                  ]
+                ),
                 _vm._v(" "),
                 _vm._m(1)
               ]),
@@ -53473,95 +53537,106 @@ var render = function() {
                                 staticStyle: { padding: "0px 200px 0px 200px" }
                               },
                               [
-                                _vm._m(2),
-                                _vm._v(" "),
-                                _c("div", { staticClass: "input-group mb-3" }, [
-                                  _c(
-                                    "select",
-                                    {
-                                      directives: [
-                                        {
-                                          name: "model",
-                                          rawName: "v-model",
-                                          value: _vm.selectedProduct,
-                                          expression: "selectedProduct"
+                                _c(
+                                  "div",
+                                  { staticClass: "input-group mb-3 mt-3" },
+                                  [
+                                    _c(
+                                      "select",
+                                      {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.selectedProduct,
+                                            expression: "selectedProduct"
+                                          }
+                                        ],
+                                        staticClass: "form-control",
+                                        on: {
+                                          change: function($event) {
+                                            var $$selectedVal = Array.prototype.filter
+                                              .call(
+                                                $event.target.options,
+                                                function(o) {
+                                                  return o.selected
+                                                }
+                                              )
+                                              .map(function(o) {
+                                                var val =
+                                                  "_value" in o
+                                                    ? o._value
+                                                    : o.value
+                                                return val
+                                              })
+                                            _vm.selectedProduct = $event.target
+                                              .multiple
+                                              ? $$selectedVal
+                                              : $$selectedVal[0]
+                                          }
                                         }
-                                      ],
-                                      staticClass: "form-control",
-                                      on: {
-                                        change: function($event) {
-                                          var $$selectedVal = Array.prototype.filter
-                                            .call(
-                                              $event.target.options,
-                                              function(o) {
-                                                return o.selected
-                                              }
-                                            )
-                                            .map(function(o) {
-                                              var val =
-                                                "_value" in o
-                                                  ? o._value
-                                                  : o.value
-                                              return val
-                                            })
-                                          _vm.selectedProduct = $event.target
-                                            .multiple
-                                            ? $$selectedVal
-                                            : $$selectedVal[0]
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c(
-                                        "option",
-                                        {
-                                          attrs: { disabled: "" },
-                                          domProps: { value: null }
-                                        },
-                                        [_vm._v("Please select product")]
-                                      ),
-                                      _vm._v(" "),
-                                      _vm._l(_vm.notSelectedProducts, function(
-                                        prod
-                                      ) {
-                                        return _c(
+                                      },
+                                      [
+                                        _c(
                                           "option",
                                           {
-                                            key: prod.id,
-                                            domProps: { value: prod }
+                                            attrs: { disabled: "" },
+                                            domProps: { value: null }
                                           },
                                           [
                                             _vm._v(
-                                              _vm._s(prod.item.description)
+                                              "Select products of " +
+                                                _vm._s(
+                                                  _vm.selectedRaw.item
+                                                    .description
+                                                )
                                             )
                                           ]
-                                        )
-                                      })
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group-append" },
-                                    [
-                                      _c(
-                                        "button",
-                                        {
-                                          staticClass: "btn btn-primary",
-                                          staticStyle: { width: "200px" },
-                                          attrs: { type: "button " },
-                                          on: {
-                                            click: function($event) {
-                                              return _vm.btnSelectProduct()
-                                            }
+                                        ),
+                                        _vm._v(" "),
+                                        _vm._l(
+                                          _vm.notSelectedProducts,
+                                          function(prod) {
+                                            return _c(
+                                              "option",
+                                              {
+                                                key: prod.id,
+                                                domProps: { value: prod }
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(prod.item.description)
+                                                )
+                                              ]
+                                            )
                                           }
-                                        },
-                                        [_vm._v("Select")]
-                                      )
-                                    ]
-                                  )
-                                ])
+                                        )
+                                      ],
+                                      2
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "div",
+                                      { staticClass: "input-group-append" },
+                                      [
+                                        _c(
+                                          "button",
+                                          {
+                                            staticClass: "btn btn-primary",
+                                            staticStyle: { width: "200px" },
+                                            attrs: { type: "button " },
+                                            on: {
+                                              click: function($event) {
+                                                return _vm.btnSelectProduct()
+                                              }
+                                            }
+                                          },
+                                          [_vm._v("Select")]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
                               ]
                             )
                           ])
@@ -53569,23 +53644,27 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
-                  _c("tr", [
-                    _vm._m(3),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _vm._v(_vm._s(_vm.totalWieghtOfSelectedProduct) + "g")
-                    ]),
-                    _vm._v(" "),
-                    _c("td")
-                  ]),
+                  _c(
+                    "tr",
+                    { staticStyle: { "border-top": "3px solid gray" } },
+                    [
+                      _vm._m(2),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _vm._v(_vm._s(_vm.totalWieghtOfSelectedProduct) + "g")
+                      ]),
+                      _vm._v(" "),
+                      _c("td")
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("tr", [
                     _c("td"),
@@ -53598,7 +53677,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", { staticClass: "text-center" }, [
                       _c("div", { staticClass: "form-inline" }, [
-                        _vm._m(4),
+                        _vm._m(3),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -53648,7 +53727,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", { staticClass: "text-center" }, [
                       _c("div", { staticClass: "form-inline" }, [
-                        _vm._m(5),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -53687,23 +53766,27 @@ var render = function() {
                     _c("td")
                   ]),
                   _vm._v(" "),
-                  _c("tr", [
-                    _vm._m(6),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td"),
-                    _vm._v(" "),
-                    _c("td", { staticClass: "text-right" }, [
-                      _c("strong", [_vm._v(_vm._s(_vm.finalWeight))])
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Grams")])
-                  ])
+                  _c(
+                    "tr",
+                    { staticStyle: { "border-top": "4px solid black" } },
+                    [
+                      _vm._m(5),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td"),
+                      _vm._v(" "),
+                      _c("td", { staticClass: "text-right" }, [
+                        _c("strong", [_vm._v(_vm._s(_vm.finalWeight))])
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v("Grams")])
+                    ]
+                  )
                 ],
                 2
               )
@@ -53741,7 +53824,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("th", { attrs: { scope: "col" } }, [
+    return _c("div", { staticClass: "col-md-4" }, [
       _c("div", { staticClass: "form-group" }, [
         _c("label", { attrs: { for: "out" } }, [
           _vm._v("Raw Stock-out Weight")
@@ -53759,7 +53842,9 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tr", [
-      _c("th", { attrs: { scope: "col" } }, [_vm._v("id")]),
+      _c("th", { staticStyle: { width: "90px" }, attrs: { scope: "col" } }, [
+        _vm._v("id")
+      ]),
       _vm._v(" "),
       _c("th", { attrs: { scope: "col" } }, [_vm._v("Product")]),
       _vm._v(" "),
@@ -53790,14 +53875,6 @@ var staticRenderFns = [
       ]),
       _vm._v(" "),
       _c("th")
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("label", { staticClass: "text-dark", attrs: { for: "raws" } }, [
-      _c("strong", [_vm._v("Select Products of Chicken")])
     ])
   },
   function() {
@@ -67822,14 +67899,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************************************************************!*\
   !*** ./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue ***!
   \****************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ItemsRawProductIn_vue_vue_type_template_id_b1f87892___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ItemsRawProductIn.vue?vue&type=template&id=b1f87892& */ "./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=template&id=b1f87892&");
 /* harmony import */ var _ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ItemsRawProductIn.vue?vue&type=script&lang=js& */ "./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ItemsRawProductIn_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -67859,7 +67937,7 @@ component.options.__file = "resources/js/components/pages/items/items-raw-produc
 /*!*****************************************************************************************************************!*\
   !*** ./resources/js/components/pages/items/items-raw-product-in/ItemsRawProductIn.vue?vue&type=script&lang=js& ***!
   \*****************************************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
