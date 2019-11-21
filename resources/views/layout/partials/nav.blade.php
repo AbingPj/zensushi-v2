@@ -6,16 +6,22 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="step-1">
                 <a class="nav-link" href="{{route('page.items')}}" id="navbardrop">
                     Inventory
                 </a>
             </li>
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown"  id="step-2">
+                <a class="nav-link" href="{{ route('page.production') }}" id="navbardrop">
+                    Production
+                </a>
+            </li>
+            <li class="nav-item dropdown"  id="step-3">
                 <a class="nav-link" href="{{ route('page.records') }}" id="navbardrop">
                     Records
                 </a>
             </li>
+           
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item" id="Notification_navItem">

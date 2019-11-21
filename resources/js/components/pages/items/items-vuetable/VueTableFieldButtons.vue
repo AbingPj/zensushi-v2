@@ -83,9 +83,13 @@ export default {
 
       if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
         this.$events.fire("showItemInModal", dataToIn);
+      }else{
+        console.log(data);
+        LoadingOverlay();
+        window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
       }
 
-      showItemAdditionalModal
+      
     },
 
     itemAdditional(data){
@@ -95,8 +99,12 @@ export default {
 
     itemOut(data) {
       let dataToOut = { ...data };
-      if (dataToOut.item_type_id == 1 || dataToOut.item_type_id == 3) {
+      if (dataToOut.item_type_id == 2 || dataToOut.item_type_id == 3) {
         this.$events.fire("showItemOutModal", dataToOut);
+      }else{
+         console.log(data);
+        LoadingOverlay();
+        window.location = "/zensushi-production/" + data.id;
       }
     },
     deleteAction(data, index) {

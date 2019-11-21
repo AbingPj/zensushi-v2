@@ -23,7 +23,9 @@ class ItemsRawController extends Controller
         // }
         if ($rawItems->isNotEmpty()) {
             $rawItems->map(function ($row) {
-                return $row->item = $row->item;
+                $row->selected = false;
+                $row->item = $row->item;
+                return $row;
             });
         }
         return response()->json($rawItems);

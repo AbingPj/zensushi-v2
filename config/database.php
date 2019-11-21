@@ -63,6 +63,29 @@ return [
             ]) : [],
         ],
 
+
+
+        // for 000webhost configuration
+         /*
+        'mysql' => [
+            'driver' => 'mysql',
+            'url' => env('DATABASE_URL'),
+            'host' => env('DB_HOST', 'localhost'),
+            'options' => [PDO::ATTR_EMULATE_PREPARES => true,], # this line
+            'port' => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'id11656096_zensushi_db'),
+            'username' => env('DB_USERNAME', 'id11656096_zensushi_db'),
+            'password' => env('DB_PASSWORD', 'samkit143'),
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'strict' => true,
+            'engine' => null,
+        ],
+        */
+
         'pgsql' => [
             'driver' => 'pgsql',
             'url' => env('DATABASE_URL'),
