@@ -14,13 +14,13 @@
             <form @submit="checkForm()" class="needs-validation" novalidate>
               <div class="form-group">
                 <label for="date">Date</label>
-                <input type="date" class="form-control" id="date" v-model="date" />
+                <input :class="dateIsValid? '': 'is-invalid'" type="date" class="form-control" id="date" v-model="date" />
               </div>
 
               <div class="form-group">
                 <label for="title">Stock-out: {{ item.description }}</label>
                 <div class="input-group">
-                  <input type="number" class="form-control" placeholder="0" v-model="outStock" />
+                  <input  :class="outStockIsValid? '': 'is-invalid'" type="number" class="form-control" placeholder="0" v-model="outStock" />
                   <div class="input-group-append">
                     <span class="input-group-text">{{ item.unit }}</span>
                   </div>
@@ -40,7 +40,7 @@
                     required
                   />
                   <div class="invalid-feedback">Please choose a username.</div>
-                </div> -->
+                </div>-->
 
                 <br />
                 <div class="text-center">
@@ -64,11 +64,39 @@ export default {
     return {
       item: {},
       outStock: null,
-      date: null
+      date: null,
+      dateIsValid: true,
+      outStockIsValid: true
     };
   },
   methods: {
     stockOut() {
+      if (
+        this.date == null ||
+        this.date == undefined ||
+        this.date == "" ||
+        this.outStock == null ||
+        this.outStock == undefined ||
+        this.outStock <= 0 ||
+        this.outStock == ""
+      ) {
+        this.date == null || this.date == undefined || this.date == ""
+          ? (this.dateIsValid = false)
+          : (this.dateIsValid = true);
+
+        this.outStock == null ||
+        this.outStock == undefined ||
+        this.outStock <= 0 ||
+        this.outStock == ""
+          ? (this.outStockIsValid = false)
+          : (this.outStockIsValid = true);
+      } else {
+        this.dateIsValid = true;
+        this.outStockIsValid = true;
+        this.axiosPost();
+      }
+    },
+    axiosPost() {
       LoadingOverlay();
       axios
         .post("/items/stockout", {
@@ -98,6 +126,17 @@ export default {
       "showItemOutModal",
       data => ($("#itemOutModal").modal("show"), (this.item = data))
     );
+  },
+  
+  mounted() {
+    let self = this;
+    $("#itemOutModal").on("hidden.bs.modal", function() {
+      //  window.clearTimeout(timer);
+      self.dateIsValid = true;
+      self.outStockIsValid = true;
+      self.outStock = null;
+      self.date = null;
+    });
   }
   // mounted() {
   //   $("#itemOutModal").on("show.bs.modal	", function(e) {
