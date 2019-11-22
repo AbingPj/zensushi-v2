@@ -11,16 +11,28 @@
 
           <!-- Modal body -->
           <div class="modal-body">
-            <form @submit="checkForm()" class="needs-validation" novalidate>
+            <form>
               <div class="form-group">
                 <label for="date">Date</label>
-                <input :class="dateIsValid? '': 'is-invalid'" type="date" class="form-control" id="date" v-model="date" />
+                <input
+                  :class="dateIsValid? '': 'is-invalid'"
+                  type="date"
+                  class="form-control"
+                  id="date"
+                  v-model="date"
+                />
               </div>
 
               <div class="form-group">
                 <label for="title">Stock-out: {{ item.description }}</label>
                 <div class="input-group">
-                  <input  :class="outStockIsValid? '': 'is-invalid'" type="number" class="form-control" placeholder="0" v-model="outStock" />
+                  <input
+                    :class="outStockIsValid? '': 'is-invalid'"
+                    type="number"
+                    class="form-control"
+                    placeholder="0"
+                    v-model="outStock"
+                  />
                   <div class="input-group-append">
                     <span class="input-group-text">{{ item.unit }}</span>
                   </div>
@@ -96,28 +108,33 @@ export default {
         this.axiosPost();
       }
     },
+
     axiosPost() {
-      LoadingOverlay();
-      axios
-        .post("/items/stockout", {
-          itemId: this.item.id,
-          value: this.outStock,
-          date: this.date
-        })
-        .then(res => {
-          $("#itemOutModal").modal("hide");
-        })
-        .catch(err => {
-          alert(
-            "This function have an error, please contact the zensushi developer. \n" +
-              "Error: [" +
-              err.message +
-              " \n " +
-              err.response.data.message +
-              "]"
-          );
-          LoadingOverlayHide();
-        });
+      if (this.item.balance == 0 || this.outStock > this.item.balance) {
+        alert("Item balance must not be zero or item out value must not be greater than item balance.")
+      } else {
+        LoadingOverlay();
+        axios
+          .post("/items/stockout", {
+            itemId: this.item.id,
+            value: this.outStock,
+            date: this.date
+          })
+          .then(res => {
+            $("#itemOutModal").modal("hide");
+          })
+          .catch(err => {
+            alert(
+              "This function have an error, please contact the zensushi developer. \n" +
+                "Error: [" +
+                err.message +
+                " \n " +
+                err.response.data.message +
+                "]"
+            );
+            LoadingOverlayHide();
+          });
+      }
     }
   },
 
@@ -127,7 +144,7 @@ export default {
       data => ($("#itemOutModal").modal("show"), (this.item = data))
     );
   },
-  
+
   mounted() {
     let self = this;
     $("#itemOutModal").on("hidden.bs.modal", function() {
