@@ -34,9 +34,10 @@
               <!-- Unit -->
               <div class="form-group">
                 <label>Unit &nbsp;</label>
-                <select v-model="selectedUnit" class="form-control form-control-sm">
+                <select v-model="selectedUnit" class="form-control form-control-sm"  @change="onChangeUnitSelection(selectedUnit)">
                   <option value="null" disabled>Select Unit</option>
                   <option v-for="unit in units" :value="unit" :key="unit.id">{{ unit.description }}</option>
+                  
                 </select>
               </div>
 
@@ -48,10 +49,14 @@
                     name="description"
                     v-model="rawValue"
                     placeholder="ex. 1000 grams"
+                    :disabled="disabledValue"
                     class="form-control"
                   />
                 </div>
               </div>
+
+
+
               <div v-else-if="item.item_type_id == 2">
                 <div class="form-group">
                   <label for>Raw product</label>
@@ -68,10 +73,10 @@
                   <label for>Value(Grams)</label>
                   <input
                     type="text"
-                    name="description"
                     v-model="rawProductValue"
                     placeholder="ex. 100 grams"
                     class="form-control"
+                    :disabled="disabledValue"
                   />
                 </div>
               </div>
@@ -99,10 +104,26 @@ export default {
       rawValue: 0,
       rawProductValue: 0,
       raws: [],
-      selectedRaw: {}
+      selectedRaw: {},
+      disabledValue: false,
     };
   },
   methods: {
+    onChangeUnitSelection(data){
+      // if (this.parseItemType.id == 1 || this.parseItemType.id == 2) {
+        if (data.id == 4) {
+          console.log(data);
+          this.rawValue = 1000;
+          this.rawProductValue = 1000;
+          this.disabledValue = true;
+        } else {
+          this.rawValue = "";
+          this.rawProductValue = "";
+          this.disabledValue = false;
+        }
+      // }
+
+    },
     async getUpdateItemData(id) {
       LoadingOverlay();
       let { data, status } = await axios.get("/items/update/data/" + id);
@@ -117,6 +138,11 @@ export default {
         this.rawProductValue = data.raw_product_value;
         this.raws = data.raws;
         this.selectedRaw = data.selected_raw;
+         if((this.rawValue == 1000 || this.rawProductValue == 1000 )&& this.selectedUnit.id == 4){
+            this.disabledValue = true;
+        }else{
+          this.disabledValue = false;
+        }
         LoadingOverlayHide();
       }
     },
