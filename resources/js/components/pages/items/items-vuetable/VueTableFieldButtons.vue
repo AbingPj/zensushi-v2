@@ -33,11 +33,11 @@
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
           <!-- <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a> -->
           <a @click="itemIn(rowData)" class="dropdown-item">
-            <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; IN
+            <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; {{rowData.item_type_id == 2? 'PRODUCTION': 'IN'}}
           </a>
 
           <a @click="itemOut(rowData)" class="dropdown-item" href="#">
-            <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;OUT
+            <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;{{rowData.item_type_id == 1? 'PRODUCTION': 'OUT'}}
           </a>
           <a @click=" itemAdditional(rowData)" class="dropdown-item" href="#">
             <i class="fa fa-plus fa-lg" aria-hidden="true"></i> &nbsp; Additional
