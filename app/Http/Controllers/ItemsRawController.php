@@ -23,10 +23,14 @@ class ItemsRawController extends Controller
         // foreach ($rawItems as $key => $raw) {
         //     $raw->item = $raw->item;
         // }
+       
         if ($rawItems->isNotEmpty()) {
             $rawItems->map(function ($row) {
                 $row->selected = false;
+                $balance =  ItemClass::getItemBalance($row->item_id);
                 $row->item = $row->item;
+                $row->balance = $balance;
+                $row->unit = $row->item->unit;
                 return $row;
             });
         }

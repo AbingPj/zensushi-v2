@@ -31,6 +31,7 @@ Route::get('/zensushi-records', 'PageController@records')->name('page.records');
 Route::get('/zensushi-production', 'PageController@production')->name('page.production');;
 Route::get('/zensushi-production/{item_id}', 'PageController@production2');
 Route::get('/zensushi-production/{item_id}/{product_item_id}', 'PageController@production3');
+Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@production4');
 
 
 
@@ -61,6 +62,7 @@ Route::get('/items/products', 'ItemsProductController@getProductItems');
 Route::get('/items/products/{item_id}', 'ItemsProductController@getProductItemsByRaw');
 Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsProductController@StockInRawProduct');
 Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsProductController@StockInRawProduct2');
+// Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}/{item_raw_stock_out}', 'ItemsProductController@production4');
 Route::post('/items/products/stockin', 'ItemsProductController@saveProductsIn');
 
 

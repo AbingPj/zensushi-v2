@@ -10,7 +10,7 @@
                 <tr style=" border-bottom: 4px solid gray; border-top: 4px solid black;">
                   <th colspan="7">
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="date">Date</label>
                           <input
@@ -22,7 +22,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for>Selected Raw</label>
                           <select
@@ -39,10 +39,36 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="out">Balance</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control"
+                              :value=" selectedRaw == null? '' : selectedRaw.balance"
+                              disabled
+                            />
+                              
+                            <div class="input-group-append">
+                              <span class="input-group-text">{{ selectedRaw == null? '' : selectedRaw.unit.description }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="out">Raw Stock-out Weight</label>
-                          <input type="number" class="form-control" id="stock-out" />
+                          <!-- <input type="number" class="form-control" id="stock-out" /> -->
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control"
+                            />
+                            <div class="input-group-append">
+                              <span class="input-group-text">{{ selectedRaw == null? '' : selectedRaw.unit.description }}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -122,7 +148,7 @@
                   </td>
                 </tr>
                 <!-- Subtotal -->
-                <tr  style="border-top: 3px solid gray;">
+                <tr style="border-top: 3px solid gray;">
                   <td>
                     <strong>Sub-Total</strong>
                   </td>
