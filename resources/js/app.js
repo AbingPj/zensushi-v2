@@ -113,6 +113,12 @@ Vue.component(
     require("./components/pages/items/items-raw-product-in/ItemsRawProductIn.vue").default
 );
 
+
+Vue.component(
+    "items-raw-out",
+    require("./components/pages/items/ItemsRawOut.vue").default
+);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

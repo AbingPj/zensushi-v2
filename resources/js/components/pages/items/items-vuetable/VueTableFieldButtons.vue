@@ -104,7 +104,9 @@ export default {
       }else{
          console.log(data);
         LoadingOverlay();
-        window.location = "/zensushi-production/" + data.id;
+        let link = "/zensushi-production/" + data.id;
+         this.$events.fire("showItemRawOutModal", link, dataToOut);
+        // window.location = ;
       }
     },
     deleteAction(data, index) {
