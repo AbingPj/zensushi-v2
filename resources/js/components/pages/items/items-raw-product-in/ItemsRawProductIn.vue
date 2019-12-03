@@ -53,7 +53,7 @@
                             <div class="input-group-append">
                               <span
                                 class="input-group-text"
-                              >{{ selectedRaw == null? '' : selectedRaw.unit.description }}</span>
+                              >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
                             </div>
                           </div>
                         </div>
@@ -78,7 +78,7 @@
                             <div class="input-group-append">
                               <span
                                 class="input-group-text"
-                              >{{ selectedRaw == null? '' : selectedRaw.unit.description }}</span>
+                              >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
                             </div>
                           </div>
                         </div>

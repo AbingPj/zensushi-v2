@@ -10,9 +10,8 @@
           </div>
 
           <!-- Modal body -->
-          <div class="modal-body">
-            <form>
-              <!-- <div class="form-group">
+          <div class="modal-body" style="padding: 30px">
+            <!-- <div class="form-group">
                 <label for="date">Date</label>
                 <input
                   :class="dateIsValid? '': 'is-invalid'"
@@ -21,50 +20,68 @@
                   id="date"
                   v-model="date"
                 />
-              </div> -->
-              <label>Item: <strong>{{ item.desc }}</strong></label>
-              <div class="form-group">
-                
-                <label for="title">Balance: <strong>{{ item.balance }}&nbsp;{{ item.unit}}</strong></label>
-                <div class="input-group">
-                  <input
-                    :class="outStockIsValid? '': 'is-invalid'"
-                    type="number"
-                    class="form-control"
-                    placeholder="0"
-                    v-model="outStock"
-                  />
-                  <div class="input-group-append">
-                    <span class="input-group-text">{{ item.unit }}</span>
-                  </div>
-                </div>
-                <small>set stock-out value for raw</small>
+            </div>-->
 
-                <!-- <label for="validationCustomUsername">Username</label>
-                <div class="input-group">
-                  <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupPrepend">@</span>
-                  </div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="validationCustomUsername"
-                    placeholder="Username"
-                    aria-describedby="inputGroupPrepend"
-                    required
-                  />
-                  <div class="invalid-feedback">Please choose a username.</div>
+            <div class="form-group">
+              <label>
+                <strong>Item</strong>
+              </label>
+              <div class="input-group">
+                <!-- <div class="input-group-prepend">
+                  <span class="input-group-text" style="width:80px;"><strong>Item :</strong></span>
                 </div>-->
-
-                <br />
-                <div class="text-center">
-                  <button @click="goToProduction()" class="btn btn-info">Set Raw Out Value</button>
+                <input type="text" class="form-control" :value="item.desc" disabled />
+              </div>
+              <br>
+              <label>
+                <strong>Balance</strong>
+              </label>
+              <div class="input-group">
+                <!-- <div class="input-group-prepend">
+                  <span class="input-group-text" style="width:80px;"><strong>Balance :</strong></span>
+                </div>-->
+                <input
+                  type="text"
+                  class="form-control"
+                  :class="outStockIsValid? '': 'is-invalid'"
+                  :value="item.balance"
+                  disabled
+                />
+                <div class="input-group-append">
+                  <span class="input-group-text">{{ item.unit }}</span>
                 </div>
               </div>
-            </form>
-            <!-- <div class="modal-footer">
-                <button class="btn btn-info" data-dismiss="modal">IN</button>
-            </div>-->
+              <br>
+              <label>
+                <strong>Raw Out Value</strong>
+              </label>
+              <div class="input-group">
+                <!-- <div class="input-group-prepend">
+                  <span class="input-group-text" style="width:80px;" ><strong>Out :</strong></span>
+                </div>-->
+                <input
+                  :class="outStockIsValid? '': 'is-invalid'"
+                  type="number"
+                  class="form-control"
+                  placeholder="0"
+                  v-model="outStock"
+                />
+
+                <div class="input-group-append">
+                  <span class="input-group-text">{{ item.unit }}</span>
+                </div>
+                <div
+                  class="invalid-feedback"
+                >Raw Out value must not be greater than Raw remaining balance or Raw remaining balance must not be zero.</div>
+              </div>
+              <small>set stock-out value for raw</small>
+
+              <br />
+                <br />
+              <div class="text-center">
+                <button @click="stockOut()" class="btn btn-info">Set Raw Out Value</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -78,98 +95,44 @@ export default {
     return {
       item: {},
       outStock: null,
-      date: null,
-      dateIsValid: true,
       outStockIsValid: true,
-      link: "",
+      link: ""
     };
   },
   methods: {
     stockOut() {
-      if (
-        this.date == null ||
-        this.date == undefined ||
-        this.date == "" ||
-        this.outStock == null ||
-        this.outStock == undefined ||
-        this.outStock <= 0 ||
-        this.outStock == ""
-      ) {
-        this.date == null || this.date == undefined || this.date == ""
-          ? (this.dateIsValid = false)
-          : (this.dateIsValid = true);
-
-        this.outStock == null ||
-        this.outStock == undefined ||
-        this.outStock <= 0 ||
-        this.outStock == ""
-          ? (this.outStockIsValid = false)
-          : (this.outStockIsValid = true);
-      } else {
-        this.dateIsValid = true;
-        this.outStockIsValid = true;
-        // this.axiosPost();
-      }
+      this.outStock == null ||
+      this.outStock == undefined ||
+      this.outStock <= 0 ||
+      this.outStock == ""
+        ? (this.outStockIsValid = false)
+        : this.setRawOut();
     },
-
-    goToProduction(){
-      window.location = this.link;
-    },
-
-
-    axiosPost() {
+    setRawOut() {
       if (this.item.balance == 0 || this.outStock > this.item.balance) {
-        alert("Item balance must not be zero or item out value must not be greater than item balance.")
+        this.outStockIsValid = false;
       } else {
-        LoadingOverlay();
-        axios
-          .post("/items/stockout", {
-            itemId: this.item.id,
-            value: this.outStock,
-            date: this.date
-          })
-          .then(res => {
-            $("#itemOutModal").modal("hide");
-          })
-          .catch(err => {
-            alert(
-              "This function have an error, please contact the zensushi developer. \n" +
-                "Error: [" +
-                err.message +
-                " \n " +
-                err.response.data.message +
-                "]"
-            );
-            LoadingOverlayHide();
-          });
+        this.$parent.rawOut = this.outStock;
+         $("#itemRawOutModal2").modal("hide");
       }
     }
   },
-
-  // created() {
-  //   this.$events.listen(
-  //     "showItemOutModal",
-  //     data => ($("#itemOutModal").modal("show"), (this.item = data))
-  //   );
-  // },
 
   mounted() {
     let self = this;
     $("#itemRawOutModal").on("hidden.bs.modal", function() {
       //  window.clearTimeout(timer);
-      self.dateIsValid = true;
       self.outStockIsValid = true;
       self.outStock = null;
-      self.date = null;
     });
   },
   events: {
-    showItemRawOutModal2(data){
-       this.item = data;
+    showItemRawOutModal2(data) {
+      this.item = data;
       //  this.link = link;
-       $("#itemRawOutModal2").modal("show");
-       LoadingOverlayHide();
+      $("#itemRawOutModal2").modal("show");
+      LoadingOverlayHide();
     }
-  }  
+  }
 };
 </script>
