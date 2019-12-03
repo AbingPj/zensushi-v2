@@ -318,6 +318,7 @@
         </div>
       </div>
     </div>
+    <items-raw-out-2></items-raw-out-2>
   </div>
 </template>
 
@@ -545,6 +546,7 @@ export default {
           LoadingOverlayHide();
         } else {
           this.selectedRaw = raw;
+          this.$events.fire("showItemRawOutModal2", this.selectedRaw);
           this.getProducts();
         }
       } else {
