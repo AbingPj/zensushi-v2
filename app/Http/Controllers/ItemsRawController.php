@@ -29,8 +29,9 @@ class ItemsRawController extends Controller
                 $row->selected = false;
                 $balance =  ItemClass::getItemBalance($row->item_id);
                 $row->item = $row->item;
+                $row->desc = $row->item->description;
                 $row->balance = $balance;
-                $row->unit = $row->item->unit;
+                $row->unit = $row->item->unit->description;
                 return $row;
             });
         }
