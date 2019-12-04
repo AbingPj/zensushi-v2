@@ -30,6 +30,11 @@ Vue.component("per-page-option", require("./vt2/PerPageOption.vue").default);
 import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 Vue.component("vuetable-pagination-info", VuetablePaginationInfo);
 
+
+import VueTour from 'vue-tour'
+require('vue-tour/dist/vue-tour.css')
+Vue.use(VueTour)
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -44,6 +49,10 @@ Vue.component("vuetable-pagination-info", VuetablePaginationInfo);
 Vue.component(
     "example-component",
     require("./components/ExampleComponent.vue").default
+);
+Vue.component(
+    "tour-sample",
+    require("./components/vtour.vue").default
 );
 Vue.component(
     "vc-items",
@@ -97,6 +106,21 @@ Vue.component(
 Vue.component(
     "vc-records-table",
     require("./components/pages/records/RecordsTable.vue").default
+);
+
+Vue.component(
+    "vc-items-raw-product-in",
+    require("./components/pages/items/items-raw-product-in/ItemsRawProductIn.vue").default
+);
+
+
+Vue.component(
+    "items-raw-out",
+    require("./components/pages/items/ItemsRawOut.vue").default
+);
+Vue.component(
+    "items-raw-out-2",
+    require("./components/pages/items/items-raw-product-in/ItemsRawOut2.vue").default
 );
 
 /**

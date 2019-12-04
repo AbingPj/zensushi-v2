@@ -33,11 +33,11 @@
         <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
           <!-- <a class="dropdown-item" href="#"><i class="fa fa-window-close-o" aria-hidden="true"></i> &nbsp;  IN</a> -->
           <a @click="itemIn(rowData)" class="dropdown-item">
-            <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; IN
+            <i class="fa fa-check-square-o fa-2x" aria-hidden="true"></i> &nbsp; {{rowData.item_type_id == 2? 'PRODUCTION': 'IN'}}
           </a>
 
           <a @click="itemOut(rowData)" class="dropdown-item" href="#">
-            <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;OUT
+            <i class="fa fa-minus-square fa-2x" aria-hidden="true"></i> &nbsp;{{rowData.item_type_id == 1? 'PRODUCTION': 'OUT'}}
           </a>
           <a @click=" itemAdditional(rowData)" class="dropdown-item" href="#">
             <i class="fa fa-plus fa-lg" aria-hidden="true"></i> &nbsp; Additional
@@ -83,9 +83,13 @@ export default {
 
       if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
         this.$events.fire("showItemInModal", dataToIn);
+      }else{
+        console.log(data);
+        LoadingOverlay();
+        window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
       }
 
-      showItemAdditionalModal
+      
     },
 
     itemAdditional(data){
@@ -95,8 +99,15 @@ export default {
 
     itemOut(data) {
       let dataToOut = { ...data };
-      if (dataToOut.item_type_id == 1 || dataToOut.item_type_id == 3) {
+      if (dataToOut.item_type_id == 2 || dataToOut.item_type_id == 3) {
         this.$events.fire("showItemOutModal", dataToOut);
+      }else{
+         console.log(data);
+        LoadingOverlay();
+        // let link = "/zensushi-production/" + data.id;
+        // this.$events.fire("showItemRawOutModal", link, dataToOut);
+        window.location = "/zensushi-production/" + data.id;
+       
       }
     },
     deleteAction(data, index) {

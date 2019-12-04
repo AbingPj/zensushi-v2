@@ -13,13 +13,25 @@
           <div class="modal-body">
             <div class="form-group">
               <label for="date">Date</label>
-              <input type="date" class="form-control" id="date" v-model="date" />
+              <input
+                :class="dateIsValid? '' : 'is-invalid'"
+                type="date"
+                class="form-control"
+                id="date"
+                v-model="date"
+              />
             </div>
 
             <div class="form-group">
               <label for="title">Additional: {{ item.description }}</label>
               <div class="input-group">
-                <input type="number" class="form-control" placeholder="0" v-model="additional" />
+                <input
+                  :class="additionalIsValid? '' : 'is-invalid'"
+                  type="number"
+                  class="form-control"
+                  placeholder="0"
+                  v-model="additional"
+                />
                 <div class="input-group-append">
                   <span class="input-group-text">{{ item.unit }}</span>
                 </div>
@@ -46,11 +58,40 @@ export default {
     return {
       item: {},
       additional: null,
-      date: null
+      date: null,
+      dateIsValid: true,
+      additionalIsValid: true
     };
   },
   methods: {
     additionalItem() {
+      // validation
+      if (
+        this.date == null ||
+        this.date == undefined ||
+        this.date == "" ||
+        this.additional == null ||
+        this.additional == undefined ||
+        this.additional <= 0 ||
+        this.additional == ""
+      ) {
+        this.date == null || this.date == undefined || this.date == ""
+          ? (this.dateIsValid = false)
+          : (this.dateIsValid = true);
+
+        this.additional == null ||
+        this.additional == undefined ||
+        this.additional <= 0 ||
+        this.additional == ""
+          ? (this.additionalIsValid = false)
+          : (this.additionalIsValid = true);
+      } else {
+        this.dateIsValid = true;
+        this.additionalIsValid = true;
+        this.axiosPost();
+      }
+    },
+    axiosPost() {
       LoadingOverlay();
       axios
         .post("/items/additional", {
@@ -80,6 +121,17 @@ export default {
       "showItemAdditionalModal",
       data => ($("#itemAdditionalModal").modal("show"), (this.item = data))
     );
+  },
+
+  mounted() {
+    let self = this;
+    $("#itemAdditionalModal").on("hidden.bs.modal", function() {
+      //  window.clearTimeout(timer);
+      self.dateIsValid = true;
+      self.additionalIsValid = true;
+      self.additional = null;
+      self.date = null;
+    });
   }
   // mounted() {
   //   $("#itemInModal").on("show.bs.modal	", function(e) {

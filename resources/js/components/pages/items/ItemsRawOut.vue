@@ -1,18 +1,18 @@
 <template>
   <div>
-    <div class="modal fade" id="itemOutModal">
+    <div class="modal fade" id="itemRawOutModal">
       <div class="modal-dialog">
         <div class="modal-content">
           <!-- Modal Header -->
           <div class="modal-header">
-            <h4 class="modal-title">Item Stock-out</h4>
+            <h4 class="modal-title">Set Value</h4>
             <button type="button" class="close" data-dismiss="modal">&times;</button>
           </div>
 
           <!-- Modal body -->
           <div class="modal-body">
             <form>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="date">Date</label>
                 <input
                   :class="dateIsValid? '': 'is-invalid'"
@@ -21,10 +21,11 @@
                   id="date"
                   v-model="date"
                 />
-              </div>
-
+              </div> -->
+              <label>Item: <strong>{{ item.description }}</strong></label>
               <div class="form-group">
-                <label for="title">Stock-out: {{ item.description }}</label>
+                
+                <label for="title">Balance: <strong>{{ item.balance }}&nbsp;{{ item.unit}}</strong></label>
                 <div class="input-group">
                   <input
                     :class="outStockIsValid? '': 'is-invalid'"
@@ -37,6 +38,7 @@
                     <span class="input-group-text">{{ item.unit }}</span>
                   </div>
                 </div>
+                <small>set stock-out value for raw</small>
 
                 <!-- <label for="validationCustomUsername">Username</label>
                 <div class="input-group">
@@ -56,7 +58,7 @@
 
                 <br />
                 <div class="text-center">
-                  <button @click="stockOut()" class="btn btn-info">Stock-Out</button>
+                  <button @click="goToProduction()" class="btn btn-info">Go To Production</button>
                 </div>
               </div>
             </form>
@@ -78,7 +80,8 @@ export default {
       outStock: null,
       date: null,
       dateIsValid: true,
-      outStockIsValid: true
+      outStockIsValid: true,
+      link: "",
     };
   },
   methods: {
@@ -109,6 +112,11 @@ export default {
       }
     },
 
+    goToProduction(){
+      window.location = this.link;
+    },
+
+
     axiosPost() {
       if (this.item.balance == 0 || this.outStock > this.item.balance) {
         alert("Item balance must not be zero or item out value must not be greater than item balance.")
@@ -138,27 +146,30 @@ export default {
     }
   },
 
-  created() {
-    this.$events.listen(
-      "showItemOutModal",
-      data => ($("#itemOutModal").modal("show"), (this.item = data))
-    );
-  },
+  // created() {
+  //   this.$events.listen(
+  //     "showItemOutModal",
+  //     data => ($("#itemOutModal").modal("show"), (this.item = data))
+  //   );
+  // },
 
   mounted() {
     let self = this;
-    $("#itemOutModal").on("hidden.bs.modal", function() {
+    $("#itemRawOutModal").on("hidden.bs.modal", function() {
       //  window.clearTimeout(timer);
       self.dateIsValid = true;
       self.outStockIsValid = true;
       self.outStock = null;
       self.date = null;
     });
-  }
-  // mounted() {
-  //   $("#itemOutModal").on("show.bs.modal	", function(e) {
-  //     this.outStock = 0;
-  //   });
-  // }
+  },
+  events: {
+    showItemRawOutModal(link, data){
+       this.item = data;
+       this.link = link;
+       $("#itemRawOutModal").modal("show");
+       LoadingOverlayHide();
+    }
+  }  
 };
 </script>

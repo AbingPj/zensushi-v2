@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="text-center">
+          <div style="text-align: center;">
             <h5>Choose Item Type</h5>
           </div>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -14,13 +14,11 @@
         <div class="modal-body">
           <div class="container">
             <div class="row">
-              <div v-for="(itemType, index) in itemTypes" :key="index">
-                <div class="col-4">
-                  <button
-                    class="btn btn-primary"
-                    @click="onClickItemType(itemType)"
-                  >{{ itemType.description}}</button>
-                </div>
+              <div v-for="(itemType, index) in itemTypes" :key="index" class="col-4">
+                <button
+                  class="btn btn-primary btn-block"
+                  @click="onClickItemType(itemType)"
+                >{{ itemType.description}}</button>
               </div>
             </div>
           </div>

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Events\ItemsEvent;
 use App\In_record;
-use Illuminate\Http\Request;
 use App\Item;
 use App\Item_type;
 use App\Additional;
@@ -14,18 +12,15 @@ use App\Out_record;
 use App\Raw;
 use App\Raw_product;
 use App\Unit;
+
+use App\Events\ItemsEvent;
 use Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 
 class ItemsController extends Controller
 {
-    public function triggerPusher()
-    {
-        broadcast(new ItemsEvent('HELLO WORLD'));
-    }
-
-
     public function items()
     {
         $items = Item::all();
@@ -37,53 +32,6 @@ class ItemsController extends Controller
         $items = Item_type::all();
         return response()->json($items);
     }
-
-    public function showUpdateItemModal($id)
-    {
-
-        $item =  Item::find($id);
-
-        $item->selected_category = $item->category;
-        $item->selected_unit     = $item->unit;
-        $categories              = Category::all();
-        $units                   = Unit::all();
-        $raws                    = Raw::all();
-        if ($item->item_type_id == 1) {
-            $data = array(
-                "item"       => $item,
-                "categories" => $categories,
-                "units"      => $units,
-                "raw_value"  => $item->raw->value
-            );
-        } elseif ($item->item_type_id == 2) {
-            if ($raws->isNotEmpty()) {
-                $raws->map(function ($row) {
-                    return $row->item = $row->item;
-                });
-            }
-            $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
-            $data = array(
-                "item"              => $item,
-                "categories"        => $categories,
-                "units"             => $units,
-                "raws"              => $raws,
-                "raw_product_value" => $item->raw_product->value,
-                "selected_raw"      => $selectedRaw
-
-            );
-        } elseif ($item->item_type_id == 3) {
-            $data = array(
-                "item"       => $item,
-                "categories" => $categories,
-                "units"      => $units
-            );
-        }
-
-        return response()->json($data);
-    }
-
-
-
 
     public function createItem($id)
     {
@@ -103,19 +51,6 @@ class ItemsController extends Controller
                 return $row->item = $row->item;
             });
         }
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
-    }
-
-    public function StockInRawProduct($id)
-    {
-
-        $item = Item::findOrFail($id);
-        $raw = Raw::findOrFail($item->raw->id);
-        $raw_products = $raw->raw_products;
-        $raw_products->map(function ($row) {
-            return $row->item = $row->item;
-        });
-        dd($raw_products);
         return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
@@ -162,28 +97,48 @@ class ItemsController extends Controller
         });
     }
 
-    public function deleteItem($id)
+    public function showUpdateItemModal($id)
     {
+
         $item =  Item::find($id);
-        $itemType =  $item->item_type_id;
-        DB::transaction(function () use ($itemType, $item) {
-            if ($itemType == 1) {
-                $raw_id = $item->raw->id;
-                Raw::destroy($raw_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($itemType == 2) {
-                $raw_product_id = $item->raw_product->id;
-                Raw_product::destroy($raw_product_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($itemType == 3) {
-                $not_raw_id = $item->not_raw->id;
-                Not_raw::destroy($not_raw_id);
-                $item->delete();
-                broadcast(new ItemsEvent($item->id));
+
+        $item->selected_category = $item->category;
+        $item->selected_unit     = $item->unit;
+        $categories              = Category::all();
+        $units                   = Unit::all();
+        $raws                    = Raw::all();
+        if ($item->item_type_id == 1) {
+            $data = array(
+                "item"       => $item,
+                "categories" => $categories,
+                "units"      => $units,
+                "raw_value"  => $item->raw->value
+            );
+        } elseif ($item->item_type_id == 2) {
+            if ($raws->isNotEmpty()) {
+                $raws->map(function ($row) {
+                    return $row->item = $row->item;
+                });
             }
-        });
+            $selectedRaw = $raws->firstWhere('id', $item->raw_product->raw_id);
+            $data = array(
+                "item"              => $item,
+                "categories"        => $categories,
+                "units"             => $units,
+                "raws"              => $raws,
+                "raw_product_value" => $item->raw_product->value,
+                "selected_raw"      => $selectedRaw
+
+            );
+        } elseif ($item->item_type_id == 3) {
+            $data = array(
+                "item"       => $item,
+                "categories" => $categories,
+                "units"      => $units
+            );
+        }
+
+        return response()->json($data);
     }
 
     public function updateItem(Request $request)
@@ -215,28 +170,25 @@ class ItemsController extends Controller
         });
     }
 
-    public function StockInRaw(Request $request)
+    public function deleteItem($id)
     {
-
-        DB::transaction(function () use ($request) {
-            $value = $request->input('value');
-            $date = $request->input('date');
-            $item = Item::findOrFail($request->input('itemId'));
-            if ($item->item_type_id ==  1) {
-                $in          = new In_record;
-                $in->item_id = $item->id;
-                $in->value   = $value;
-                $in->user    = Auth::id();
-                $in->date    = $date;
-                $in->save();
+        $item =  Item::find($id);
+        $itemType =  $item->item_type_id;
+        DB::transaction(function () use ($itemType, $item) {
+            if ($itemType == 1) {
+                $raw_id = $item->raw->id;
+                Raw::destroy($raw_id);
+                $item->delete();
                 broadcast(new ItemsEvent($item->id));
-            } elseif ($item->item_type_id ==  3) {
-                $in          = new In_record;
-                $in->item_id = $item->id;
-                $in->value   = $value;
-                $in->user    = Auth::id();
-                $in->date    = $date;
-                $in->save();
+            } elseif ($itemType == 2) {
+                $raw_product_id = $item->raw_product->id;
+                Raw_product::destroy($raw_product_id);
+                $item->delete();
+                broadcast(new ItemsEvent($item->id));
+            } elseif ($itemType == 3) {
+                $not_raw_id = $item->not_raw->id;
+                Not_raw::destroy($not_raw_id);
+                $item->delete();
                 broadcast(new ItemsEvent($item->id));
             }
         });
@@ -257,40 +209,6 @@ class ItemsController extends Controller
             broadcast(new ItemsEvent($item->id));
         });
     }
-
-    public function StockOutRaw(Request $request)
-    {
-        DB::transaction(function () use ($request) {
-            $value = $request->input('value');
-            $date = $request->input('date');
-            $item = Item::findOrFail($request->input('itemId'));
-
-            if ($item->item_type_id ==  1) {
-                $out          = new Out_record();
-                $out->item_id = $item->id;
-                $out->value   = $value;
-                $out->user    = Auth::id();
-                $out->date    = $date;
-                $out->save();
-                broadcast(new ItemsEvent($item->id));
-            } elseif ($item->item_type_id == 3) {
-                $out          = new Out_record();
-                $out->item_id = $item->id;
-                $out->value   = $value;
-                $out->user    = Auth::id();
-                $out->date    = $date;
-                $out->save();
-                broadcast(new ItemsEvent($item->id));
-            }
-        });
-    }
-
-
-
-
-
-
-
 
     public function index()
     {
@@ -338,6 +256,8 @@ class ItemsController extends Controller
             ->join('users', 'items.user_id', 'users.id')
             ->join('categories', 'items.category_id', 'categories.id')
             ->join('item_types', 'items.item_type_id', 'item_types.id')
+            ->leftJoin('raw_products', 'items.id', 'raw_products.item_id')
+            ->leftJoin('raws', 'raw_products.raw_id', 'raws.id')
             // ->leftJoinSub($additionals_data, 'additionals', function ($join) {
             //     $join->on('items.id', '=', 'additionals.item_id');
             // })
@@ -361,6 +281,8 @@ class ItemsController extends Controller
                 'items.category_id',
                 'items.item_type_id',
                 'items.unit_id',
+                'raw_products.raw_id',
+                'raws.item_id AS product_raw_item_id',
                 'addi',
                 'item_in',
                 'item_out',
@@ -405,6 +327,7 @@ class ItemsController extends Controller
                     ->orWhere('categories.description', 'like', $value)
                     ->orWhere('units.description', 'like', $value)
                     ->orWhere('users.name', 'like', $value)
+                    ->orWhere('item_types.description', 'like', $value)
                     ->orWhere('balance', 'like', $value);
             });
         }
@@ -424,7 +347,8 @@ class ItemsController extends Controller
             ->header('Access-Control-Allow-Methods', 'GET');
     }
 
-
-
-    //End
+    // public function triggerPusher()
+    // {
+    //     broadcast(new ItemsEvent('HELLO WORLD'));
+    // }
 }
