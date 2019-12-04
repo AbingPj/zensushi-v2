@@ -77,3 +77,7 @@ Route::get('loading', function () {
     return view('loading');
 });
 
+
+Route::get('/test', 'TestController@test');
+
+
