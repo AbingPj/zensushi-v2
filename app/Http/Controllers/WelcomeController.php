@@ -9,17 +9,17 @@ class WelcomeController extends Controller
 {
 
 
-    // public function __construct()
-    // {
-    //     // $this->middleware('guest')->except('logout');
-    //     $this->middleware('guest');
-    // }
+    public function __construct()
+    {
+        // $this->middleware('guest')->except('logout');
+        $this->middleware('guest');
+    }
 
     public function welcome()
     {
-        if(Auth::check()) {
-            return redirect()->route('page.home');
-        }
+        // if(Auth::check()) {
+        //     return redirect()->route('page.home');
+        // }
         return view('welcome');
     }
     public function register()

@@ -31,6 +31,7 @@ Route::get('/zensushi-records', 'PageController@records')->name('page.records');
 Route::get('/zensushi-production', 'PageController@production')->name('page.production');;
 Route::get('/zensushi-production/{item_id}', 'PageController@production2');
 Route::get('/zensushi-production/{item_id}/{product_item_id}', 'PageController@production3');
+Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@production4');
 
 
 
@@ -43,6 +44,8 @@ Route::put('/items/update', 'ItemsController@updateItem');
 Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 Route::post('/items/additional', 'ItemsController@AdditionalItem');
 Route::get('/items', 'ItemsController@index');
+
+
 // Route::post('/triggerPusher', 'ItemsController@triggerPusher');
 
 // Records Controller
@@ -52,12 +55,14 @@ Route::get('/records', 'RecordsController@getRecords');
 Route::get('/items/raw', 'ItemsRawController@getRawItems');
 Route::post('/items/stockin', 'ItemsRawController@StockInRaw');
 Route::post('/items/stockout', 'ItemsRawController@StockOutRaw');
+Route::get('/item/balance/{item_id}', 'ItemsRawController@getItemBalance');
 
 // Products Controller
 Route::get('/items/products', 'ItemsProductController@getProductItems');
 Route::get('/items/products/{item_id}', 'ItemsProductController@getProductItemsByRaw');
 Route::get('/items/stockin/rawproduct/{item_id}', 'ItemsProductController@StockInRawProduct');
 Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsProductController@StockInRawProduct2');
+// Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}/{item_raw_stock_out}', 'ItemsProductController@production4');
 Route::post('/items/products/stockin', 'ItemsProductController@saveProductsIn');
 
 
@@ -71,3 +76,8 @@ Route::get('/in_raw_products', function () {
 Route::get('loading', function () {
     return view('loading');
 });
+
+
+Route::get('/test', 'TestController@test');
+
+

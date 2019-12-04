@@ -10,7 +10,7 @@
                 <tr style=" border-bottom: 4px solid gray; border-top: 4px solid black;">
                   <th colspan="7">
                     <div class="row">
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for="date">Date</label>
                           <input
@@ -22,7 +22,7 @@
                           />
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label for>Selected Raw</label>
                           <select
@@ -39,10 +39,48 @@
                           </select>
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
-                          <label for="out">Raw Stock-out Weight</label>
-                          <input type="number" class="form-control" id="stock-out" />
+                          <label for="out">Balance</label>
+                          <div class="input-group">
+                            <input
+                              type="number"
+                              class="form-control"
+                              :value=" selectedRaw == null? '' : selectedRaw.balance"
+                              disabled
+                            />
+
+                            <div class="input-group-append">
+                              <span
+                                class="input-group-text"
+                              >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="out">Raw Out:</label>
+                          <!-- <input type="number" class="form-control" id="stock-out" /> -->
+                          <div class="input-group">
+                            <div class="input-group-prepend">
+                              <button class="btn btn-primary" @click="itemRawOutModal2Show()">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                              </button>
+                            </div>
+                            <input
+                              disabled
+                              type="number"
+                              class="form-control"
+                              v-model="rawOut"
+                              onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                            />
+                            <div class="input-group-append">
+                              <span
+                                class="input-group-text"
+                              >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -53,7 +91,7 @@
                   <th scope="col">Product</th>
                   <th scope="col" style="width: 150px;" class="text-center">Quantity</th>
                   <th scope="col"></th>
-                  <th scope="col" style="width: 200px;" class="text-center">Weight</th>
+                  <th scope="col" style="width: 250px;" class="text-center">Weight</th>
                   <th scope="col" class="text-right">Total Weight</th>
                   <th></th>
                 </tr>
@@ -122,7 +160,7 @@
                   </td>
                 </tr>
                 <!-- Subtotal -->
-                <tr  style="border-top: 3px solid gray;">
+                <tr style="border-top: 3px solid gray;">
                   <td>
                     <strong>Sub-Total</strong>
                   </td>
@@ -143,20 +181,41 @@
                   <td class="text-center">
                     <div class="form-inline">
                       <label for="scrap" class="mr-sm-2">
-                        <b>Scrap:</b>
+                        <b>Scrap:&nbsp;</b>
                       </label>
-                      <input
+                      <!-- <input
                         type="text"
                         maxlength="10"
                         class="form-control"
                         style="width: 100px;"
                         v-model="scrap"
                         onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
-                      />
+                      />-->
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          maxlength="10"
+                          class="form-control"
+                          style="width: 100px;"
+                          v-model="scrap"
+                          id="scrap"
+                          onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                        />
+                        <div class="input-group-append">
+                          <select
+                            v-model="scrapSelectedWeight"
+                            class="btn btn-outline-secondary"
+                            style="padding: 0px;"
+                          >
+                            <option style="padding: 0px;">Grams</option>
+                            <option style="padding: 0px;">Kilo</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </td>
 
-                  <td class="text-right">{{scrap == ""? 0 : scrap }}g</td>
+                  <td class="text-right">{{computedScrap == "" ? 0 : computedScrap }}g</td>
                   <td></td>
                 </tr>
                 <!-- BOnes -->
@@ -167,21 +226,43 @@
                   <td></td>
                   <td class="text-center">
                     <div class="form-inline">
-                      <label for="scrap" class="mr-sm-2">
+                      <label for="bones" class="mr-sm-2">
                         <b>Bones:</b>
                       </label>
-                      <input
+                      <!-- <input
                         type="text"
                         maxlength="10"
                         class="form-control"
                         style="width: 100px;"
                         v-model="bones"
+                        id="bones"
                         onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
-                      />
+                      />-->
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          maxlength="10"
+                          class="form-control"
+                          style="width: 100px;"
+                          v-model="bones"
+                          id="bones"
+                          onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                        />
+                        <div class="input-group-append">
+                          <select
+                            v-model="bonesSelectedWeight"
+                            class="btn btn-outline-secondary"
+                            style="padding: 0px;"
+                          >
+                            <option style="padding: 0px;">Grams</option>
+                            <option style="padding: 0px;">Kilo</option>
+                          </select>
+                        </div>
+                      </div>
                     </div>
                   </td>
 
-                  <td class="text-right">{{bones == ""? 0 : bones}}g</td>
+                  <td class="text-right">{{computedBones == ""? 0 : computedBones}}g</td>
                   <td></td>
                 </tr>
                 <!-- TOTAl -->
@@ -194,9 +275,29 @@
                   <td></td>
                   <td></td>
                   <td class="text-right">
-                    <strong>{{finalWeight}}</strong>
+                    <strong>{{finalWeight}}g</strong>
                   </td>
-                  <td>Grams</td>
+                  <td>{{finalWeight/1000}} Kilo</td>
+                </tr>
+
+                <!-- Out -->
+                <tr>
+                  <td>Raw Out:</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">{{rawStackOutWeightGrams}}g</td>
+                  <td>{{rawStackOutWeightKilo}} Kilo</td>
+                </tr>
+                <tr>
+                  <td>Difference:</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td class="text-right">{{difference}}g</td>
+                  <td>{{difference/1000}} Kilo</td>
                 </tr>
               </tbody>
             </table>
@@ -217,6 +318,7 @@
         </div>
       </div>
     </div>
+    <items-raw-out-2></items-raw-out-2>
   </div>
 </template>
 
@@ -233,12 +335,15 @@ export default {
       products: [],
       selectedRaw: null,
       selectedRawOut: 0,
+      rawOut: 0,
       selectedProduct: null,
       selectedProductsNew: [],
       scrap: 0,
       bones: 0,
       date: null,
-      dateIsValid: true
+      dateIsValid: true,
+      scrapSelectedWeight: "Grams",
+      bonesSelectedWeight: "Grams"
       // selectedProducts: []
     };
   },
@@ -286,12 +391,65 @@ export default {
         return sum;
       }
     },
-    finalWeight() {
+
+    computedScrap() {
       let scrap = this.scrap;
       scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
+      if (this.scrapSelectedWeight == "Kilo") {
+        return scrap * 1000;
+      } else {
+        return scrap;
+      }
+    },
+
+    computedBones() {
       let bones = this.bones;
       bones == "" ? (bones = 0) : (bones = parseFloat(bones));
+      if (this.bonesSelectedWeight == "Kilo") {
+        return bones * 1000;
+      } else {
+        return bones;
+      }
+    },
+
+    finalWeight() {
+      let scrap = this.computedScrap;
+      scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
+      let bones = this.computedBones;
+      bones == "" ? (bones = 0) : (bones = parseFloat(bones));
       return scrap + bones + parseFloat(this.totalWieghtOfSelectedProduct);
+    },
+
+    rawStackOutWeightGrams() {
+      if (this.selectedRaw == null) {
+        return 0;
+      } else {
+        let value = this.selectedRaw.value;
+        value == "" ? (value = 0) : (value = parseFloat(value));
+        let rawOut = this.rawOut;
+        rawOut == "" ? (rawOut = 0) : (rawOut = parseFloat(rawOut));
+        return rawOut * value;
+      }
+    },
+
+    rawStackOutWeightKilo() {
+      if (this.selectedRaw == null) {
+        return 0;
+      } else {
+        let value = this.selectedRaw.value;
+        value == "" ? (value = 0) : (value = parseFloat(value));
+        let rawOut = this.rawOut;
+        rawOut == "" ? (rawOut = 0) : (rawOut = parseFloat(rawOut));
+        return (rawOut * value) / 1000;
+      }
+    },
+
+    difference() {
+      let total = this.finalWeight;
+      total == "" ? (total = 0) : (total = parseFloat(total));
+      let out = this.rawStackOutWeightGrams;
+      out == "" ? (out = 0) : (out = parseFloat(out));
+      return total - out;
     }
   },
   methods: {
@@ -308,6 +466,8 @@ export default {
         this.selectedProduct = null;
       }
     },
+
+
 
     removeSelection(data) {
       this.products.map(obj => {
@@ -388,6 +548,7 @@ export default {
           LoadingOverlayHide();
         } else {
           this.selectedRaw = raw;
+          this.$events.fire("showItemRawOutModal2", this.selectedRaw);
           this.getProducts();
         }
       } else {
@@ -428,7 +589,7 @@ export default {
       } else {
         LoadingOverlayHide();
       }
-    }
+    },
     // cleaningSelectedProducts(data) {
     //   return data.map(obj => {
     //     delete obj.selected;
@@ -440,6 +601,11 @@ export default {
     //     return obj;
     //   });
     // },
+    itemRawOutModal2Show(){
+      console.log('show');
+      $("#itemRawOutModal2").modal("show");
+    }
+     
   },
 
   mounted() {
