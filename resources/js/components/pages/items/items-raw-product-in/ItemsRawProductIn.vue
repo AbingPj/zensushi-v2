@@ -64,7 +64,7 @@
                           <!-- <input type="number" class="form-control" id="stock-out" /> -->
                           <div class="input-group">
                             <div class="input-group-prepend">
-                              <button class="btn btn-primary">
+                              <button class="btn btn-primary" @click="itemRawOutModal2Show()">
                                 <i class="fa fa-pencil" aria-hidden="true"></i>
                               </button>
                             </div>
@@ -467,6 +467,8 @@ export default {
       }
     },
 
+
+
     removeSelection(data) {
       this.products.map(obj => {
         if (obj.id == data.id) {
@@ -587,7 +589,7 @@ export default {
       } else {
         LoadingOverlayHide();
       }
-    }
+    },
     // cleaningSelectedProducts(data) {
     //   return data.map(obj => {
     //     delete obj.selected;
@@ -599,6 +601,11 @@ export default {
     //     return obj;
     //   });
     // },
+    itemRawOutModal2Show(){
+      console.log('show');
+      $("#itemRawOutModal2").modal("show");
+    }
+     
   },
 
   mounted() {

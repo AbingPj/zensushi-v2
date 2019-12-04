@@ -113,6 +113,7 @@ export default {
         this.outStockIsValid = false;
       } else {
         this.$parent.rawOut = this.outStock;
+         this.outStockIsValid = true;
          $("#itemRawOutModal2").modal("hide");
       }
     }
@@ -120,11 +121,10 @@ export default {
 
   mounted() {
     let self = this;
-    $("#itemRawOutModal").on("hidden.bs.modal", function() {
-      //  window.clearTimeout(timer);
-      self.outStockIsValid = true;
-      self.outStock = null;
-    });
+    // $("#itemRawOutModal").on("hidden.bs.modal", function() {
+    //   // self.outStockIsValid = true;
+    //   self.outStockIsValid = true;
+    // });
   },
   events: {
     showItemRawOutModal2(data) {
