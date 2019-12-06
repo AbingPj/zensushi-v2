@@ -289,10 +289,14 @@
                 <!-- Out -->
                 <tr>
                   <td>Raw Out:</td>
+                  <!-- <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
-                  <td></td>
+                  <td></td> -->
+                  <td><strong>{{selectedRaw == null? '' : selectedRaw.desc}}</strong></td>
+                  <td><strong>{{rawOut}}&nbsp;{{selectedRaw == null? '' : selectedRaw.unit}}</strong></td>
+                  <td>x</td>
+                  <td><strong>{{selectedRaw == null? '' : selectedRaw.value}}g</strong></td>
                   <td class="text-right">{{rawStackOutWeightGrams}}g</td>
                   <td>{{rawStackOutWeightKilo}} Kilo</td>
                   <td></td>
@@ -525,11 +529,14 @@ export default {
         let params = {
           // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
           selected_products: this.selectedProductsNew,
-          bones: this.bones,
-          scrap: this.scrap,
+          //  bones: this.bones,
+          // scrap: this.scrap,
+          bones: this.computedBones,
+          scrap: this.computedScrap,
           total: this.finalWeight,
           selected_raw: this.selectedRaw,
-          selected_raw_out_value: this.selectedRawOut,
+          // selected_raw_out_value: this.selectedRawOut,
+          selected_raw_out_value: this.rawOut,
           date: this.date
         };
 
