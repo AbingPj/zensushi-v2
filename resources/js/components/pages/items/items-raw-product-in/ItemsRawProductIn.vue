@@ -523,6 +523,7 @@ export default {
       console.log(this.date);
       if (this.date == null || this.date == undefined || this.date == "") {
         console.log("date is required");
+        alert("date is required");
         this.dateIsValid = false;
         LoadingOverlayHide();
       } else {
@@ -533,11 +534,14 @@ export default {
           // scrap: this.scrap,
           bones: this.computedBones,
           scrap: this.computedScrap,
-          total: this.finalWeight,
+        
           selected_raw: this.selectedRaw,
           // selected_raw_out_value: this.selectedRawOut,
           selected_raw_out_value: this.rawOut,
-          date: this.date
+          date: this.date,
+
+          total: this.finalWeight,
+          difference: this.difference
         };
 
         axios
