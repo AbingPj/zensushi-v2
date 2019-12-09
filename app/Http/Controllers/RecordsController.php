@@ -28,7 +28,9 @@ class RecordsController extends Controller
                            '' as 'IN',
                            '' as 'OUT',
                            '' as 'BONES',
-                           '' as 'SCRAPS'
+                           '' as 'SCRAPS',
+                           '' as 'TOTAL',
+                           '' as 'DIFFERENCE'
                         "));
 
         $in = In_record::join('users', 'in_records.user', 'users.id')
@@ -41,52 +43,98 @@ class RecordsController extends Controller
                                    in_records.value as 'IN',
                                    '' as 'OUT',
                                    '' as 'BONES',
-                                   '' as 'SCRAPS'
+                                   '' as 'SCRAPS',
+                                   '' as 'TOTAL',
+                                   '' as 'DIFFERENCE'
                                 "));
 
-        $out = Out_record::join('users', 'out_records.user', 'users.id')
-            ->join('items', 'out_records.item_id', 'items.id')
-            ->select(DB::raw(" item_id,
-                                date,
-                                items.description as 'item',
-                                users.name as 'user',
-                                '' as 'ADD',
-                                '' as 'IN',
-                                out_records.value as 'OUT',
-                                '' as 'BONES',
-                                '' as 'SCRAPS'
-                            "));
 
-        $bones = Bone::join('users', 'bones.user', 'users.id')
-            ->join('items', 'bones.item_id', 'items.id')
-            ->select(DB::raw(" item_id,
-                               date,
-                               items.description as 'item',
-                               users.name as 'user',
-                               '' as 'ADD',
-                               '' as 'IN',
-                               '' as 'OUT',
-                               bones.value as 'BONES',
-                               '' as 'SCRAPS'
-                            "));
 
-        $query = Scrap::join('users', 'scraps.user', 'users.id')
-            ->join('items', 'scraps.item_id', 'items.id')
-            ->select(DB::raw(" item_id,
-                               date,
-                               items.description as 'item',
-                               users.name as 'user',
-                               '' as 'ADD',
-                               '' as 'IN',
-                               '' as 'OUT',
-                               '' as 'BONES',
-                               scraps.value as 'SCRAPS'
-                            "))
-            ->union($add)
-            ->union($in)
-            ->union($out)
-            ->union($bones)
-            ->newQuery();;
+            // $query = Out_record::join('users', 'out_records.user', 'users.id')
+            //     ->join('items', 'out_records.item_id', 'items.id')
+            //     ->join('bones', 'out_records.id', 'bones.raw_out_id')
+            //     ->join('scraps', 'out_records.id', 'scraps.raw_out_id')
+            //     ->select(DB::raw("  out_records.item_id,
+            //                         out_records.date,
+            //                         items.description as 'item',
+            //                         users.name as 'user',
+            //                         '' as 'ADD',
+            //                         '' as 'IN',
+            //                         out_records.value as 'OUT',
+            //                         IF(items.unit_id = 4, CONCAT((ROUND(bones.value/1000, 2)),' kilo'), CONCAT(bones.value,' g')) as 'BONES',
+            //                         IF(items.unit_id = 4, CONCAT((ROUND(scraps.value/1000, 2)),' kilo'), CONCAT(scraps.value,' g')) as 'SCRAPS'
+            //                     "))
+            //     ->union($add)
+            //     ->union($in)
+            //     ->newQuery();
+
+            $query = Out_record::join('users', 'out_records.user', 'users.id')
+                ->join('items', 'out_records.item_id', 'items.id')
+                ->join('bones', 'out_records.id', 'bones.raw_out_id')
+                ->join('scraps', 'out_records.id', 'scraps.raw_out_id')
+                ->select(DB::raw("  out_records.item_id,
+                                    out_records.date,
+                                    items.description as 'item',
+                                    users.name as 'user',
+                                    '' as 'ADD',
+                                    '' as 'IN',
+                                    out_records.value as 'OUT',
+                                    CONCAT( FORMAT(bones.value,0) ,'g   (', FORMAT((bones.value/1000),2), 'Kilo)' ) as 'BONES',
+                                    CONCAT( FORMAT(scraps.value,0) ,'g   (', FORMAT((scraps.value/1000),2), 'Kilo)' ) as 'SCRAPS',
+                                    out_records.total_production as 'TOTAL',
+                                    out_records.difference as 'DIFFERENCE'
+                                "))
+                ->union($add)
+                ->union($in)
+                ->newQuery();
+
+
+            
+
+                                
+        // $out = Out_record::join('users', 'out_records.user', 'users.id')
+        //     ->join('items', 'out_records.item_id', 'items.id')
+        //     ->select(DB::raw(" item_id,
+        //                         date,
+        //                         items.description as 'item',
+        //                         users.name as 'user',
+        //                         '' as 'ADD',
+        //                         '' as 'IN',
+        //                         out_records.value as 'OUT',
+        //                         '' as 'BONES',
+        //                         '' as 'SCRAPS'
+        //                     "));
+
+        // $bones = Bone::join('users', 'bones.user', 'users.id')
+        //     ->join('items', 'bones.item_id', 'items.id')
+        //     ->select(DB::raw(" item_id,
+        //                        date,
+        //                        items.description as 'item',
+        //                        users.name as 'user',
+        //                        '' as 'ADD',
+        //                        '' as 'IN',
+        //                        '' as 'OUT',
+        //                        bones.value as 'BONES',
+        //                        '' as 'SCRAPS'
+        //                     "));
+
+        // $query = Scrap::join('users', 'scraps.user', 'users.id')
+        //     ->join('items', 'scraps.item_id', 'items.id')
+        //     ->select(DB::raw(" item_id,
+        //                        date,
+        //                        items.description as 'item',
+        //                        users.name as 'user',
+        //                        '' as 'ADD',
+        //                        '' as 'IN',
+        //                        '' as 'OUT',
+        //                        '' as 'BONES',
+        //                        scraps.value as 'SCRAPS'
+        //                     "))
+        //     ->union($add)
+        //     ->union($in)
+        //     ->union($out)
+        //     ->union($bones)
+        //     ->newQuery();;
 
         if (request('sort') != "") {
             $sorts = explode(',', request()->sort);
