@@ -39,5 +39,15 @@ export default [
         title: "SCRAPS",
         sortField: "SCRAPS"
     },
+    {
+        name: "TOTAL",
+        title: "TOTAL PROD",
+        sortField: "SCRAPS"
+    },
+    {
+        name: "DIFFERENCE",
+        title: "DIFFERENCE",
+        sortField: "SCRAPS"
+    },
     
 ];

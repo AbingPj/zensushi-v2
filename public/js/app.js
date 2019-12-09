@@ -3621,6 +3621,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.date == null || this.date == undefined || this.date == "") {
         console.log("date is required");
+        alert("date is required");
         this.dateIsValid = false;
         LoadingOverlayHide();
       } else {
@@ -3631,11 +3632,12 @@ __webpack_require__.r(__webpack_exports__);
           // scrap: this.scrap,
           bones: this.computedBones,
           scrap: this.computedScrap,
-          total: this.finalWeight,
           selected_raw: this.selectedRaw,
           // selected_raw_out_value: this.selectedRawOut,
           selected_raw_out_value: this.rawOut,
-          date: this.date
+          date: this.date,
+          total: this.finalWeight,
+          difference: this.difference
         };
         axios.post("/items/products/stockin", params).then(function (res) {
           console.log(res);
@@ -74068,6 +74070,14 @@ __webpack_require__.r(__webpack_exports__);
 }, {
   name: "SCRAPS",
   title: "SCRAPS",
+  sortField: "SCRAPS"
+}, {
+  name: "TOTAL",
+  title: "TOTAL PROD",
+  sortField: "SCRAPS"
+}, {
+  name: "DIFFERENCE",
+  title: "DIFFERENCE",
   sortField: "SCRAPS"
 }]);
 
