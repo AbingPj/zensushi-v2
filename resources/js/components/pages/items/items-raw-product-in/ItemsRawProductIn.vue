@@ -19,6 +19,7 @@
                             :class=" dateIsValid? '' : 'is-invalid'"
                             id="date"
                             v-model="date"
+                            ref="date"
                           />
                         </div>
                       </div>
@@ -523,9 +524,11 @@ export default {
       console.log(this.date);
       if (this.date == null || this.date == undefined || this.date == "") {
         console.log("date is required");
-        alert("date is required");
+        // alert("date is required");
+        document.getElementById("date").focus();
         this.dateIsValid = false;
         LoadingOverlayHide();
+         this.$refs.date.$el.focus();
       } else {
         let params = {
           // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
