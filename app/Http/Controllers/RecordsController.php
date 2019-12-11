@@ -7,6 +7,7 @@ use App\Additional;
 use App\In_record;
 use App\Out_record;
 use App\Bone;
+use App\CustomizeClass\ItemClass;
 use App\Scrap;
 // use App\Http\Controllers\DB;
 use Illuminate\Support\Facades\DB;
@@ -14,6 +15,65 @@ use Illuminate\Support\Facades\DB;
 
 class RecordsController extends Controller
 {
+    public function deleteRecord(Request $request){
+       
+        $id = $request->input('id');
+        $scrap_id = $request->input('scrap_id');
+        $bones_id = $request->input('bones_id');
+       
+        $record_type = $request->input('record_type');
+        if($record_type == 'add'){
+            $record = Additional::findOrFail($id);
+            $record->delete();
+        }elseif ($record_type == 'in') {
+            $record = In_record::findOrFail($id);
+            $raw_out_id = $record->raw_out_id;
+            $record->delete();
+            ItemClass::updateProductionTotalAndDifference($raw_out_id);
+        }elseif ($record_type == 'out') {
+            $record = Out_record::findOrFail($id);
+            $record->delete();
+            $scrap_record  = Scrap::findOrFail($scrap_id);
+            $scrap_record->delete();
+            $bones_record = Bone::findOrFail($bones_id);
+            $bones_record->delete();
+            ItemClass::updateProductionTotalAndDifference($id);
+        }
+    }
+
+    public function updateRecord(Request $request){
+
+        
+       
+        $id = $request->input('id');
+        $scrap_id = $request->input('scrap_id');
+        $bones_id = $request->input('bones_id');
+       
+        $record_type = $request->input('record_type');
+        if($record_type == 'add'){
+            $record = Additional::findOrFail($id);
+            $record->value = $request->input('ADD');
+            $record->save();
+        }elseif ($record_type == 'in') {
+            $record = In_record::findOrFail($id);
+            $raw_out_id = $record->raw_out_id;
+            $record->value =  $request->input('IN');
+            $record->save();
+            ItemClass::updateProductionTotalAndDifference($raw_out_id);
+        }elseif ($record_type == 'out') {
+            $record = Out_record::findOrFail($id);
+            $record->value = $request->input('OUT');
+            $record->save();
+            $scrap_record  = Scrap::findOrFail($scrap_id);
+            $scrap_record->value = $request->input('scraps_value');
+            $scrap_record->save();
+            $bones_record = Bone::findOrFail($bones_id);
+            $bones_record->value = $request->input('bones_value');
+            $bones_record->save();
+            ItemClass::updateProductionTotalAndDifference($id);
+        }
+    }
+
     public function getRecords()
     {
         $request = request();
@@ -89,8 +149,8 @@ class RecordsController extends Controller
         $query = Out_record::join('users', 'out_records.user', 'users.id')
             ->join('items', 'out_records.item_id', 'items.id')
             ->join('units', 'items.unit_id', 'units.id')
-            ->join('bones', 'out_records.id', 'bones.raw_out_id')
-            ->join('scraps', 'out_records.id', 'scraps.raw_out_id')
+            ->leftJoin('bones', 'out_records.id', 'bones.raw_out_id')
+            ->leftJoin('scraps', 'out_records.id', 'scraps.raw_out_id')
             ->select(DB::raw("  out_records.item_id,
                                     out_records.date,
                                     items.description as 'item',
@@ -114,6 +174,8 @@ class RecordsController extends Controller
             ->union($in)
             ->newQuery();
 
+
+         
 
             // units.description as 'unit
 

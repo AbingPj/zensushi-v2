@@ -12,19 +12,6 @@
                     <div class="row">
                       <div class="col-md-3">
                         <div class="form-group">
-                          <label for="date">Date</label>
-                          <input
-                            type="date"
-                            class="form-control"
-                            :class=" dateIsValid? '' : 'is-invalid'"
-                            id="date"
-                            v-model="date"
-                            ref="date"
-                          />
-                        </div>
-                      </div>
-                      <div class="col-md-3">
-                        <div class="form-group">
                           <label for>Selected Raw</label>
                           <select
                             v-model="selectedRaw"
@@ -82,6 +69,19 @@
                               >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
                             </div>
                           </div>
+                        </div>
+                      </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="date">Date</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            :class=" dateIsValid? '' : 'is-invalid'"
+                            id="date"
+                            v-model="date"
+                            ref="date"
+                          />
                         </div>
                       </div>
                     </div>
@@ -173,7 +173,7 @@
                   <td></td>
                   <td class="text-right">{{totalWieghtOfSelectedProduct}}g</td>
                   <td>{{totalWieghtOfSelectedProduct/1000}} Kilo</td>
-                   <td></td>
+                  <td></td>
                 </tr>
 
                 <!-- Scrap -->
@@ -269,7 +269,7 @@
 
                   <td class="text-right">{{computedBones == ""? 0 : computedBones}}g</td>
                   <td>{{computedBonesKilo == ""? 0 : computedBonesKilo}} Kilo</td>
-                   <td></td>
+                  <td></td>
                 </tr>
                 <!-- TOTAl -->
                 <tr style="border-top: 4px solid black;">
@@ -284,7 +284,7 @@
                     <strong>{{finalWeight}}g</strong>
                   </td>
                   <td>{{finalWeight/1000}} Kilo</td>
-                   <td></td>
+                  <td></td>
                 </tr>
 
                 <!-- Out -->
@@ -293,11 +293,17 @@
                   <!-- <td></td>
                   <td></td>
                   <td></td>
-                  <td></td> -->
-                  <td><strong>{{selectedRaw == null? '' : selectedRaw.desc}}</strong></td>
-                  <td><strong>{{rawOut}}&nbsp;{{selectedRaw == null? '' : selectedRaw.unit}}</strong></td>
+                  <td></td>-->
+                  <td>
+                    <strong>{{selectedRaw == null? '' : selectedRaw.desc}}</strong>
+                  </td>
+                  <td>
+                    <strong>{{rawOut}}&nbsp;{{selectedRaw == null? '' : selectedRaw.unit}}</strong>
+                  </td>
                   <td>x</td>
-                  <td><strong>{{selectedRaw == null? '' : selectedRaw.value}}g</strong></td>
+                  <td>
+                    <strong>{{selectedRaw == null? '' : selectedRaw.value}}g</strong>
+                  </td>
                   <td class="text-right">{{rawStackOutWeightGrams}}g</td>
                   <td>{{rawStackOutWeightKilo}} Kilo</td>
                   <td></td>
@@ -420,7 +426,7 @@ export default {
       if (this.scrapSelectedWeight == "Kilo") {
         return scrap;
       } else {
-        return scrap/1000;
+        return scrap / 1000;
       }
     },
 
@@ -439,7 +445,7 @@ export default {
       if (this.bonesSelectedWeight == "Kilo") {
         return bones;
       } else {
-        return bones/1000;
+        return bones / 1000;
       }
     },
 
@@ -498,8 +504,6 @@ export default {
       }
     },
 
-
-
     removeSelection(data) {
       this.products.map(obj => {
         if (obj.id == data.id) {
@@ -528,7 +532,7 @@ export default {
         document.getElementById("date").focus();
         this.dateIsValid = false;
         LoadingOverlayHide();
-         this.$refs.date.$el.focus();
+        this.$refs.date.$el.focus();
       } else {
         let params = {
           // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
@@ -537,7 +541,7 @@ export default {
           // scrap: this.scrap,
           bones: this.computedBones,
           scrap: this.computedScrap,
-        
+
           selected_raw: this.selectedRaw,
           // selected_raw_out_value: this.selectedRawOut,
           selected_raw_out_value: this.rawOut,
@@ -641,11 +645,10 @@ export default {
     //     return obj;
     //   });
     // },
-    itemRawOutModal2Show(){
-      console.log('show');
+    itemRawOutModal2Show() {
+      console.log("show");
       $("#itemRawOutModal2").modal("show");
     }
-     
   },
 
   mounted() {

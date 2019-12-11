@@ -44,7 +44,7 @@
               </p>
             </div>
             <center>
-              <button @click="deleteItem()" class="btn btn-danger" data-dismiss="modal">Yes</button>
+              <button @click="deleteRecord()" class="btn btn-danger" data-dismiss="modal">Yes</button>
               <button class="btn btn-secondary" data-dismiss="modal">No</button>
             </center>
           </div>
@@ -63,11 +63,20 @@ export default {
       item: []
     };
   },
-  methods: {},
+  methods: {
+    deleteRecord(){
+      axios.post("/records/delete",this.item)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err); 
+      })
+    }
 
-  // created() {
-  //   this.$events.listen("showItemDeleteModal", data => this.setItem(data));
-  // }
+  },
+
+ 
   events: {
     deleteRecordModal(data) {
       console.log(data);

@@ -24,7 +24,7 @@
               <div v-if="item.record_type == 'add'">
                 <label>Update Additionals valu:</label>
                 <div class="input-group mb-3">
-                  <input :value="item.ADD" type="text" class="form-control" />
+                  <input v-model="item.ADD" type="text" class="form-control" />
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">{{item.unit}}</span>
                   </div>
@@ -33,7 +33,7 @@
               <div v-else-if="item.record_type == 'in'">
                 <label>Update IN value:</label>
                 <div class="input-group mb-3">
-                  <input :value="item.IN" type="text" class="form-control" />
+                  <input v-model="item.IN" type="text" class="form-control" />
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">{{item.unit}}</span>
                   </div>
@@ -42,21 +42,21 @@
               <div v-else-if="item.record_type == 'out'">
                 <label for="out">Update Out Value:</label>
                 <div class="input-group mb-3">
-                  <input :value="item.OUT" type="text" class="form-control" />
+                  <input v-model="item.OUT" type="text" class="form-control" />
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">{{item.unit}}</span>
                   </div>
                 </div>
                 <label>Update Bones Value:</label>
                 <div class="input-group mb-3">
-                  <input :value="item.bones_value" type="text" class="form-control" />
+                  <input v-model="item.bones_value" type="text" class="form-control" />
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">Grams</span>
                   </div>
                 </div>
                 <label>Update Scrap Value:</label>
                 <div class="input-group mb-3">
-                  <input :value="item.scraps_value" type="text" class="form-control" />
+                  <input v-model="item.scraps_value" type="text" class="form-control" />
                   <div class="input-group-append">
                     <span class="input-group-text" id="basic-addon2">Grams</span>
                   </div>
@@ -82,19 +82,14 @@ export default {
     };
   },
   methods: {
-
     updateRecord(){
-      let params = {
-          item: this.item,
-        };
-        axios.post('/update/record',params)
-        .then(res => {
-          console.log(res)
-        })
-        .catch(err => {
-          console.error(err); 
-        })
-
+      axios.post("/records/update",this.item)
+      .then(res => {
+        console.log(res)
+      })
+      .catch(err => {
+        console.error(err); 
+      })
     }
   },
   events: {

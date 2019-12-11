@@ -50,6 +50,8 @@ Route::get('/items', 'ItemsController@index');
 
 // Records Controller
 Route::get('/records', 'RecordsController@getRecords');
+Route::post('/records/delete', 'RecordsController@deleteRecord');
+Route::post('/records/update', 'RecordsController@updateRecord');
 
 // Raw Controller
 Route::get('/items/raw', 'ItemsRawController@getRawItems');
