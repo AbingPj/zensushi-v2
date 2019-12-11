@@ -1,3 +1,4 @@
+import RecordsButtons from "./RecordsButtons.vue";
 export default [
     {
         name: "date",
@@ -16,7 +17,7 @@ export default [
     },
     {
         name: "ADD",
-        title: "Additional",
+        title: "Add",
         sortField: "ADD"
     },
     {
@@ -49,5 +50,11 @@ export default [
         title: "DIFFERENCE",
         sortField: "SCRAPS"
     },
+    {
+        name: RecordsButtons,
+        title: "Actions",
+        titleClass: "text-center",
+        dataClass: "text-center"
+    }
     
 ];
