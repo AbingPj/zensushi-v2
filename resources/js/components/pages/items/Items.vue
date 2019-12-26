@@ -25,6 +25,7 @@ export default {
 
   mounted() {
     Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+      console.log(data);
       this.$refs.itemsVuetable.refreshVueTable();
     });
   }

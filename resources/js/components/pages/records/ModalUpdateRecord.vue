@@ -83,11 +83,15 @@ export default {
   },
   methods: {
     updateRecord(){
+      LoadingOverlay();
       axios.post("/records/update",this.item)
       .then(res => {
-        console.log(res)
+        console.log(res);
+        $("#updateRecordModal").modal("hide");
+        LoadingOverlayHide();
       })
       .catch(err => {
+        $("#updateRecordModal").modal("hide");
         console.error(err); 
       })
     }

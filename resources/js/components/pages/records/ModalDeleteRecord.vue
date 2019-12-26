@@ -44,7 +44,7 @@
               </p>
             </div>
             <center>
-              <button @click="deleteRecord()" class="btn btn-danger" data-dismiss="modal">Yes</button>
+              <button @click="deleteRecord()" class="btn btn-danger" data-dismiss="modal" >Yes</button>
               <button class="btn btn-secondary" data-dismiss="modal">No</button>
             </center>
           </div>
@@ -65,12 +65,15 @@ export default {
   },
   methods: {
     deleteRecord(){
+      LoadingOverlay();
       axios.post("/records/delete",this.item)
       .then(res => {
         console.log(res)
+         LoadingOverlayHide();
       })
       .catch(err => {
         console.error(err); 
+         LoadingOverlayHide();
       })
     }
 

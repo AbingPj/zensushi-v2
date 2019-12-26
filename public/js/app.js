@@ -1768,6 +1768,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     Echo.channel("ItemsChannel").listen("ItemsEvent", function (data) {
+      console.log(data);
+
       _this.$refs.itemsVuetable.refreshVueTable();
     });
   }
@@ -4229,10 +4231,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     deleteRecord: function deleteRecord() {
+      LoadingOverlay();
       axios.post("/records/delete", this.item).then(function (res) {
         console.log(res);
+        LoadingOverlayHide();
       })["catch"](function (err) {
         console.error(err);
+        LoadingOverlayHide();
       });
     }
   },
@@ -4340,9 +4345,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     updateRecord: function updateRecord() {
+      LoadingOverlay();
       axios.post("/records/update", this.item).then(function (res) {
         console.log(res);
+        $("#updateRecordModal").modal("hide");
+        LoadingOverlayHide();
       })["catch"](function (err) {
+        $("#updateRecordModal").modal("hide");
         console.error(err);
       });
     }
@@ -4383,6 +4392,15 @@ __webpack_require__.r(__webpack_exports__);
   methods: {// trigger() {
     //   axios.post("/triggerPusher");
     // }
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    Echo.channel("RecordsChannel").listen("RecordsEvent", function (data) {
+      console.log(data);
+
+      _this.$refs.recordsVuetable.refreshVueTable();
+    });
   }
 });
 
@@ -56569,7 +56587,10 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("vc-records-table", { attrs: { baseUrl: _vm.baseurl } }),
+      _c("vc-records-table", {
+        ref: "recordsVuetable",
+        attrs: { baseUrl: _vm.baseurl }
+      }),
       _vm._v(" "),
       _c("modal-delete-record"),
       _vm._v(" "),

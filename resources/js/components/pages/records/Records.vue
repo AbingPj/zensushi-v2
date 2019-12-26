@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <!-- <button @click="trigger()">Trigger Puhser</button> -->
-    <vc-records-table :baseUrl="baseurl"></vc-records-table>
+    <vc-records-table ref="recordsVuetable" :baseUrl="baseurl"></vc-records-table>
     <modal-delete-record></modal-delete-record>
     <modal-update-record></modal-update-record>
   </div>
@@ -16,6 +16,12 @@ export default {
     // trigger() {
     //   axios.post("/triggerPusher");
     // }
+  },
+   mounted() {
+    Echo.channel("RecordsChannel").listen("RecordsEvent", data => {
+      console.log(data);
+      this.$refs.recordsVuetable.refreshVueTable();
+    });
   }
 };
 </script>

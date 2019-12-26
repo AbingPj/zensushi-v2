@@ -5,7 +5,10 @@ namespace App\CustomizeClass;
 use App\In_record;
 use App\Out_record;
 use App\Additional;
+use App\Events\RecordsEvent;
+use CreateAdditionalRecordsTable;
 use Illuminate\Support\Facades\DB;
+
 
 class ItemClass
 {
@@ -52,6 +55,7 @@ class ItemClass
     $out->total_production = $total;
     $out->difference = ($total - $total_out);
     $out->save();
+    broadcast(new RecordsEvent($out->id));
   }
 
   // static function getItemBalanceWithSelectedDate($item_id, $date)

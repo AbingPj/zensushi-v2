@@ -18,3 +18,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
 Broadcast::channel('ItemsChannel', function () {
     return true;
 });
+
+Broadcast::channel('RecordsChannel', function () {
+    return true;
+});
