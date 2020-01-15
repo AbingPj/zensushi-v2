@@ -23,6 +23,21 @@ class PageController extends Controller
         return view('app.pages.records.records');
     }
 
+    public function requestdeliver()
+    {
+        return view('app.pages.requestdeliver.requestdeliver');
+    }
+
+    public function deliver()
+    {
+        return view('app.pages.deliver.deliver');
+    }
+
+    public function notification()
+    {
+        return view('app.pages.notification.notification');
+    }
+
     public function production()
     {
     
