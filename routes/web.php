@@ -70,6 +70,10 @@ Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}', 'ItemsProduct
 // Route::get('/items/stockin/rawproduct/{item_id}/{raw_product_id}/{item_raw_stock_out}', 'ItemsProductController@production4');
 Route::post('/items/products/stockin', 'ItemsProductController@saveProductsIn');
 
+// DeliveriesController
+Route::get('/items/delivery/products', 'DeliveriesController@getProducts');
+Route::get('/items/delivery/products/{product}', 'DeliveriesController@serchProducts');
+
 
 
 
