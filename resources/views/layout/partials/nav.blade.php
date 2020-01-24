@@ -22,13 +22,13 @@
                 </a>
             </li>
             <li class="nav-item dropdown"  id="step-3">
-                <a class="nav-link" href="{{ route('page.request.deliver') }}" id="navbardrop">
-                    Request Deliver
+                <a class="nav-link" href="{{ route('page.delivery.request') }}" id="navbardrop">
+                    Delivery Request
                 </a>
             </li>
             <li class="nav-item dropdown"  id="step-3">
-                <a class="nav-link" href="{{ route('page.deliver') }}" id="navbardrop">
-                    Deliver
+                <a class="nav-link" href="{{ route('page.delivery') }}" id="navbardrop">
+                    Delivery
                 </a>
             </li>
            
