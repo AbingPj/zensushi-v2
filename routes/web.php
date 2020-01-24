@@ -28,8 +28,8 @@ Route::get('/registerpage', 'WelcomeController@register')->name('page.register')
 Route::get('/zensushi', 'PageController@home')->name('page.home');
 Route::get('/zensushi-items', 'PageController@items')->name('page.items');
 Route::get('/zensushi-records', 'PageController@records')->name('page.records');
-Route::get('/zensushi-request-deliver', 'PageController@requestdeliver')->name('page.request.deliver');
-Route::get('/zensushi-deliver', 'PageController@deliver')->name('page.deliver');
+Route::get('/zensushi-delivery-request', 'PageController@deliveryRequest')->name('page.delivery.request');
+Route::get('/zensushi-delivery', 'PageController@delivery')->name('page.delivery');
 Route::get('/zensushi-notification', 'PageController@notification')->name('page.notification');
 Route::get('/zensushi-production', 'PageController@production')->name('page.production');;
 Route::get('/zensushi-production/{item_id}', 'PageController@production2');

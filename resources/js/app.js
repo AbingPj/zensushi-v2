@@ -138,6 +138,16 @@ Vue.component(
     require("./components/pages/notifications/Notifications.vue").default
 );
 
+Vue.component(
+    "delivery-page",
+    require("./components/pages/delivery/DeliveryPage.vue").default
+);
+
+Vue.component(
+    "delivery-request-page",
+    require("./components/pages/delivery-request/DeliveryRequestPage.vue").default
+);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
