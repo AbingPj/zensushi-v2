@@ -24,12 +24,18 @@ class DeliveriesController extends Controller
 
     public function serchProducts($product)
     {
+        $prod = $product;
 
-        $items = Item::where("description", "like",'%'.$product.'%')
-            ->orWhere("id", "like",'%'.$product.'%')
-            ->where("item_type_id", "<>", "1")
+        $items = Item::whereRaw("item_type_id <> 1 AND (description LIKE '%" . $prod . "%' OR id LIKE '%" . $prod . "')")->get();
+
+        $items = Item::where('item_type_id', '<>', 1)
+            ->where(function ($query) use ($prod) {
+                return $query->where("description", "LIKE", "%$prod%")
+                    ->orWhere("id", "like", "%$prod%");
+            })
             ->get();
-            if ($items->isNotEmpty()) {
+
+        if ($items->isNotEmpty()) {
             $items->map(function ($row) {
                 $row->balance =  ItemClass::getItemBalance($row->id);
                 $row->unit_desc = $row->unit->description;
