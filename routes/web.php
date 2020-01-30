@@ -25,6 +25,7 @@ Route::get('/', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
 
 // Page Controller
+Route::get('/home', 'PageController@home');
 Route::get('/zensushi', 'PageController@home')->name('page.home');
 Route::get('/zensushi-items', 'PageController@items')->name('page.items');
 Route::get('/zensushi-records', 'PageController@records')->name('page.records');
