@@ -1,4 +1,6 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css"
+    "/css/app.css": "/css/app.css",
+    "/js/bootstrap-notify.min.js": "/js/bootstrap-notify.min.js",
+    "/css/animate.css": "/css/animate.css"
 }

@@ -5,23 +5,11 @@
       <div class="row">
         <div class="col-12">
           <div class="table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
               <thead>
                 <tr style=" border-bottom: 4px solid gray; border-top: 4px solid black;">
-                  <th colspan="7">
+                  <th colspan="8">
                     <div class="row">
-                      <div class="col-md-3">
-                        <div class="form-group">
-                          <label for="date">Date</label>
-                          <input
-                            type="date"
-                            class="form-control"
-                            :class=" dateIsValid? '' : 'is-invalid'"
-                            id="date"
-                            v-model="date"
-                          />
-                        </div>
-                      </div>
                       <div class="col-md-3">
                         <div class="form-group">
                           <label for>Selected Raw</label>
@@ -83,6 +71,19 @@
                           </div>
                         </div>
                       </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <label for="date">Date</label>
+                          <input
+                            type="date"
+                            class="form-control"
+                            :class=" dateIsValid? '' : 'is-invalid'"
+                            id="date"
+                            v-model="date"
+                            ref="date"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </th>
                 </tr>
@@ -93,6 +94,7 @@
                   <th scope="col"></th>
                   <th scope="col" style="width: 250px;" class="text-center">Weight</th>
                   <th scope="col" class="text-right">Total Weight</th>
+                  <th></th>
                   <th></th>
                 </tr>
               </thead>
@@ -121,6 +123,7 @@
                   <td class="text-center">X</td>
                   <td class="text-center">{{product.value}}g</td>
                   <td class="text-right">{{product.total_weight}}g</td>
+                  <td>{{product.total_weight/1000}} Kilo</td>
                   <td class="text-right">
                     <button class="btn btn-sm btn-danger" @click="removeSelection(product)">
                       <i class="fa fa-eraser" aria-hidden="true"></i>
@@ -130,7 +133,7 @@
 
                 <!-- Choose Products -->
                 <tr v-if="notSelectedProductsLength !== 0" style="background-color:#d9d9d9;">
-                  <td colspan="7">
+                  <td colspan="8">
                     <div style="padding: 0px 200px 0px 200px;" class="form-group">
                       <!-- <label for="raws" class="text-dark">
                         <strong>Select Products of {{selectedRaw.description}}}</strong>
@@ -169,6 +172,7 @@
                   <td></td>
                   <td></td>
                   <td class="text-right">{{totalWieghtOfSelectedProduct}}g</td>
+                  <td>{{totalWieghtOfSelectedProduct/1000}} Kilo</td>
                   <td></td>
                 </tr>
 
@@ -216,6 +220,7 @@
                   </td>
 
                   <td class="text-right">{{computedScrap == "" ? 0 : computedScrap }}g</td>
+                  <td>{{computedScrapKilo == ""? 0 : computedScrapKilo}} Kilo</td>
                   <td></td>
                 </tr>
                 <!-- BOnes -->
@@ -263,6 +268,7 @@
                   </td>
 
                   <td class="text-right">{{computedBones == ""? 0 : computedBones}}g</td>
+                  <td>{{computedBonesKilo == ""? 0 : computedBonesKilo}} Kilo</td>
                   <td></td>
                 </tr>
                 <!-- TOTAl -->
@@ -278,17 +284,29 @@
                     <strong>{{finalWeight}}g</strong>
                   </td>
                   <td>{{finalWeight/1000}} Kilo</td>
+                  <td></td>
                 </tr>
 
                 <!-- Out -->
                 <tr>
                   <td>Raw Out:</td>
+                  <!-- <td></td>
                   <td></td>
                   <td></td>
-                  <td></td>
-                  <td></td>
+                  <td></td>-->
+                  <td>
+                    <strong>{{selectedRaw == null? '' : selectedRaw.desc}}</strong>
+                  </td>
+                  <td>
+                    <strong>{{rawOut}}&nbsp;{{selectedRaw == null? '' : selectedRaw.unit}}</strong>
+                  </td>
+                  <td>x</td>
+                  <td>
+                    <strong>{{selectedRaw == null? '' : selectedRaw.value}}g</strong>
+                  </td>
                   <td class="text-right">{{rawStackOutWeightGrams}}g</td>
                   <td>{{rawStackOutWeightKilo}} Kilo</td>
+                  <td></td>
                 </tr>
                 <tr>
                   <td>Difference:</td>
@@ -298,6 +316,7 @@
                   <td></td>
                   <td class="text-right">{{difference}}g</td>
                   <td>{{difference/1000}} Kilo</td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
@@ -401,6 +420,15 @@ export default {
         return scrap;
       }
     },
+    computedScrapKilo() {
+      let scrap = this.scrap;
+      scrap == "" ? (scrap = 0) : (scrap = parseFloat(scrap));
+      if (this.scrapSelectedWeight == "Kilo") {
+        return scrap;
+      } else {
+        return scrap / 1000;
+      }
+    },
 
     computedBones() {
       let bones = this.bones;
@@ -409,6 +437,15 @@ export default {
         return bones * 1000;
       } else {
         return bones;
+      }
+    },
+    computedBonesKilo() {
+      let bones = this.bones;
+      bones == "" ? (bones = 0) : (bones = parseFloat(bones));
+      if (this.bonesSelectedWeight == "Kilo") {
+        return bones;
+      } else {
+        return bones / 1000;
       }
     },
 
@@ -467,8 +504,6 @@ export default {
       }
     },
 
-
-
     removeSelection(data) {
       this.products.map(obj => {
         if (obj.id == data.id) {
@@ -493,18 +528,27 @@ export default {
       console.log(this.date);
       if (this.date == null || this.date == undefined || this.date == "") {
         console.log("date is required");
+        // alert("date is required");
+        document.getElementById("date").focus();
         this.dateIsValid = false;
         LoadingOverlayHide();
+        this.$refs.date.$el.focus();
       } else {
         let params = {
           // selected_products: this.cleaningSelectedProducts(this.selectedProductsNew),
           selected_products: this.selectedProductsNew,
-          bones: this.bones,
-          scrap: this.scrap,
-          total: this.finalWeight,
+          //  bones: this.bones,
+          // scrap: this.scrap,
+          bones: this.computedBones,
+          scrap: this.computedScrap,
+
           selected_raw: this.selectedRaw,
-          selected_raw_out_value: this.selectedRawOut,
-          date: this.date
+          // selected_raw_out_value: this.selectedRawOut,
+          selected_raw_out_value: this.rawOut,
+          date: this.date,
+
+          total: this.finalWeight,
+          difference: this.difference
         };
 
         axios
@@ -601,11 +645,10 @@ export default {
     //     return obj;
     //   });
     // },
-    itemRawOutModal2Show(){
-      console.log('show');
+    itemRawOutModal2Show() {
+      console.log("show");
       $("#itemRawOutModal2").modal("show");
     }
-     
   },
 
   mounted() {

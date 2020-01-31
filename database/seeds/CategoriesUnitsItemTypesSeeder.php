@@ -71,7 +71,7 @@ class CategoriesUnitsItemTypesSeeder extends Seeder
 
     DB::table('items')->insert([
       'description' => "PORK (80 Grams)",
-      'unit_id' => 4,
+      'unit_id' => 1,
       'category_id' => 2,
       'item_type_id' => 2,
       'user_id' => 2,
@@ -81,6 +81,22 @@ class CategoriesUnitsItemTypesSeeder extends Seeder
     DB::table('raw_products')->insert([
       'value' => 80,
       'item_id' => 3,
+      'raw_id' => 2,
+      'created_at' => Carbon::now(),
+    ]);
+
+    DB::table('items')->insert([
+      'description' => "PORK (40 Grams)",
+      'unit_id' => 1,
+      'category_id' => 2,
+      'item_type_id' => 2,
+      'user_id' => 2,
+      'created_at' => Carbon::now(),
+    ]);
+
+    DB::table('raw_products')->insert([
+      'value' => 40,
+      'item_id' => 4,
       'raw_id' => 2,
       'created_at' => Carbon::now(),
     ]);
@@ -96,7 +112,7 @@ class CategoriesUnitsItemTypesSeeder extends Seeder
     ]);
 
     DB::table('not_raws')->insert([
-      'item_id' => 4,
+      'item_id' => 5,
       'created_at' => Carbon::now(),
     ]);
   }

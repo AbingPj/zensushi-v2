@@ -10,10 +10,17 @@ use Illuminate\Support\Facades\DB;
 class TestController extends Controller
 {
     //
+    public function test2(){
+        ItemClass::updateProductionTotalAndDifference(2);
+    }
+
     public function test()
     {
 
         
+        // ItemClass::getItemBalance();
+
+
         $item_id = 1;
         $date = '2019-12-01';
 

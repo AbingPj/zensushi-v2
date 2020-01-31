@@ -21,11 +21,21 @@
                     Records
                 </a>
             </li>
+            <li class="nav-item dropdown"  id="step-3">
+                <a class="nav-link" href="{{ route('page.delivery.request') }}" id="navbardrop">
+                    Delivery Request
+                </a>
+            </li>
+            <li class="nav-item dropdown"  id="step-3">
+                <a class="nav-link" href="{{ route('page.delivery') }}" id="navbardrop">
+                    Delivery
+                </a>
+            </li>
            
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item" id="Notification_navItem">
-                <a class="nav-link" href="../../pages/notification-page/notification.html">
+                <a class="nav-link" href="{{ route('page.notification') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
             </li>
