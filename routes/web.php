@@ -74,6 +74,8 @@ Route::post('/items/products/stockin', 'ItemsProductController@saveProductsIn');
 // DeliveriesController
 Route::get('/items/delivery/products', 'DeliveriesController@getProducts');
 Route::get('/items/delivery/products/{product}', 'DeliveriesController@serchProducts');
+Route::post('/items/delivery/send-delivery-request', 'DeliveriesController@sendDeliveryRequest');
+Route::post('/items/delivery/send-delivery', 'DeliveriesController@sendDelivery');
 
 
 

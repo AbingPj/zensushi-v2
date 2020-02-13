@@ -76,6 +76,18 @@
                   </tr>
                </tbody>
             </table>
+            <div style="padding: 0px 50px 0px 50px ">
+               <label for="branch" class="mr-sm-2">Branch:</label>
+               <input
+                  v-model="branch"
+                  type="text"
+                  class="form-control"
+                  placeholder="Enter Branch Name"
+                  id="branch"
+               />
+               <br />
+               <button class="btn btn-primary btn-block" @click="submit()">Submit</button>
+            </div>
          </div>
       </div>
    </div>
@@ -88,11 +100,34 @@ export default {
       return {
          search_product: "",
          products: [],
-         selectedProducts: []
+         selectedProducts: [],
+          branch: ""
       };
    },
 
    methods: {
+      submit() {
+         LoadingOverlay();
+
+         let params = {
+            branch: this.branch,
+            products: this.products
+         };
+         axios
+            .post("/items/delivery/send-delivery", {
+               branch: this.branch,
+               products: this.products
+            })
+            .then(res => {
+               console.log(res);
+               this.branch = "";
+               this.selectedProducts = [];
+               LoadingOverlayHide();
+            })
+            .catch(err => {
+               console.error(err);
+            });
+      },
       selectProduct(data) {
          let y = this.selectedProducts.find(list => list.id == data.id);
          if (y == undefined) {
