@@ -7,7 +7,7 @@
 <meta name="author" content="">
 
 {{-- <title>{{ config('app.name', 'Laravel') }}</title> --}}
-<title>ZenSushi Davao Inventory</title>
+<title>{{config('app.name')}} Inventory</title>
 <!-- Styles -->
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <link rel="stylesheet" href="{{ asset('css/animate.css') }}">

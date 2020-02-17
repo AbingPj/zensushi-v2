@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-6 col-sm-6 col-xs-12">
-        <span class="copyright-text">© 2019 <b>ZenSushi</b>Davao Inventory. All rights reserved.</span>
+        <span class="copyright-text">© 2019 <b>{{config('app.name')}}</b> Davao Inventory. All rights reserved.</span>
       </div>
     </div>
   </div>
