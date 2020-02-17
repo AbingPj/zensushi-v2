@@ -1,6 +1,8 @@
 
-<?php $bannerheader = "records"; ?>
+<?php $bannerheader = "Records"; ?>
 @extends('layout.app')
+
+@section('title', 'Records' )
 
 @section('content')
   @include('layout.partials.banner')

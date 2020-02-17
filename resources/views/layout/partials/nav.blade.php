@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <img src="{{asset('images/zenicon3.png')}}" class="rounded float-left">
-<a class="navbar-brand active" href="{{route('page.home')}}">Zen Sushi</a>
+<a class="navbar-brand active" href="{{route('page.home')}}">{{config('app.name')}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    @include('layout.partials.head')
+    <title>{{config('app.name')}} @yield('title') </title>
+    @include('layout.partials.head')  
   </head>
   <body>
       <div id="app">

@@ -1,5 +1,7 @@
-<?php $bannerheader = "zen sushi home"; ?>
+<?php $bannerheader =  "Home"; ?>
 @extends('layout.app')
+
+@section('title', 'Home' )
 
 @section('content')
   @include('layout.partials.banner')
