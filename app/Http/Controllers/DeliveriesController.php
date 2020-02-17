@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\CustomizeClass\ItemClass;
 use App\Item;
+use App\request as AppRequest;
+use App\request_list;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DeliveriesController extends Controller
 {
@@ -47,15 +50,30 @@ class DeliveriesController extends Controller
 
     public function sendDeliveryRequest(Request $request)
     {
-        $branch = $request->input('branch');
-        $products = $request->input('products');
-        dd($request);
+        DB::transaction(function () use ($request) {
+            $products = $request->input('products');
+            $req = new AppRequest;
+            $req->branch = $request->input('branch');
+            $req->save();
+            foreach ($products as $key => $product) {
+                $request_list = new request_list;
+                $request_list->request_id = $req->id;
+                $request_list->item_id = $product['id'];
+                $request_list->quantity = $product['quantity'];
+                $request_list->save();
+            }
+        });
     }
 
     public function sendDelivery(Request $request)
     {
         $branch = $request->input('branch');
         $products = $request->input('products');
+
+      
+
+
+
         dd($request);
     }
 }
