@@ -1,6 +1,8 @@
 <?php $bannerheader =  "Home"; ?>
 @extends('layout.app')
 
+@section('title', 'Home' )
+
 @section('content')
   @include('layout.partials.banner')
   <div class="container">
