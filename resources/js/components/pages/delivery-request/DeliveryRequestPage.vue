@@ -1,7 +1,7 @@
 <template>
    <div class="container">
       <div class="row">
-         <div class="col-md-4">
+         <div class="col-md-5">
             <h3>Select Products</h3>
             <small>Select product for request delivery list</small>
             <div class="input-group mb-3">
@@ -38,7 +38,7 @@
             </table>
          </div>
 
-         <div class="col-md-8">
+         <div class="col-md-7">
             <h3 class="text-center">Delivery Reqquest List Form</h3>
             <table class="table table-striped">
                <thead>
