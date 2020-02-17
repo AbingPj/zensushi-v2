@@ -15,6 +15,9 @@ class CreateRequestListsTable extends Migration
     {
         Schema::create('request_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('request_id');
+            $table->bigInteger('item_id');
+            $table->bigInteger('quantity');
             $table->timestamps();
         });
     }
