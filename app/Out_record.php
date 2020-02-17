@@ -10,4 +10,15 @@ class Out_record extends Model
     {
         return $this->belongsTo('App\Item', 'item_id', 'id');
     }
+    
+    public function scrap()
+    {
+        return $this->hasOne('App\Scrap', 'raw_out_id', 'id');
+    }
+
+    public function bone()
+    {
+        return $this->hasOne('App\Bone', 'raw_out_id', 'id');
+    }
+    
 }

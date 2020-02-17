@@ -123,6 +123,32 @@ Vue.component(
     require("./components/pages/items/items-raw-product-in/ItemsRawOut2.vue").default
 );
 
+Vue.component(
+    "modal-delete-record",
+    require("./components/pages/records/ModalDeleteRecord.vue").default
+);
+
+Vue.component(
+    "modal-update-record",
+    require("./components/pages/records/ModalUpdateRecord.vue").default
+);
+
+Vue.component(
+    "notifications-page",
+    require("./components/pages/notifications/Notifications.vue").default
+);
+
+Vue.component(
+    "delivery-page",
+    require("./components/pages/delivery/DeliveryPage.vue").default
+);
+
+Vue.component(
+    "delivery-request-page",
+    require("./components/pages/delivery-request/DeliveryRequestPage.vue").default
+);
+
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

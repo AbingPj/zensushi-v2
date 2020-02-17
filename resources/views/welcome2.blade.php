@@ -81,7 +81,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Zensushi Inventory
+                    {{config('app.name')}} Inventory
                 </div>
 
                 <div class="links">

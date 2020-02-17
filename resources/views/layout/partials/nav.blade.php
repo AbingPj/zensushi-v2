@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <img src="{{asset('images/zenicon3.png')}}" class="rounded float-left">
-<a class="navbar-brand active" href="{{route('page.home')}}">Zen Sushi</a>
+<a class="navbar-brand active" href="{{route('page.home')}}">{{config('app.name')}}</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -21,11 +21,21 @@
                     Records
                 </a>
             </li>
+            <li class="nav-item dropdown"  id="step-3">
+                <a class="nav-link" href="{{ route('page.delivery.request') }}" id="navbardrop">
+                    Delivery Request
+                </a>
+            </li>
+            <li class="nav-item dropdown"  id="step-3">
+                <a class="nav-link" href="{{ route('page.delivery') }}" id="navbardrop">
+                    Delivery
+                </a>
+            </li>
            
         </ul>
         <ul class="nav navbar-nav">
             <li class="nav-item" id="Notification_navItem">
-                <a class="nav-link" href="../../pages/notification-page/notification.html">
+                <a class="nav-link" href="{{ route('page.notification') }}">
                     <i class="fa fa-bell" aria-hidden="true"></i>
                 </a>
             </li>
