@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestListsTable extends Migration
+class CreateDeliveryListsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateRequestListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('request_lists', function (Blueprint $table) {
+        Schema::create('delivery_lists', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('request_id');
+            $table->bigInteger('delivery_id');
             $table->bigInteger('item_id');
             $table->double('quantity', 10, 2)->nullable();
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateRequestListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_lists');
+        Schema::dropIfExists('delivery_lists');
     }
 }

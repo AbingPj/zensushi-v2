@@ -3,11 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\CustomizeClass\ItemClass;
+use App\Delivery;
+use App\Delivery_list;
+use App\Events\NotificationEvent;
 use App\Item;
+use App\Notification;
 use App\request as AppRequest;
 use App\request_list;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class DeliveriesController extends Controller
 {
@@ -54,6 +59,7 @@ class DeliveriesController extends Controller
             $products = $request->input('products');
             $req = new AppRequest;
             $req->branch = $request->input('branch');
+            $req->user_id = Auth::user()->id;
             $req->save();
             foreach ($products as $key => $product) {
                 $request_list = new request_list;
@@ -62,18 +68,42 @@ class DeliveriesController extends Controller
                 $request_list->quantity = $product['quantity'];
                 $request_list->save();
             }
+
+            $notif = new Notification;
+            $notif->title = 'New Delivery Request';
+            $notif->notification_type_id = 2;
+            $notif->request_id = $req->id;
+            $notif->user_id = Auth::user()->id;
+            $notif->save();
+
+            $data = Notification::CountUnseen();
+            broadcast(new NotificationEvent($data));
+
+            
         });
     }
 
     public function sendDelivery(Request $request)
     {
-        $branch = $request->input('branch');
-        $products = $request->input('products');
+        DB::transaction(function () use ($request) {
+            $products = $request->input('products');
+            $req = new AppRequest;
+            $delivery = new Delivery;
+            $delivery->branch = $request->input('branch');
+            $delivery->user_id = Auth::user()->id;
+            $delivery->save();
+            foreach ($products as $key => $product) {
+                $list = new Delivery_list;
+                $list->delivery_id = $delivery->id;
+                $list->item_id = $product['id'];
+                $list->quantity = $product['quantity'];
+                $list->save();
+            }
 
-      
-
-
-
-        dd($request);
+            // $notif = new Notification;
+            // $notif->notification_type_id = 2;
+            // $notif->
+            
+        });
     }
 }

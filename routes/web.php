@@ -78,7 +78,8 @@ Route::post('/items/delivery/send-delivery-request', 'DeliveriesController@sendD
 Route::post('/items/delivery/send-delivery', 'DeliveriesController@sendDelivery');
 
 
-
+// NotificationController
+Route::get('/notification/unseen', 'NotificationController@getUnseenNotification');
 
 Route::get('/in_raw_products', function () {
     return view('app.pages.items.items-raw-product-in');
