@@ -33,6 +33,7 @@ export default {
       Echo.channel("NotificationChannel").listen("NotificationEvent", data => {
          console.log(data);
           this.getNotifCounts();
+          // this.unseen = data;
       });
    }
 };

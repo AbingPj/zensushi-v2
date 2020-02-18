@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CustomizeClass\ItemClass;
 use App\Delivery;
 use App\Delivery_list;
+use App\Events\NotificationEvent;
 use App\Item;
 use App\Notification;
 use App\request as AppRequest;
