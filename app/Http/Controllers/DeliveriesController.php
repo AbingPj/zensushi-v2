@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\CustomizeClass\ItemClass;
+use App\Delivery;
+use App\Delivery_list;
 use App\Item;
 use App\request as AppRequest;
 use App\request_list;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Auth;
 
 class DeliveriesController extends Controller
 {
@@ -54,6 +57,7 @@ class DeliveriesController extends Controller
             $products = $request->input('products');
             $req = new AppRequest;
             $req->branch = $request->input('branch');
+            $req->user_id = Auth::user()->id;
             $req->save();
             foreach ($products as $key => $product) {
                 $request_list = new request_list;
@@ -67,13 +71,20 @@ class DeliveriesController extends Controller
 
     public function sendDelivery(Request $request)
     {
-        $branch = $request->input('branch');
-        $products = $request->input('products');
-
-      
-
-
-
-        dd($request);
+        DB::transaction(function () use ($request) {
+            $products = $request->input('products');
+            $req = new AppRequest;
+            $delivery = new Delivery;
+            $delivery->branch = $request->input('branch');
+            $delivery->user_id = Auth::user()->id;
+            $delivery->save();
+            foreach ($products as $key => $product) {
+                $list = new Delivery_list;
+                $list->delivery_id = $delivery->id;
+                $list->item_id = $product['id'];
+                $list->quantity = $product['quantity'];
+                $list->save();
+            }
+        });
     }
 }
