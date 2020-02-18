@@ -22,3 +22,7 @@ Broadcast::channel('ItemsChannel', function () {
 Broadcast::channel('RecordsChannel', function () {
     return true;
 });
+
+Broadcast::channel('NotificationChannel', function () {
+    return true;
+});
