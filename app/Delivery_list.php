@@ -4,13 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class request_list extends Model
+class Delivery_list extends Model
 {
     protected $guarded = [];
 
-    public function request()
+    public function delivery()
     {
-        return $this->belongsTo(request::class);
+        return $this->belongsTo(Delivery::class);
     }
 
     public function item()
@@ -18,4 +18,3 @@ class request_list extends Model
         return $this->belongsTo(Item::class);
     }
 }
-

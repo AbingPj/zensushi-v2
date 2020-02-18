@@ -4,14 +4,13 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-
-class request extends Model
+class Delivery extends Model
 {
     protected $guarded = [];
 
-    public function request_lists()
+    public function delivery_lists()
     {
-        return $this->hasMany(request_list::class);
+        return $this->hasMany(Delivery_list::class);
     }
 
     public function user()

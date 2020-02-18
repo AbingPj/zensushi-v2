@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateRequestListsTable extends Migration
+class CreateDeliveriesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateRequestListsTable extends Migration
      */
     public function up()
     {
-        Schema::create('request_lists', function (Blueprint $table) {
+        Schema::create('deliveries', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('request_id');
-            $table->bigInteger('item_id');
-            $table->double('quantity', 10, 2)->nullable();
+            $table->string('branch')->nullable();
+            $table->bigInteger('user_id');
+            $table->integer('status')->default(0);
+            $table->integer('remove')->default(0);
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateRequestListsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('request_lists');
+        Schema::dropIfExists('deliveries');
     }
 }

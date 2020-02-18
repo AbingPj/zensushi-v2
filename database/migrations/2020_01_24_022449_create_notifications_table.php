@@ -15,11 +15,16 @@ class CreateNotificationsTable extends Migration
     {
         Schema::create('notifications', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('description');
-            $table->bigInteger('notification_type_id')->unsigned();
-            $table->boolean('seen')->default(false);
-            $table->boolean('remove')->nullable()->default(false);
+            $table->string('title')->nullable();
+            $table->string('description')->nullable();
+            // $table->bigInteger('notification_type_id')->unsigned();
+            $table->bigInteger('notification_type_id')->unsigned()->nullable();
+            $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('request_id')->nullable();
+            $table->bigInteger('delivery_id')->nullable();
+            $table->integer('seen')->default(0);
+            $table->integer('status')->default(0);
+            $table->integer('remove')->default(0);
             $table->timestamps();
         });
     }
