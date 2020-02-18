@@ -17,7 +17,7 @@ class CreateRequestListsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('request_id');
             $table->bigInteger('item_id');
-            $table->bigInteger('quantity');
+            $table->double('quantity', 10, 2)->nullable();
             $table->timestamps();
         });
     }

@@ -16,7 +16,9 @@ class CreateRequestsTable extends Migration
         Schema::create('requests', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('branch')->nullable();
+            $table->bigInteger('user_id');
             $table->integer('status')->default(0);
+            $table->integer('remove')->default(0);
             $table->timestamps();
         });
     }

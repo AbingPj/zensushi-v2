@@ -17,9 +17,11 @@ class CreateNotificationsTable extends Migration
             $table->bigIncrements('id');
             $table->string('title');
             $table->string('description');
-            $table->bigInteger('notification_type_id')->unsigned();
-            $table->boolean('seen')->default(false);
-            $table->boolean('remove')->nullable()->default(false);
+            // $table->bigInteger('notification_type_id')->unsigned();
+            $table->bigInteger('notification_type_id')->unsigned()->nullable();
+            $table->integer('seen')->default(0);
+            $table->integer('status')->default(0);
+            $table->integer('remove')->default(0);
             $table->timestamps();
         });
     }
