@@ -6,6 +6,7 @@ use App\CustomizeClass\ItemClass;
 use App\Delivery;
 use App\Delivery_list;
 use App\Item;
+use App\Notification;
 use App\request as AppRequest;
 use App\request_list;
 use Illuminate\Http\Request;
@@ -66,6 +67,15 @@ class DeliveriesController extends Controller
                 $request_list->quantity = $product['quantity'];
                 $request_list->save();
             }
+
+            $notif = new Notification;
+            $notif->title = 'New Delivery Request';
+            $notif->notification_type_id = 2;
+            $notif->request_id = $req->id;
+            $notif->user_id = Auth::user()->id;
+            $notif->save();
+
+            
         });
     }
 
@@ -85,6 +95,11 @@ class DeliveriesController extends Controller
                 $list->quantity = $product['quantity'];
                 $list->save();
             }
+
+            // $notif = new Notification;
+            // $notif->notification_type_id = 2;
+            // $notif->
+            
         });
     }
 }
