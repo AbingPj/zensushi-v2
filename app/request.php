@@ -13,4 +13,9 @@ class request extends Model
     {
         return $this->hasMany(request_list::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

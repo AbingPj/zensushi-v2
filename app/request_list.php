@@ -12,5 +12,10 @@ class request_list extends Model
     {
         return $this->belongsTo(request::class);
     }
+
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
+    }
 }
 
