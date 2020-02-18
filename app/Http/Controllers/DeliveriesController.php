@@ -75,6 +75,9 @@ class DeliveriesController extends Controller
             $notif->user_id = Auth::user()->id;
             $notif->save();
 
+            $data = Notification::CountUnseen();
+            broadcast(new NotificationEvent($data));
+
             
         });
     }

@@ -36,7 +36,7 @@
         <ul class="nav navbar-nav">
             <li class="nav-item" id="Notification_navItem">
                 <a class="nav-link" href="{{ route('page.notification') }}">
-                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <notification-button></notification-button>
                 </a>
             </li>
             <li class="nav-item dropdown">
