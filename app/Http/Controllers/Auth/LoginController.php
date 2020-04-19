@@ -25,7 +25,8 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/zensushi';
+    // protected $redirectTo = '/zensushi';
+    protected $redirectTo = '/zen';
     // protected $redirectTo = '/zensushi-items';
 
     /**
