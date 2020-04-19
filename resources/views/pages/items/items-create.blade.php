@@ -1,31 +1,11 @@
-<?php $bannerheader = ""; ?>
-@extends('layout.app')
 
-@section('title', 'Items' )
+@extends('layout2.master')
 
-@section('content')
-@include('layout.partials.banner')
-<div class="container">
-
-  <vc-items-create itemtype="{{ $itemType }}" categories="{{ $categories }}" units="{{ $units }}" rawitems="{{ $rawItems }}">
-  </vc-items-create>
-
-</div>
-@endsection
-
-
-
-
-@extends('layout.app')
-
-@section('title', 'Items' )
+@section('title', 'Create Item' )
 
 @section('content')
-@include('layout.partials.banner')
-<div class="container">
-
-  <vc-items-create itemtype="{{ $itemType }}" categories="{{ $categories }}" units="{{ $units }}" rawitems="{{ $rawItems }}">
-  </vc-items-create>
-
-</div>
+    <div class="container">
+        <vc-items-create itemtype="{{ $itemType }}" categories="{{ $categories }}" units="{{ $units }}" rawitems="{{ $rawItems }}">
+        </vc-items-create>
+    </div>
 @endsection
