@@ -32,11 +32,12 @@ Route::get('/zensushi-records', 'PageController@records')->name('page.records');
 Route::get('/zensushi-delivery-request', 'PageController@deliveryRequest')->name('page.delivery.request');
 Route::get('/zensushi-delivery', 'PageController@delivery')->name('page.delivery');
 Route::get('/zensushi-notification', 'PageController@notification')->name('page.notification');
-Route::get('/zensushi-production', 'PageController@production')->name('page.production');;
+Route::get('/zensushi-production', 'PageController@production')->name('page.production');
 Route::get('/zensushi-production/{item_id}', 'PageController@production2');
 Route::get('/zensushi-production/{item_id}/{product_item_id}', 'PageController@production3');
 Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@production4');
 
+Route::get('/zen', 'PageController@zen')->name('zen.home');
 
 
 // Items Controller
