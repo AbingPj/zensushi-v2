@@ -79,6 +79,7 @@
     }
 
 </script>
-<script src="{{ url('/js/app.js') }}"></script>
+{{-- <script src="{{ url('/js/app.js') }}"></script> --}}
+<script src="{{ url('/js/admin.js') }}"></script>
 <script src="{{ url('/js/bootstrap-notify.min.js') }}"></script>
 

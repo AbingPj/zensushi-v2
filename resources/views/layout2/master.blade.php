@@ -8,23 +8,23 @@
 
 
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
-    <div id="app">
-    <div class="wrapper">
-        <!-- Navbar -->
-        @include('layout2.parts.navbar')
-        <!-- /.navbar -->
-        <!-- Main Sidebar Container -->
-        @include('layout2.parts.mainsidebar')
+    <div id="app2">
+        <div class="wrapper">
+            <!-- Navbar -->
+            @include('layout2.parts.navbar')
+            <!-- /.navbar -->
+            <!-- Main Sidebar Container -->
+            @include('layout2.parts.mainsidebar')
 
- <!-- Content Wrapper. Contains page content -->
- <div class="content-wrapper">
-    @yield('content')
-</div>
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                @yield('content')
+            </div>
 
 
-<!-- /.content-wrapper -->
+            <!-- /.content-wrapper -->
 
-        {{-- <!-- Content Wrapper. Contains page content -->
+            {{-- <!-- Content Wrapper. Contains page content -->
         <div class="content-wrapper">
             <!-- Content Header (Page header) -->
             <div class="content-header">
@@ -178,18 +178,18 @@
 
 
 
-        <!-- Control Sidebar -->
-        @include('layout2.parts.controlsidebar')
-        <!-- /.control-sidebar -->
+            <!-- Control Sidebar -->
+            @include('layout2.parts.controlsidebar')
+            <!-- /.control-sidebar -->
 
 
 
-        <!-- Main Footer -->
-        @include('layout2.parts.mainfooter')
+            <!-- Main Footer -->
+            @include('layout2.parts.mainfooter')
 
 
-    </div>
-    <!-- ./wrapper -->
+        </div>
+        <!-- ./wrapper -->
 
     </div>
 
