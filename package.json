@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.11"
     },
     "dependencies": {
+        "admin-lte": "^3.0.4",
         "font-awesome": "^4.7.0",
         "gasparesganga-jquery-loading-overlay": "^2.1.7",
         "laravel-echo": "^1.7.0",
