@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PageController;
+use Illuminate\Routing\RouteGroup;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,10 +33,24 @@ Route::get('/zensushi-records', 'PageController@records')->name('page.records');
 Route::get('/zensushi-delivery-request', 'PageController@deliveryRequest')->name('page.delivery.request');
 Route::get('/zensushi-delivery', 'PageController@delivery')->name('page.delivery');
 Route::get('/zensushi-notification', 'PageController@notification')->name('page.notification');
-Route::get('/zensushi-production', 'PageController@production')->name('page.production');;
+Route::get('/zensushi-production', 'PageController@production')->name('page.production');
 Route::get('/zensushi-production/{item_id}', 'PageController@production2');
 Route::get('/zensushi-production/{item_id}/{product_item_id}', 'PageController@production3');
 Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@production4');
+
+
+Route::group(['prefix' => 'zen'], function () {
+    Route::get('/', 'PageController@zen')->name('zen.home');
+    Route::get('/iventory', 'PageController@zenInventory')->name('zen.inventory');
+    Route::get('/records', 'PageController@zenRecords')->name('zen.records');
+    Route::get('/request', 'PageController@zenRequest')->name('zen.request');
+    Route::get('/delivery', 'PageController@zenDelivery')->name('zen.delivery');
+    Route::get('/users', 'PageController@zenUsers')->name('zen.users');
+    Route::get('/production', 'PageController@zenProduction')->name('zen.production');
+    Route::get('/production/{item_id}', 'PageController@zenProduction2');
+    Route::get('/production/{item_id}/{product_item_id}', 'PageController@zenProduction3');
+    Route::get('/production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@zenProduction4');
+});
 
 
 
@@ -93,5 +108,3 @@ Route::get('loading', function () {
 
 Route::get('/test', 'TestController@test');
 Route::get('/test2', 'TestController@test2');
-
-
