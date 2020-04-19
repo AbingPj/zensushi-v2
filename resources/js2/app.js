@@ -20,19 +20,14 @@ Vue.component("per-page-option", require("./vt2/PerPageOption.vue").default);
 import VuetablePaginationInfo from "vuetable-2/src/components/VuetablePaginationInfo";
 Vue.component("vuetable-pagination-info", VuetablePaginationInfo);
 
-import VueTour from 'vue-tour'
-require('vue-tour/dist/vue-tour.css')
-Vue.use(VueTour)
+// import VueTour from 'vue-tour'
+// require('vue-tour/dist/vue-tour.css')
+// Vue.use(VueTour)
 
-
-Vue.component(
-    "example-component",
-    require("./components/ExampleComponent.vue").default
-);
-Vue.component(
-    "tour-sample",
-    require("./components/vtour.vue").default
-);
+// Vue.component(
+//     "tour-sample",
+//     require("./components/vtour.vue").default
+// );
 Vue.component(
     "vc-items",
     require("./components/pages/items/Items.vue").default
