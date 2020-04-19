@@ -23,35 +23,69 @@
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item has-treeview menu-open">
-            <a href="#" class="nav-link active">
+          <li class="nav-item">
+            <a href="{{ route('zen.home') }}" class="nav-link active">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
-                Starter Pages
-                <i class="right fas fa-angle-left"></i>
+                Dashboard
               </p>
             </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="#" class="nav-link active">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Active Page</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="#" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Inactive Page</p>
-                </a>
-              </li>
-            </ul>
           </li>
+
           <li class="nav-item">
-            <a href="#" class="nav-link">
+            <a href="{{ route('zen.inventory') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Simple Link
-                <span class="right badge badge-danger">New</span>
+                Inventory
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('zen.production') }}" class="nav-link">
+              {{-- <i class="nav-icon fas fa-boxes"></i> --}}
+              <i class="nav-icon fas fa-people-carry"></i>
+              <p>
+                Production
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('zen.records') }}" class="nav-link">
+              {{-- <i class="nav-icon fas fa-clipboard"></i> --}}
+              <i class="nav-icon fas fa-window-restore"></i>
+              <p>
+                Records
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('zen.request') }}" class="nav-link">
+              <i class="nav-icon fas fa-phone-square-alt"></i>
+              <p>
+                Delivery Request
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('zen.delivery') }}" class="nav-link">
+              {{-- <i class="nav-icon fa fa-truck"></i> --}}
+              <i class="nav-icon fas fa-shipping-fast"></i>
+              <p>
+                Delivery
+              </p>
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a href="{{ route('zen.users') }}" class="nav-link">
+              {{-- <i class="nav-icon fa fa-truck"></i> --}}
+              <i class="nav-icon fas fa-users-cog"></i>
+              <p>
+                Users
               </p>
             </a>
           </li>
