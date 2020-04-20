@@ -86,10 +86,11 @@ export default {
       }else{
         console.log(data);
         LoadingOverlay();
-        window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
+        // window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
+        window.location = "/zen/production/" + data.product_raw_item_id +"/"+ data.id;
       }
 
-      
+
     },
 
     itemAdditional(data){
@@ -106,8 +107,9 @@ export default {
         LoadingOverlay();
         // let link = "/zensushi-production/" + data.id;
         // this.$events.fire("showItemRawOutModal", link, dataToOut);
-        window.location = "/zensushi-production/" + data.id;
-       
+        // window.location = "/zensushi-production/" + data.id;
+        window.location = "/zen/production/" + data.id;
+
       }
     },
     deleteAction(data, index) {

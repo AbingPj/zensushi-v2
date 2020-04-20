@@ -529,7 +529,7 @@ export default {
       ////////////////
       rawSelectionChange() {
          LoadingOverlay();
-         window.location = "/zensushi-production/" + this.selectedRaw.item_id;
+         window.location = "/zen/production/" + this.selectedRaw.item_id;
       },
       sendSelelectedProducts() {
          LoadingOverlay();

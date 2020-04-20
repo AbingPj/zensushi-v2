@@ -63,10 +63,7 @@ Route::put('/items/update', 'ItemsController@updateItem');
 Route::delete('/items/delete/{id}', 'ItemsController@deleteItem');
 Route::post('/items/additional', 'ItemsController@AdditionalItem');
 Route::get('/items', 'ItemsController@index');
-
-
 // Route::post('/triggerPusher', 'ItemsController@triggerPusher');
-
 // Records Controller
 Route::get('/records', 'RecordsController@getRecords');
 Route::post('/records/delete', 'RecordsController@deleteRecord');
