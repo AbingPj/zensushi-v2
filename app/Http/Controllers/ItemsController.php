@@ -51,7 +51,8 @@ class ItemsController extends Controller
                 return $row->item = $row->item;
             });
         }
-        return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+        // return view('app.pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
+        return view('pages.items.items-create', compact('itemType', 'categories', 'units', 'rawItems'));
     }
 
     public function createItemSave(Request $request)
