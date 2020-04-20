@@ -41,7 +41,7 @@ Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out
 
 Route::group(['prefix' => 'zen'], function () {
     Route::get('/', 'PageController@zen')->name('zen.home');
-    Route::get('/iventory', 'PageController@zenInventory')->name('zen.inventory');
+    Route::get('/inventory', 'PageController@zenInventory')->name('zen.inventory');
     Route::get('/records', 'PageController@zenRecords')->name('zen.records');
     Route::get('/request', 'PageController@zenRequest')->name('zen.request');
     Route::get('/delivery', 'PageController@zenDelivery')->name('zen.delivery');
@@ -54,7 +54,7 @@ Route::group(['prefix' => 'zen'], function () {
 
 
 
-// Items Controller
+//API Items Controller
 Route::get('/items/item_types', 'ItemsController@item_types');
 Route::get('/items/create/{id}', 'ItemsController@createItem');
 Route::post('/items/create/item', 'ItemsController@createItemSave');

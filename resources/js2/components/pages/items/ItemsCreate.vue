@@ -187,7 +187,8 @@ export default {
           console.log(response.status);
           if (response.status == 200) {
             setTimeout(() => {
-              window.location.href = "/zensushi-items";
+            //   window.location.href = "/zensushi-items";
+              window.location.href = "/zen/inventory";
             }, 2000);
           }
         })

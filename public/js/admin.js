@@ -2700,7 +2700,8 @@ __webpack_require__.r(__webpack_exports__);
 
         if (response.status == 200) {
           Object(timers__WEBPACK_IMPORTED_MODULE_0__["setTimeout"])(function () {
-            window.location.href = "/zensushi-items";
+            //   window.location.href = "/zensushi-items";
+            window.location.href = "/zen/inventory";
           }, 2000);
         }
       })["catch"](function (err) {
