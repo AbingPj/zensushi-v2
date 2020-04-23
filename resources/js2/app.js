@@ -130,6 +130,16 @@ Vue.component(
     require("./components/NotificationsPage.vue").default
 );
 
+
+
+
+/////       new  pages /////
+
+Vue.component(
+    "inventory-page",
+    require("./pages/inventory/index.vue").default
+);
+
 const app = new Vue({
     el: "#app2"
 });
