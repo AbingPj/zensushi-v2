@@ -30,19 +30,23 @@
                                 <table id="dt" class="table table-bordered table-sm table-hover">
                                     <thead>
                                         <tr>
-                                            <th>item id</th>
-                                            <th>description</th>
-                                            <th>item_type</th>
-                                            <th>category</th>
-                                            <th style="width: 100px;">option</th>
+                                            <th>Id</th>
+                                            <th>Description</th>
+                                            <th>Balance</th>
+                                            <th>Unit</th>
+                                            <th>Item Type</th>
+                                            <th>Category</th>
+                                            <th style="width: 100px;">Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <tr v-for="(item, index) in items" :key="index">
                                             <td>{{item.id}}</td>
                                             <td>{{item.description}}</td>
-                                            <td>{{item.item_type_id}}</td>
-                                            <td>{{item.category_id}}</td>
+                                            <td>{{item.balance}}</td>
+                                            <td>{{item.unit.description}}</td>
+                                            <td>{{item.item_type.description}}</td>
+                                            <td>{{item.category.description}}</td>
                                             <td>
                                                 <action-button :item="item"></action-button>
                                             </td>
