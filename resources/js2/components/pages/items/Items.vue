@@ -2,12 +2,12 @@
   <div class="container">
     <!-- <button @click="trigger()">Trigger Puhser</button> -->
     <vc-items-table ref="itemsVuetable" :baseUrl="baseurl"></vc-items-table>
-    <vc-items-choose-itemtype-modal></vc-items-choose-itemtype-modal>
-    <vc-items-delete-modal></vc-items-delete-modal>
+    <!-- <vc-items-choose-itemtype-modal></vc-items-choose-itemtype-modal> -->
+    <!-- <vc-items-delete-modal></vc-items-delete-modal> -->
     <!-- <vc-items-update-modal></vc-items-update-modal> -->
-    <vc-items-in-modal></vc-items-in-modal>
-    <vc-items-out-modal></vc-items-out-modal>
-    <vc-items-additional-modal></vc-items-additional-modal>
+    <!-- <vc-items-in-modal></vc-items-in-modal> -->
+    <!-- <vc-items-out-modal></vc-items-out-modal> -->
+    <!-- <vc-items-additional-modal></vc-items-additional-modal> -->
     <items-raw-out></items-raw-out>
   </div>
 </template>
@@ -24,10 +24,10 @@ export default {
   },
 
   mounted() {
-    Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
-      console.log(data);
-      this.$refs.itemsVuetable.refreshVueTable();
-    });
+    // Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+    //   console.log(data);
+    //   this.$refs.itemsVuetable.refreshVueTable();
+    // });
   }
 };
 </script>
