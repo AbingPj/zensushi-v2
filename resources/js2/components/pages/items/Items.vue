@@ -4,7 +4,7 @@
     <vc-items-table ref="itemsVuetable" :baseUrl="baseurl"></vc-items-table>
     <vc-items-choose-itemtype-modal></vc-items-choose-itemtype-modal>
     <vc-items-delete-modal></vc-items-delete-modal>
-    <vc-items-update-modal></vc-items-update-modal>
+    <!-- <vc-items-update-modal></vc-items-update-modal> -->
     <vc-items-in-modal></vc-items-in-modal>
     <vc-items-out-modal></vc-items-out-modal>
     <vc-items-additional-modal></vc-items-additional-modal>
