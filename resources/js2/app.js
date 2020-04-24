@@ -138,6 +138,7 @@ Vue.component("inventory-page",require("./pages/inventory/index.vue").default);
 Vue.component("action-button",require("./pages/inventory/actionbutton.vue").default);
 Vue.component("items-update-modal", require("./pages/inventory/ItemsUpdate.vue").default);
 Vue.component("items-delete-modal", require("./pages/inventory/ItemsDelete.vue").default);
+Vue.component("items-addtional-modal", require("./pages/inventory/ItemsAdditional.vue").default);
 
 
 
