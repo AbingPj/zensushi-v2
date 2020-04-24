@@ -145,6 +145,15 @@ Vue.component(
     require("./pages/inventory/actionbutton.vue").default
 );
 
+
+Vue.component(
+    "items-update-modal",
+    require("./pages/inventory/ItemsUpdate.vue").default
+);
+
+
+
+
 const app = new Vue({
     el: "#app2"
 });
