@@ -45,8 +45,8 @@ class PageController extends Controller
         $item_raw_stock_out = null;
         $product_item_id = null;
         return view(
-                    'app.pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
+            'app.pages.items.items-raw-product-in',
+            compact('item_id', 'item_raw_stock_out', 'product_item_id')
         );
     }
     public function production2($item_id)
@@ -55,93 +55,100 @@ class PageController extends Controller
         $item_raw_stock_out = null;
         $product_item_id = null;
         return view(
-                    'app.pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'app.pages.items.items-raw-product-in',
+            compact('item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
-    public function production3( $item_id, $product_item_id )
+    public function production3($item_id, $product_item_id)
     {
 
         $item_raw_stock_out = null;
         return view(
-                    'app.pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'app.pages.items.items-raw-product-in',
+            compact('item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
 
-    public function production4( $item_id, $product_item_id, $item_raw_stock_out )
+    public function production4($item_id, $product_item_id, $item_raw_stock_out)
     {
 
         return view(
-                    'app.pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'app.pages.items.items-raw-product-in',
+            compact('item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
 
     public function zen()
     {
-        return view('pages.home.home');
+        $page_title = "Dashboard";
+        return view('pages.home.home', compact('page_title'));
     }
     public function zenInventory()
     {
-        return view('pages.items.items');
+        $page_title = "Inventory";
+        return view('pages.items.items', compact('page_title'));
     }
     public function zenRecords()
     {
-        return view('pages.records.records');
+        $page_title = "Records";
+        return view('pages.records.records', compact('page_title'));
     }
 
     public function zenRequest()
     {
-        return view('pages.delivery-request.delivery-request');
+        $page_title = "Delivery Request";
+        return view('pages.delivery-request.delivery-request', compact('page_title'));
     }
 
     public function zenDelivery()
     {
-        return view('pages.delivery.delivery');
+        $page_title = "Deliveries";
+        return view('pages.delivery.delivery', compact('page_title'));
     }
     public function zenUsers()
     {
-        return view('pages.users.users');
+        $page_title = "Users";
+        return view('pages.users.users', compact('page_title'));
     }
 
 
     public function zenProduction()
     {
+        $page_title = "Production";
         $item_id = null;
         $item_raw_stock_out = null;
         $product_item_id = null;
         return view(
-                    'pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
+            'pages.items.items-raw-product-in',
+            compact('page_title', 'item_id', 'item_raw_stock_out', 'product_item_id')
         );
     }
     public function zenProduction2($item_id)
     {
-
+        $page_title = "Production";
         $item_raw_stock_out = null;
         $product_item_id = null;
         return view(
-                    'pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'pages.items.items-raw-product-in',
+            compact('page_title', 'item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
-    public function zenProduction3( $item_id, $product_item_id )
+    public function zenProduction3($item_id, $product_item_id)
     {
-
+        $page_title = "Production";
         $item_raw_stock_out = null;
         return view(
-                    'pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'pages.items.items-raw-product-in',
+            compact('page_title', 'item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
 
-    public function zenProduction4( $item_id, $product_item_id, $item_raw_stock_out )
+    public function zenProduction4($item_id, $product_item_id, $item_raw_stock_out)
     {
-
+        $page_title = "Production";
         return view(
-                    'pages.items.items-raw-product-in',
-                    compact('item_id', 'item_raw_stock_out', 'product_item_id')
-                    );
+            'pages.items.items-raw-product-in',
+            compact('page_title', 'item_id', 'item_raw_stock_out', 'product_item_id')
+        );
     }
 }

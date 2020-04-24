@@ -24,7 +24,7 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
-            <a href="{{ route('zen.home') }}" class="nav-link active">
+            <a href="{{ route('zen.home') }}" class="nav-link {{ $page_title == 'Dashboard' ? 'active' : '' }}">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -33,7 +33,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.inventory') }}" class="nav-link">
+          <a href="{{ route('zen.inventory') }}" class="nav-link {{ $page_title == 'Inventory' ? 'active' : '' }} ">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Inventory
@@ -42,9 +42,10 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.production') }}" class="nav-link">
+            <a href="{{ route('zen.production') }}" class="nav-link {{ $page_title == 'Production' ? 'active' : '' }} ">
               {{-- <i class="nav-icon fas fa-boxes"></i> --}}
-              <i class="nav-icon fas fa-people-carry"></i>
+              {{-- <i class="nav-icon fas fa-people-carry"></i> --}}
+              <i class="nav-icon fas fa-cubes"></i>
               <p>
                 Production
               </p>
@@ -52,7 +53,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.records') }}" class="nav-link">
+            <a href="{{ route('zen.records') }}" class="nav-link {{ $page_title == 'Records' ? 'active' : '' }} ">
               {{-- <i class="nav-icon fas fa-clipboard"></i> --}}
               <i class="nav-icon fas fa-window-restore"></i>
               <p>
@@ -62,7 +63,7 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.request') }}" class="nav-link">
+            <a href="{{ route('zen.request') }}" class="nav-link {{ $page_title == 'Delivery Request' ? 'active' : '' }} ">
               <i class="nav-icon fas fa-phone-square-alt"></i>
               <p>
                 Delivery Request
@@ -71,17 +72,17 @@
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.delivery') }}" class="nav-link">
+            <a href="{{ route('zen.delivery') }}" class="nav-link {{ $page_title == 'Deliveries' ? 'active' : '' }} ">
               {{-- <i class="nav-icon fa fa-truck"></i> --}}
               <i class="nav-icon fas fa-shipping-fast"></i>
               <p>
-                Delivery
+                Deliveries
               </p>
             </a>
           </li>
 
           <li class="nav-item">
-            <a href="{{ route('zen.users') }}" class="nav-link">
+            <a href="{{ route('zen.users') }}" class="nav-link {{ $page_title == 'Users' ? 'active' : '' }} ">
               {{-- <i class="nav-icon fa fa-truck"></i> --}}
               <i class="nav-icon fas fa-users-cog"></i>
               <p>

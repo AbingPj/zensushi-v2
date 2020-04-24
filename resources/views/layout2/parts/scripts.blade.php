@@ -8,7 +8,8 @@
 <script>
     function LoadingOverlay() {
      var customElement = $("<img>", {
-         class: "ld ld-shadow",
+        //  class: "ld ld-shadow",
+         class: "ld ld-heartbeat",
          src: "{{ asset('images/svg_logo/logo2.svg') }}"
      });
      $.LoadingOverlay("show", {
