@@ -1,20 +1,21 @@
-body {
-    // background: bisque;
-    /* fallback for old browsers */
-    // background: -webkit-linear-gradient(to right,  lightpink, bisque, cornsilk);
-    /* Chrome 10-25, Safari 5.1-6 */
-    // background: linear-gradient(to right, lightpink, bisque,  cornsilk);
+
+
+
+.content-wrapper{
     background: linear-gradient(
-        to bottom,
-        white,
-        white,
-        white,
+        to top,
+        black,
+        rgb(65, 60, 60),
         white,
         white,
         cornsilk,
+        cornsilk,
         bisque,
+        bisque,
+        lightpink,
         lightpink
     );
+
 }
 
 // Fonts
@@ -23,15 +24,15 @@ body {
 // Variables
 @import "mixins";
 
-// Bootstrap
-// @import "~bootstrap/scss/bootstrap";
-
 //adminlte
 @import "~admin-lte/dist/css/adminlte.css";
 @import '~admin-lte/plugins/fontawesome-free/css/all.css';
 @import '~admin-lte/plugins/datatables-bs4/css/dataTables.bootstrap4.css';
 
-// @import '~admin-lte/plugins/bootstrap/;
+
+
+
+
 
 // minimize;
 // @import "~admin-lte/dist/css/adminlte.min.css";

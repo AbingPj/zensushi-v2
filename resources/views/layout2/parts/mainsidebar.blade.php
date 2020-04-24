@@ -44,7 +44,8 @@
           <li class="nav-item">
             <a href="{{ route('zen.production') }}" class="nav-link">
               {{-- <i class="nav-icon fas fa-boxes"></i> --}}
-              <i class="nav-icon fas fa-people-carry"></i>
+              {{-- <i class="nav-icon fas fa-people-carry"></i> --}}
+              <i class="nav-icon fas fa-cubes"></i>
               <p>
                 Production
               </p>
