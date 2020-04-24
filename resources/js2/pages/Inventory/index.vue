@@ -1,23 +1,5 @@
 <template>
     <div>
-        <div class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1 class="m-0 text-dark">Inventroy</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item">
-                                <a href="#">Home</a>
-                            </li>
-                            <li class="breadcrumb-item active">Starter Page</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <!-- Main content -->
         <div class="content">
             <div class="container-fluid">
@@ -62,7 +44,6 @@
         <!-- /.content -->
         <items-update-modal></items-update-modal>
         <items-delete-modal></items-delete-modal>
-
     </div>
 </template>
 
@@ -109,7 +90,10 @@ export default {
                 $("#dt").DataTable({
                     language: { emptyTable: "nothing to see here" },
                     order: [[1, "asc"]],
-                    "lengthMenu": [[5, 10, 25, 50, -1], [5,10, 25, 50, "All"]],
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ],
                     iDisplayLength: -1
                 });
             });
