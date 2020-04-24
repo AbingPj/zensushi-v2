@@ -25,6 +25,7 @@
                     <div class="col">
                         <div class="card card-primary card-outline">
                             <div class="card-body">
+                                <!-- <button class="btn btn-info" onClick="return LoadingOverlay();"> loading overlay </button> -->
                                 <!-- <h5 class="card-title">Items</h5> -->
                                 <table id="dt" class="table table-bordered table-sm table-hover">
                                     <thead>
@@ -33,7 +34,7 @@
                                             <th>description</th>
                                             <th>item_type</th>
                                             <th>category</th>
-                                            <th>option</th>
+                                            <th style="width: 100px;">option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -43,7 +44,7 @@
                                             <td>{{item.item_type_id}}</td>
                                             <td>{{item.category_id}}</td>
                                             <td>
-                                                <action-button :item="item" ></action-button>
+                                                <action-button :item="item"></action-button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -55,6 +56,7 @@
             </div>
         </div>
         <!-- /.content -->
+        <items-update-modal></items-update-modal>
     </div>
 </template>
 
@@ -67,6 +69,21 @@ export default {
     },
     mounted() {
         this.getItems();
+
+        Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
+            console.log(data);
+            axios
+                .get("/api/getItems")
+                .then(res => {
+                    console.log(res);
+                    this.items = res.data;
+                    LoadingOverlayHide();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+            // this.$refs.itemsVuetable.refreshVueTable();
+        });
     },
     methods: {
         getItems() {
