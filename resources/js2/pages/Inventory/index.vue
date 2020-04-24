@@ -57,6 +57,7 @@
         </div>
         <!-- /.content -->
         <items-update-modal></items-update-modal>
+        <items-delete-modal></items-delete-modal>
     </div>
 </template>
 

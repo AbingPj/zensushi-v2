@@ -108,7 +108,7 @@ export default {
                 window.location = "/zen/production/" + data.id;
             }
         },
-        deleteAction(data, index) {
+        deleteAction(data) {
             let dataToDelete = { ...data };
             this.$events.fire("showItemDeleteModal", dataToDelete);
         }
