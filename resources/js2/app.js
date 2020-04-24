@@ -140,6 +140,11 @@ Vue.component(
     require("./pages/inventory/index.vue").default
 );
 
+Vue.component(
+    "action-button",
+    require("./pages/inventory/actionbutton.vue").default
+);
+
 const app = new Vue({
     el: "#app2"
 });
