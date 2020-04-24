@@ -108,7 +108,9 @@ export default {
             $(document).ready(function() {
                 $("#dt").DataTable({
                     language: { emptyTable: "nothing to see here" },
-                    order: [[1, "asc"]]
+                    order: [[1, "asc"]],
+                    "lengthMenu": [[5, 10, 25, 50, -1], [5,10, 25, 50, "All"]],
+                    iDisplayLength: -1
                 });
             });
         }
