@@ -30,15 +30,31 @@
             ></button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 <a @click="itemIn(item)" class="dropdown-item">
-                    <i class="fa fa-check-square-o" aria-hidden="true"></i>
-                    &nbsp; {{item.item_type_id == 2? 'PRODUCTION': 'IN'}}
+                    <div v-if="item.item_type_id == 2">
+                        <i class="fas fa-cubes"></i>
+                        &nbsp;PRODUCTION
+                    </div>
+                    <div v-else>
+                        <i class="fas fa-sign-in-alt"></i>
+                        &nbsp;IN
+                    </div>
+                    <!-- <i class="fa fa-check-square-o" aria-hidden="true"></i>
+                    &nbsp; {{item.item_type_id == 2? 'PRODUCTION': 'IN'}}-->
                 </a>
 
-                <a @click="itemOut(item)" class="dropdown-item" href="#">
-                    <i class="fa fa-minus-square" aria-hidden="true"></i>
-                    &nbsp;{{item.item_type_id == 1? 'PRODUCTION': 'OUT'}}
+                <a @click="itemOut(item)" class="dropdown-item">
+                    <div v-if="item.item_type_id == 1">
+                        <i class="fas fa-cubes"></i>
+                        &nbsp;PRODUCTION
+                    </div>
+                    <div v-else>
+                        <i class="fas fa-sign-out-alt"></i>
+                        &nbsp;OUT
+                    </div>
+                    <!-- <i class="fa fa-minus-square" aria-hidden="true"></i>
+                    &nbsp;{{item.item_type_id == 1? 'PRODUCTION': 'OUT'}}-->
                 </a>
-                <a @click=" itemAdditional(item)" class="dropdown-item" href="#">
+                <a @click=" itemAdditional(item)" class="dropdown-item">
                     <i class="fa fa-plus" aria-hidden="true"></i> &nbsp; Additional
                 </a>
             </div>
