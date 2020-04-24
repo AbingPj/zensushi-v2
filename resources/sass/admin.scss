@@ -24,6 +24,10 @@
 // Variables
 @import "mixins";
 
+//Loader
+@import "loader/loading";
+@import "loader/loading-btn";
+
 //adminlte
 @import "~admin-lte/dist/css/adminlte.css";
 @import '~admin-lte/plugins/fontawesome-free/css/all.css';
