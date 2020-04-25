@@ -136,15 +136,17 @@ Vue.component("items-delete-modal", require("./pages/Inventory/ItemsDelete.vue")
 Vue.component("items-addtional-modal", require("./pages/Inventory/ItemsAdditional.vue").default);
 Vue.component("items-in-modal", require("./pages/Inventory/ItemsIn.vue").default);
 Vue.component("items-out-modal", require("./pages/Inventory/ItemsOut.vue").default);
+Vue.component("items-choose-itemtype-modal", require("./pages/Inventory/ItemsChooseTypeModal.vue").default);
+Vue.component("items-create", require("./pages/Inventory/ItemsCreate.vue").default);
 
 
 ////  Production /////
 Vue.component("production-page", require("./pages/Production/index.vue").default);
-Vue.component("production-raw-out",require("./pages/Production/ItemsRawOut2.vue").default);
+Vue.component("production-raw-out", require("./pages/Production/ItemsRawOut2.vue").default);
 
 
 /// Records ///
-Vue.component("records-page",require("./pages/Records/Index.vue").default);
+Vue.component("records-page", require("./pages/Records/Index.vue").default);
 
 
 

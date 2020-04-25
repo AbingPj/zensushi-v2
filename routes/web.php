@@ -42,14 +42,15 @@ Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out
 Route::group(['prefix' => 'zen'], function () {
     Route::get('/', 'PageController@zen')->name('zen.home');
     Route::get('/inventory', 'PageController@zenInventory')->name('zen.inventory');
-    Route::get('/records', 'PageController@zenRecords')->name('zen.records');
-    Route::get('/request', 'PageController@zenRequest')->name('zen.request');
-    Route::get('/delivery', 'PageController@zenDelivery')->name('zen.delivery');
-    Route::get('/users', 'PageController@zenUsers')->name('zen.users');
+    Route::get('/create/items/type/{id}', 'PageController@zenCreateItem');
     Route::get('/production', 'PageController@zenProduction')->name('zen.production');
     Route::get('/production/{item_id}', 'PageController@zenProduction2');
     Route::get('/production/{item_id}/{product_item_id}', 'PageController@zenProduction3');
     Route::get('/production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@zenProduction4');
+    Route::get('/records', 'PageController@zenRecords')->name('zen.records');
+    Route::get('/request', 'PageController@zenRequest')->name('zen.request');
+    Route::get('/delivery', 'PageController@zenDelivery')->name('zen.delivery');
+    Route::get('/users', 'PageController@zenUsers')->name('zen.users');
 });
 
 

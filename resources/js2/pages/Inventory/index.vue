@@ -6,9 +6,21 @@
                 <div class="row">
                     <div class="col">
                         <div class="card card-primary card-outline">
+                            <div class="card-header" style="border-bottom:0;">
+                                <h5 class="m-0">
+                                    <button
+                                        type="button"
+                                        class="btn btn-info"
+                                        data-toggle="modal"
+                                        data-target="#chooseItemTypeModal"
+                                    >
+                                        <i class="fas fa-folder-plus fa-lg"></i> Create New Item
+                                    </button>
+                                </h5>
+                                <!-- folder-plus -->
+                            </div>
                             <div class="card-body">
-                                <!-- <button class="btn btn-info" onClick="return LoadingOverlay();"> loading overlay </button> -->
-                                <!-- <h5 class="card-title">Items</h5> -->
+                                <h6 class="card-title"></h6>
                                 <table id="dt" class="table table-bordered table-sm table-hover">
                                     <thead>
                                         <tr>
@@ -36,14 +48,15 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <!-- /.card-body end -->
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- /.content -->
+        </div><!-- /.content -->
         <items-update-modal></items-update-modal>
         <items-delete-modal></items-delete-modal>
+        <items-choose-itemtype-modal></items-choose-itemtype-modal>
     </div>
 </template>
 
