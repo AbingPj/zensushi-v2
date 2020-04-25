@@ -8,7 +8,7 @@
     <!-- <vc-items-in-modal></vc-items-in-modal> -->
     <!-- <vc-items-out-modal></vc-items-out-modal> -->
     <!-- <vc-items-additional-modal></vc-items-additional-modal> -->
-    <items-raw-out></items-raw-out>
+    <!-- <items-raw-out></items-raw-out> -->
   </div>
 </template>
 

@@ -35857,7 +35857,7 @@ div.table-responsive > div.dataTables_wrapper > div.row > div[class^="col-"]:las
 @charset "UTF-8";
 
 .content-wrapper {
-  background: linear-gradient(to top, black, #413c3c, white, white, cornsilk, cornsilk, bisque, bisque, lightpink, lightpink);
+  background: linear-gradient(to bottom, white, cornsilk, cornsilk, bisque, bisque, lightpink, lightpink);
 }
 
 .ld.reverse {

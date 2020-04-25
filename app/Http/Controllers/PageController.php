@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Category;
+use App\Item_type;
+use App\Raw;
+use App\Unit;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -88,6 +92,26 @@ class PageController extends Controller
         $page_title = "Inventory";
         return view('pages.items.items', compact('page_title'));
     }
+
+    public function zenCreateItem($id)
+    {
+        if (!($id >= 1 && $id <= 3)) {
+            return view('app.pages.items.items');
+        }
+        $itemType   = Item_type::find($id);
+        $categories = Category::all();
+        $units      = Unit::all();
+        $rawItems = Raw::all();
+
+        if ($rawItems->isNotEmpty()) {
+            $rawItems->map(function ($row) {
+                return $row->item = $row->item;
+            });
+        }
+        $page_title = "Inventory";
+        return view('pages.items.items-create', compact('page_title','itemType', 'categories', 'units', 'rawItems'));
+    }
+
     public function zenRecords()
     {
         $page_title = "Records";

@@ -1,14 +1,13 @@
 @extends('layout2.master')
 
-@section('title', 'Inventory' )
+@section('title', '{{$page_title}}' )
 
 @section('content')
-     {{-- <vc-items baseurl ="{{ Url('/') }}"></vc-items> --}}
-     <div class="content-header">
+    <div class="content-header">
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                <h1 class="m-0 text-dark"><i class="fas fa-th"></i> {{$page_title}}</h1>
+                <h1 class="m-0 text-dark"><i class="nav-icon fas fa-users-cog"></i> {{$page_title}}</h1>
                 </div>
                 <div class="col-sm-6">
                     <ol class="breadcrumb float-sm-right">
@@ -21,5 +20,5 @@
             </div>
         </div>
     </div>
-     <inventory-page></inventory-page>
+    <users-page></users-page>
 @endsection
