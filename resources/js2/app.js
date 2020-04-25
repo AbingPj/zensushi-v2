@@ -80,11 +80,6 @@ Vue.component(
     require("./components/pages/records/RecordsTable.vue").default
 );
 
-Vue.component(
-    "vc-items-raw-product-in",
-    require("./components/pages/items/items-raw-product-in/ItemsRawProductIn.vue").default
-);
-
 
 Vue.component(
     "items-raw-out",
@@ -141,6 +136,9 @@ Vue.component("items-delete-modal", require("./pages/inventory/ItemsDelete.vue")
 Vue.component("items-addtional-modal", require("./pages/inventory/ItemsAdditional.vue").default);
 Vue.component("items-in-modal", require("./pages/inventory/ItemsIn.vue").default);
 Vue.component("items-out-modal", require("./pages/inventory/ItemsOut.vue").default);
+
+////  Production /////
+Vue.component("production-page",require("./pages/production/index.vue").default);
 
 
 
