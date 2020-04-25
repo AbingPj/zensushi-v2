@@ -66,10 +66,7 @@
                                                                             class="btn btn-primary"
                                                                             @click="itemRawOutModal2Show()"
                                                                         >
-                                                                            <i
-                                                                                class="fa fa-pencil"
-                                                                                aria-hidden="true"
-                                                                            ></i>
+                                                                          <i class="far fa-edit"></i>
                                                                         </button>
                                                                     </div>
                                                                     <input
@@ -368,7 +365,7 @@
                 </div>
             </div>
         </div>
-        <items-raw-out-2></items-raw-out-2>
+        <production-raw-out></production-raw-out>
     </div>
 </template>
 
