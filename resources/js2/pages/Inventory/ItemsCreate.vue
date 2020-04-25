@@ -14,7 +14,7 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title"></h6>
-                                <form>
+
                                     <!-- item type -->
                                     <div class="form-group row">
                                         <label
@@ -135,14 +135,26 @@
                                     <br />
 
                                     <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
                                         <!-- <div class="col-sm-10">
                                             <button type="submit" class="btn btn-primary">Save</button>
                                         </div>-->
-                                        <div class="col">
-                                            <button class="btn btn-primary" @click="btnSave()">Save</button>
+                                        <div class="col-sm-10">
+                                            <div class="float-right">
+                                                <button class="btn btn-primary" @click="btnSave()">
+                                                    <i class="far fa-save fa-lg"></i> Save
+                                                </button>
+                                                <a
+                                                    class="btn btn-danger"
+                                                    onclick="return LoadingOverlay()"
+                                                    href="/zen/inventory"
+                                                >
+                                                    <i class="far fa-window-close fa-lg"></i> Cancel
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
+
                             </div>
                             <!-- /.card-body end -->
                         </div>
