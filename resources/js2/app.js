@@ -146,7 +146,10 @@ Vue.component("production-raw-out", require("./pages/Production/ItemsRawOut2.vue
 
 
 /// Records ///
-Vue.component("records-page", require("./pages/Records/Index.vue").default);
+Vue.component("records-page", require("./pages/Records/index.vue").default);
+
+////Users ///
+Vue.component("users-page", require("./pages/Users/index.vue").default);
 
 
 
