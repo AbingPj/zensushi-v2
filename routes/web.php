@@ -53,6 +53,9 @@ Route::group(['prefix' => 'zen'], function () {
     Route::get('/users', 'PageController@zenUsers')->name('zen.users');
 });
 
+Route::namespace('API')->group(function () {
+    Route::get('/getUsers', 'UsersController@getUsers');
+});
 
 
 //API Items Controller

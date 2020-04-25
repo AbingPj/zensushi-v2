@@ -25,4 +25,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 // });
 Route::namespace('API')->group(function () {
     Route::get('/getItems', 'InventoryController@getItems');
+    Route::middleware('auth:api')->get('/getUsers', 'UsersController@getUsers');
+    // Route::get('/getUsers', 'UsersController@getUsers');
 });

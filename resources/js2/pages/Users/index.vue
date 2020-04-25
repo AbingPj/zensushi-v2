@@ -23,14 +23,27 @@
                                             <th>Image</th>
                                             <th>Last Name</th>
                                             <th>First Name</th>
-                                            <th>M.I.</th>
+                                            <!-- <th>M.I.</th> -->
                                             <th>Email</th>
-                                            <th>Type</th>
+                                            <th>Role</th>
                                             <th>Status</th>
                                             <th style="width: 100px;">Option</th>
                                         </tr>
                                     </thead>
-                                    <tbody></tbody>
+                                    <tbody>
+                                        <tr v-for="user in users" :key="user.id">
+                                            <td>{{user.id}}</td>
+                                            <td></td>
+                                            <td></td>
+                                            <td>{{user.name}}</td>
+                                            <!-- <td></td> -->
+                                            <td>{{user.email}}</td>
+                                            <td>{{user.role.description}}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+
+                                    </tbody>
                                 </table>
                             </div>
                             <!-- /.card-body end -->
@@ -42,3 +55,23 @@
         <!-- /.content -->
     </div>
 </template>
+
+<script>
+export default {
+    created() {
+        axios.get('/getUsers')
+        .then(res => {
+           this.users = res.data;
+        })
+        .catch(err => {
+            console.error(err);
+        })
+    },
+    data() {
+        return {
+            users:[]
+        }
+    },
+
+}
+</script>
