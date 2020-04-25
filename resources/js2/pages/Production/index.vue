@@ -6,12 +6,369 @@
                 <div class="row">
                     <div class="col">
                         <div class="card card-primary card-outline">
-                            <div class="card-body"></div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr
+                                                style=" border-bottom: 4px solid gray; border-top: 4px solid black;"
+                                            >
+                                                <th colspan="8">
+                                                    <div class="row">
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for>Selected Raw</label>
+                                                                <select
+                                                                    v-model="selectedRaw"
+                                                                    class="form-control"
+                                                                    @change="rawSelectionChange()"
+                                                                >
+                                                                    <option
+                                                                        disabled
+                                                                        :value="null"
+                                                                    >Please select raw</option>
+                                                                    <option
+                                                                        v-for="raw in raws"
+                                                                        :value="raw"
+                                                                        :key="raw.id"
+                                                                    >{{ raw.item.description }}</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="out">Balance</label>
+                                                                <div class="input-group">
+                                                                    <input
+                                                                        type="number"
+                                                                        class="form-control"
+                                                                        :value=" selectedRaw == null? '' : selectedRaw.balance"
+                                                                        disabled
+                                                                    />
+
+                                                                    <div class="input-group-append">
+                                                                        <span
+                                                                            class="input-group-text"
+                                                                        >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="out">Raw Out:</label>
+
+                                                                <div class="input-group">
+                                                                    <div
+                                                                        class="input-group-prepend"
+                                                                    >
+                                                                        <button
+                                                                            class="btn btn-primary"
+                                                                            @click="itemRawOutModal2Show()"
+                                                                        >
+                                                                            <i
+                                                                                class="fa fa-pencil"
+                                                                                aria-hidden="true"
+                                                                            ></i>
+                                                                        </button>
+                                                                    </div>
+                                                                    <input
+                                                                        disabled
+                                                                        type="number"
+                                                                        class="form-control"
+                                                                        v-model="rawOut"
+                                                                        onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                                                                    />
+                                                                    <div class="input-group-append">
+                                                                        <span
+                                                                            class="input-group-text"
+                                                                        >{{ selectedRaw == null? '' : selectedRaw.unit }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-3">
+                                                            <div class="form-group">
+                                                                <label for="date">Date</label>
+                                                                <input
+                                                                    type="date"
+                                                                    class="form-control"
+                                                                    :class=" dateIsValid? '' : 'is-invalid'"
+                                                                    id="date"
+                                                                    v-model="date"
+                                                                    ref="date"
+                                                                />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </th>
+                                            </tr>
+                                            <tr>
+                                                <th scope="col" style="width: 90px;">id</th>
+                                                <th scope="col">Product</th>
+                                                <th
+                                                    scope="col"
+                                                    style="width: 150px;"
+                                                    class="text-center"
+                                                >Quantity</th>
+                                                <th scope="col"></th>
+                                                <th
+                                                    scope="col"
+                                                    style="width: 250px;"
+                                                    class="text-center"
+                                                >Weight</th>
+                                                <th scope="col" class="text-right">Total Weight</th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr
+                                                v-for="product in selectedProducts"
+                                                :key="product.id"
+                                            >
+                                                <td>{{product.item.id}}</td>
+                                                <td>{{product.item.description}}</td>
+                                                <td class="text-center">
+                                                    <div class="input-group input-group-sm">
+                                                        <input
+                                                            type="number"
+                                                            style="text-align:center;"
+                                                            class="form-control"
+                                                            v-model="product.quantity"
+                                                            min="1"
+                                                            max="100"
+                                                            onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                                        />
+
+                                                        <div class="input-group-append">
+                                                            <span
+                                                                class="input-group-text"
+                                                            >{{product.unit.description}}</span>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td class="text-center">X</td>
+                                                <td class="text-center">{{product.value}}g</td>
+                                                <td class="text-right">{{product.total_weight}}g</td>
+                                                <td>{{product.total_weight/1000}} Kilo</td>
+                                                <td class="text-right">
+                                                    <button
+                                                        class="btn btn-sm btn-danger"
+                                                        @click="removeSelection(product)"
+                                                    >
+                                                        <i class="fa fa-eraser" aria-hidden="true"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+
+                                            <tr
+                                                v-if="notSelectedProductsLength !== 0"
+                                                style="background-color:#d9d9d9;"
+                                            >
+                                                <td colspan="8">
+                                                    <div
+                                                        style="padding: 0px 200px 0px 200px;"
+                                                        class="form-group"
+                                                    >
+                                                        <div class="input-group mb-3 mt-3">
+                                                            <select
+                                                                v-model="selectedProduct"
+                                                                class="form-control"
+                                                            >
+                                                                <option
+                                                                    disabled
+                                                                    :value="null"
+                                                                >Select products of {{selectedRaw.item.description}}</option>
+                                                                <option
+                                                                    v-for="prod in notSelectedProducts"
+                                                                    :value="prod"
+                                                                    :key="prod.id"
+                                                                >{{ prod.item.description }}</option>
+                                                            </select>
+                                                            <div class="input-group-append">
+                                                                <button
+                                                                    @click="btnSelectProduct()"
+                                                                    class="btn btn-primary"
+                                                                    style="width: 200px;"
+                                                                    type="button "
+                                                                >Select</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                            <tr style="border-top: 3px solid gray;">
+                                                <td>
+                                                    <strong>Sub-Total</strong>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td
+                                                    class="text-right"
+                                                >{{totalWieghtOfSelectedProduct}}g</td>
+                                                <td>{{totalWieghtOfSelectedProduct/1000}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <div class="form-inline">
+                                                        <label for="scrap" class="mr-sm-2">
+                                                            <b>Scrap:&nbsp;</b>
+                                                        </label>
+
+                                                        <div class="input-group">
+                                                            <input
+                                                                type="text"
+                                                                maxlength="10"
+                                                                class="form-control"
+                                                                style="width: 100px;"
+                                                                v-model="scrap"
+                                                                id="scrap"
+                                                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                                                            />
+                                                            <div class="input-group-append">
+                                                                <select
+                                                                    v-model="scrapSelectedWeight"
+                                                                    class="btn btn-outline-secondary"
+                                                                    style="padding: 0px;"
+                                                                >
+                                                                    <option
+                                                                        style="padding: 0px;"
+                                                                    >Grams</option>
+                                                                    <option
+                                                                        style="padding: 0px;"
+                                                                    >Kilo</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td
+                                                    class="text-right"
+                                                >{{computedScrap == "" ? 0 : computedScrap }}g</td>
+                                                <td>{{computedScrapKilo == ""? 0 : computedScrapKilo}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-center">
+                                                    <div class="form-inline">
+                                                        <label for="bones" class="mr-sm-2">
+                                                            <b>Bones:</b>
+                                                        </label>
+                                                        <div class="input-group">
+                                                            <input
+                                                                type="text"
+                                                                maxlength="10"
+                                                                class="form-control"
+                                                                style="width: 100px;"
+                                                                v-model="bones"
+                                                                id="bones"
+                                                                onkeypress="return (event.charCode !=8 && event.charCode ==0 || ( event.charCode == 46 || (event.charCode >= 48 && event.charCode <= 57)))"
+                                                            />
+                                                            <div class="input-group-append">
+                                                                <select
+                                                                    v-model="bonesSelectedWeight"
+                                                                    class="btn btn-outline-secondary"
+                                                                    style="padding: 0px;"
+                                                                >
+                                                                    <option
+                                                                        style="padding: 0px;"
+                                                                    >Grams</option>
+                                                                    <option
+                                                                        style="padding: 0px;"
+                                                                    >Kilo</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                <td
+                                                    class="text-right"
+                                                >{{computedBones == ""? 0 : computedBones}}g</td>
+                                                <td>{{computedBonesKilo == ""? 0 : computedBonesKilo}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+
+                                            <tr style="border-top: 4px solid black;">
+                                                <td>
+                                                    <strong>Total</strong>
+                                                </td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-right">
+                                                    <strong>{{finalWeight}}g</strong>
+                                                </td>
+                                                <td>{{finalWeight/1000}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Raw Out:</td>
+                                                <td>
+                                                    <strong>{{selectedRaw == null? '' : selectedRaw.desc}}</strong>
+                                                </td>
+                                                <td>
+                                                    <strong>{{rawOut}}&nbsp;{{selectedRaw == null? '' : selectedRaw.unit}}</strong>
+                                                </td>
+                                                <td>x</td>
+                                                <td>
+                                                    <strong>{{selectedRaw == null? '' : selectedRaw.value}}g</strong>
+                                                </td>
+                                                <td class="text-right">{{rawStackOutWeightGrams}}g</td>
+                                                <td>{{rawStackOutWeightKilo}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Difference:</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td class="text-right">{{difference}}g</td>
+                                                <td>{{difference/1000}} Kilo</td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <!-- end of reponsive table -->
+                                <div>
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-6">
+                                            <!-- <button class="btn btn-block btn-light">Back to Items</button> -->
+                                        </div>
+                                        <div class="col-sm-12 col-md-6 text-right">
+                                            <button
+                                                @click="sendSelelectedProducts()"
+                                                class="btn btn-lg btn-block btn-success text-uppercase"
+                                            >Stock-in</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <items-raw-out-2></items-raw-out-2>
     </div>
 </template>
 
