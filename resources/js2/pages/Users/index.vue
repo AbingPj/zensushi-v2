@@ -42,7 +42,6 @@
                                             <td></td>
                                             <td></td>
                                         </tr>
-
                                     </tbody>
                                 </table>
                             </div>
@@ -59,19 +58,38 @@
 <script>
 export default {
     created() {
-        axios.get('/getUsers')
-        .then(res => {
-           this.users = res.data;
-        })
-        .catch(err => {
-            console.error(err);
-        })
+        this.getUsers();
     },
     data() {
         return {
-            users:[]
-        }
+            users: []
+        };
     },
-
-}
+    methods: {
+        getUsers() {
+            axios
+                .get("/getUsers")
+                .then(res => {
+                    this.users = res.data;
+                    this.datatablesInitialize();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+        datatablesInitialize() {
+            $(document).ready(function() {
+                $("#dt").DataTable({
+                    language: { emptyTable: "nothing to see here" },
+                    order: [[0, "asc"]],
+                    lengthMenu: [
+                        [5, 10, 25, 50, -1],
+                        [5, 10, 25, 50, "All"]
+                    ],
+                    iDisplayLength: -1
+                });
+            });
+        }
+    }
+};
 </script>
