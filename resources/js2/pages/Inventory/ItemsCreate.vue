@@ -15,146 +15,150 @@
                             <div class="card-body">
                                 <h6 class="card-title"></h6>
 
-                                    <!-- item type -->
+                                <!-- item type -->
+                                <div class="form-group row">
+                                    <label for="item_type" class="col-sm-2 col-form-label">Item Type</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                            type="text"
+                                            name="item_type"
+                                            id="item_type"
+                                            :value="parseItemType.description"
+                                            class="form-control"
+                                            disabled
+                                        />
+                                    </div>
+                                </div>
+
+                                <!--  Category -->
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Category</label>
+                                    <div class="col-sm-10">
+                                        <select v-model="selectedCategory" class="form-control">
+                                            <option value="null" disabled>Select Category</option>
+                                            <option
+                                                v-for="cat in parseCategories"
+                                                :value="cat"
+                                                :key="cat.id"
+                                            >{{ cat.description }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <!-- Unit -->
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Unit</label>
+                                    <div class="col-sm-10">
+                                        <select
+                                            v-model="selectedUnit"
+                                            class="form-control"
+                                            @change="onChangeUnitSelection(selectedUnit)"
+                                        >
+                                            <option value="null" disabled>Select Unit</option>
+                                            <option
+                                                v-for="unit in parseUnits"
+                                                :value="unit"
+                                                :key="unit.id"
+                                            >{{ unit.description }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- item name -->
+                                <div class="form-group row">
+                                    <label
+                                        for="description"
+                                        class="col-sm-2 col-form-label"
+                                    >Description (Item Name)</label>
+                                    <div class="col-sm-10">
+                                        <input
+                                            type="text"
+                                            name="description"
+                                            id="description"
+                                            v-model="description"
+                                            placeholder="item description"
+                                            class="form-control"
+                                        />
+                                    </div>
+                                </div>
+
+                                <!-- Raw Item -->
+                                <div v-if="parseItemType.id == 1">
                                     <div class="form-group row">
-                                        <label
-                                            for="item_type"
-                                            class="col-sm-2 col-form-label"
-                                        >Item Type</label>
+                                        <label class="col-sm-2 col-form-label">Value(Grams)</label>
                                         <div class="col-sm-10">
                                             <input
                                                 type="text"
-                                                name="item_type"
-                                                id="item_type"
-                                                :value="parseItemType.description"
+                                                v-model="rawValue"
+                                                placeholder="ex. 100 grams"
                                                 class="form-control"
-                                                disabled
+                                                :disabled="disabledValue"
                                             />
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!--  Category -->
+                                <!-- Product Raw Item -->
+                                <div v-else-if="parseItemType.id == 2">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Category</label>
+                                        <label class="col-sm-2 col-form-label">Raw product</label>
                                         <div class="col-sm-10">
-                                            <select v-model="selectedCategory" class="form-control">
-                                                <option value="null" disabled>Select Category</option>
+                                            <select v-model="selectedRaw" class="form-control">
+                                                <option value="null" disabled>Select Raw Product</option>
                                                 <option
-                                                    v-for="cat in parseCategories"
-                                                    :value="cat"
-                                                    :key="cat.id"
-                                                >{{ cat.description }}</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <!-- Unit -->
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label">Unit</label>
-                                        <div class="col-sm-10">
-                                            <select
-                                                v-model="selectedUnit"
-                                                class="form-control"
-                                                @change="onChangeUnitSelection(selectedUnit)"
-                                            >
-                                                <option value="null" disabled>Select Unit</option>
-                                                <option
-                                                    v-for="unit in parseUnits"
-                                                    :value="unit"
-                                                    :key="unit.id"
-                                                >{{ unit.description }}</option>
+                                                    v-for="raw in parseRawItems"
+                                                    :value="raw"
+                                                    :key="raw.id"
+                                                >{{ raw.item.description }}</option>
                                             </select>
                                         </div>
                                     </div>
 
-                                    <!-- item name -->
                                     <div class="form-group row">
-                                        <label
-                                            for="description"
-                                            class="col-sm-2 col-form-label"
-                                        >Description (Item Name)</label>
+                                        <label class="col-sm-2 col-form-label">Value(Grams)</label>
                                         <div class="col-sm-10">
                                             <input
                                                 type="text"
-                                                name="description"
-                                                id="description"
-                                                v-model="description"
-                                                placeholder="item description"
+                                                v-model="rawProductValue"
+                                                placeholder="ex. 100 grams"
                                                 class="form-control"
+                                                :disabled="disabledValue"
                                             />
                                         </div>
                                     </div>
+                                </div>
 
-                                    <!-- Raw Item -->
-                                    <div v-if="parseItemType.id == 1">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Value(Grams)</label>
-                                            <div class="col-sm-10">
-                                                <input
-                                                    type="text"
-                                                    v-model="rawValue"
-                                                    placeholder="ex. 100 grams"
-                                                    class="form-control"
-                                                    :disabled="disabledValue"
-                                                />
-                                            </div>
-                                        </div>
+                                <!-- Other Item -->
+                                <div v-else></div>
+                                <br />
+
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label">Image</label>
+                                    <div class="col-sm-10">
+                                        <input type="file" class="form-control-file" id="image" disabled>
+                                        <span class="text-danger">In Development</span>
                                     </div>
+                                </div>
 
-                                    <!-- Product Raw Item -->
-                                    <div v-else-if="parseItemType.id == 2">
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Raw product</label>
-                                            <div class="col-sm-10">
-                                                <select v-model="selectedRaw" class="form-control">
-                                                    <option value="null" disabled>Select Raw Product</option>
-                                                    <option
-                                                        v-for="raw in parseRawItems"
-                                                        :value="raw"
-                                                        :key="raw.id"
-                                                    >{{ raw.item.description }}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label class="col-sm-2 col-form-label">Value(Grams)</label>
-                                            <div class="col-sm-10">
-                                                <input
-                                                    type="text"
-                                                    v-model="rawProductValue"
-                                                    placeholder="ex. 100 grams"
-                                                    class="form-control"
-                                                    :disabled="disabledValue"
-                                                />
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <!-- Other Item -->
-                                    <div v-else></div>
-                                    <br />
-
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label"></label>
-                                        <!-- <div class="col-sm-10">
+                                <div class="form-group row">
+                                    <label class="col-sm-2 col-form-label"></label>
+                                    <!-- <div class="col-sm-10">
                                             <button type="submit" class="btn btn-primary">Save</button>
-                                        </div>-->
-                                        <div class="col-sm-10">
-                                            <div class="float-right">
-                                                <button class="btn btn-primary" @click="btnSave()">
-                                                    <i class="far fa-save fa-lg"></i> Save
-                                                </button>
-                                                <a
-                                                    class="btn btn-danger"
-                                                    onclick="return LoadingOverlay()"
-                                                    href="/zen/inventory"
-                                                >
-                                                    <i class="far fa-window-close fa-lg"></i> Cancel
-                                                </a>
-                                            </div>
+                                    </div>-->
+                                    <div class="col-sm-10">
+                                        <div class="float-right">
+                                            <button class="btn btn-primary" @click="btnSave()">
+                                                <i class="far fa-save fa-lg"></i> Save
+                                            </button>
+                                            <a
+                                                class="btn btn-danger"
+                                                onclick="return LoadingOverlay()"
+                                                href="/zen/inventory"
+                                            >
+                                                <i class="far fa-window-close fa-lg"></i> Cancel
+                                            </a>
                                         </div>
                                     </div>
-
+                                </div>
                             </div>
                             <!-- /.card-body end -->
                         </div>
