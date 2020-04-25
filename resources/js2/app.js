@@ -129,18 +129,22 @@ Vue.component(
 
 
 /////  Inventory  /////
-Vue.component("inventory-page", require("./pages/inventory/index.vue").default);
-Vue.component("action-button", require("./pages/inventory/actionbutton.vue").default);
-Vue.component("items-update-modal", require("./pages/inventory/ItemsUpdate.vue").default);
-Vue.component("items-delete-modal", require("./pages/inventory/ItemsDelete.vue").default);
-Vue.component("items-addtional-modal", require("./pages/inventory/ItemsAdditional.vue").default);
-Vue.component("items-in-modal", require("./pages/inventory/ItemsIn.vue").default);
-Vue.component("items-out-modal", require("./pages/inventory/ItemsOut.vue").default);
+Vue.component("inventory-page", require("./pages/Inventory/index.vue").default);
+Vue.component("action-button", require("./pages/Inventory/actionbutton.vue").default);
+Vue.component("items-update-modal", require("./pages/Inventory/ItemsUpdate.vue").default);
+Vue.component("items-delete-modal", require("./pages/Inventory/ItemsDelete.vue").default);
+Vue.component("items-addtional-modal", require("./pages/Inventory/ItemsAdditional.vue").default);
+Vue.component("items-in-modal", require("./pages/Inventory/ItemsIn.vue").default);
+Vue.component("items-out-modal", require("./pages/Inventory/ItemsOut.vue").default);
 
 
 ////  Production /////
-Vue.component("production-page", require("./pages/production/index.vue").default);
-Vue.component("production-raw-out",require("./pages/production/ItemsRawOut2.vue").default);
+Vue.component("production-page", require("./pages/Production/index.vue").default);
+Vue.component("production-raw-out",require("./pages/Production/ItemsRawOut2.vue").default);
+
+
+/// Records ///
+Vue.component("records-page",require("./pages/Records/Index.vue").default);
 
 
 
