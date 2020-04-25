@@ -3,8 +3,7 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-
-                    <div class="col-12">
+                    <div class="col-md-9">
                         <div class="card card-primary card-outline">
                             <div class="card-header" style="border-bottom:0;">
                                 <h5 class="m-0">
@@ -15,27 +14,30 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title"></h6>
-                                <div class="row">
-                                    <div class="col-lg-6">
-
-
-                                        <div class="form-group">
-                                            <label for>Item Type</label>
+                                <form>
+                                    <!-- item type -->
+                                    <div class="form-group row">
+                                        <label
+                                            for="item_type"
+                                            class="col-sm-2 col-form-label"
+                                        >Item Type</label>
+                                        <div class="col-sm-10">
                                             <input
                                                 type="text"
                                                 name="item_type"
+                                                id="item_type"
                                                 :value="parseItemType.description"
                                                 class="form-control"
                                                 disabled
                                             />
                                         </div>
-                                        <!--  Category -->
-                                        <div class="form-group">
-                                            <label>Category &nbsp;</label>
-                                            <select
-                                                v-model="selectedCategory"
-                                                class="form-control form-control"
-                                            >
+                                    </div>
+
+                                    <!--  Category -->
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Category</label>
+                                        <div class="col-sm-10">
+                                            <select v-model="selectedCategory" class="form-control">
                                                 <option value="null" disabled>Select Category</option>
                                                 <option
                                                     v-for="cat in parseCategories"
@@ -44,12 +46,14 @@
                                                 >{{ cat.description }}</option>
                                             </select>
                                         </div>
-                                        <!-- Unit -->
-                                        <div class="form-group">
-                                            <label>Unit &nbsp;</label>
+                                    </div>
+                                    <!-- Unit -->
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">Unit</label>
+                                        <div class="col-sm-10">
                                             <select
                                                 v-model="selectedUnit"
-                                                class="form-control form-control"
+                                                class="form-control"
                                                 @change="onChangeUnitSelection(selectedUnit)"
                                             >
                                                 <option value="null" disabled>Select Unit</option>
@@ -61,25 +65,32 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label for>Description (Name)</label>
+
+                                    <!-- item name -->
+                                    <div class="form-group row">
+                                        <label
+                                            for="description"
+                                            class="col-sm-2 col-form-label"
+                                        >Description (Item Name)</label>
+                                        <div class="col-sm-10">
                                             <input
                                                 type="text"
                                                 name="description"
+                                                id="description"
                                                 v-model="description"
                                                 placeholder="item description"
                                                 class="form-control"
                                             />
                                         </div>
+                                    </div>
 
-                                        <!-- Raw Item -->
-                                        <div v-if="parseItemType.id == 1">
-                                            <div class="form-group">
-                                                <label for>Value(Grams)</label>
+                                    <!-- Raw Item -->
+                                    <div v-if="parseItemType.id == 1">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Value(Grams)</label>
+                                            <div class="col-sm-10">
                                                 <input
                                                     type="text"
-                                                    name="description"
                                                     v-model="rawValue"
                                                     placeholder="ex. 100 grams"
                                                     class="form-control"
@@ -87,10 +98,13 @@
                                                 />
                                             </div>
                                         </div>
-                                        <!-- Product Raw Item -->
-                                        <div v-else-if="parseItemType.id == 2">
-                                            <div class="form-group">
-                                                <label for>Raw product</label>
+                                    </div>
+
+                                    <!-- Product Raw Item -->
+                                    <div v-else-if="parseItemType.id == 2">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Raw product</label>
+                                            <div class="col-sm-10">
                                                 <select v-model="selectedRaw" class="form-control">
                                                     <option value="null" disabled>Select Raw Product</option>
                                                     <option
@@ -100,11 +114,13 @@
                                                     >{{ raw.item.description }}</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group">
-                                                <label for>Value(Grams)</label>
+                                        </div>
+
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label">Value(Grams)</label>
+                                            <div class="col-sm-10">
                                                 <input
                                                     type="text"
-                                                    name="description"
                                                     v-model="rawProductValue"
                                                     placeholder="ex. 100 grams"
                                                     class="form-control"
@@ -112,16 +128,21 @@
                                                 />
                                             </div>
                                         </div>
-                                        <!-- Other Item -->
-                                        <div v-else>Others</div>
-                                        <br />
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <button class="btn btn-primary" @click="btnSave()">Save</button>
+
+                                    <!-- Other Item -->
+                                    <div v-else></div>
+                                    <br />
+
+                                    <div class="form-group row">
+                                        <!-- <div class="col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>-->
+                                        <div class="col">
+                                            <button class="btn btn-primary" @click="btnSave()">Save</button>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                             <!-- /.card-body end -->
                         </div>
