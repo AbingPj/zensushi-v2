@@ -88,7 +88,7 @@ export default {
                 // window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
                 window.location =
                     "/zen/production/" +
-                    data.product_raw_item_id +
+                    data.raw_product.raw_id +
                     "/" +
                     data.id;
             }
