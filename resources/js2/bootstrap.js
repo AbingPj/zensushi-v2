@@ -32,5 +32,13 @@ window.Echo = new Echo({
 
 require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");
 
+$(function () {
+    $("#prodDateTimePicker").datetimepicker({
+        maxDate: new Date()
+    });
+});
+
+
+
 
 

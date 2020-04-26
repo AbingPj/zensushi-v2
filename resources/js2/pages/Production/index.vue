@@ -66,7 +66,7 @@
                                                                             class="btn btn-primary"
                                                                             @click="itemRawOutModal2Show()"
                                                                         >
-                                                                          <i class="far fa-edit"></i>
+                                                                            <i class="far fa-edit"></i>
                                                                         </button>
                                                                     </div>
                                                                     <input
@@ -85,7 +85,7 @@
                                                             </div>
                                                         </div>
                                                         <div class="col-md-3">
-                                                            <div class="form-group">
+                                                            <!-- <div class="form-group">
                                                                 <label for="date">Date</label>
                                                                 <input
                                                                     type="date"
@@ -95,6 +95,35 @@
                                                                     v-model="date"
                                                                     ref="date"
                                                                 />
+                                                            </div>-->
+                                                            <div class="form-group">
+                                                                <label for="date">Date</label>
+
+                                                                <div
+                                                                    class="input-group date"
+                                                                    id="prodDateTimePicker"
+                                                                    data-target-input="nearest"
+                                                                >
+                                                                    <input
+                                                                        type="text"
+                                                                        class="form-control datetimepicker-input"
+                                                                        data-target="#prodDateTimePicker"
+                                                                        id="prodDatePicker"
+                                                                    />
+                                                                    <div
+                                                                        class="input-group-append"
+                                                                        data-target="#prodDateTimePicker"
+                                                                        data-toggle="datetimepicker"
+                                                                    >
+                                                                        <div
+                                                                            class="input-group-text"
+                                                                        >
+                                                                            <i
+                                                                                class="fa fa-calendar"
+                                                                            ></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -555,6 +584,8 @@ export default {
         sendSelelectedProducts() {
             LoadingOverlay();
             let self = this;
+            // $("#prodDatePicker").removeClass("is-invalid");
+            this.date = $("#prodDatePicker").val();
             console.log(this.date);
             if (
                 this.date == null ||
@@ -562,8 +593,9 @@ export default {
                 this.date == ""
             ) {
                 console.log("date is required");
-                // alert("date is required");
-                document.getElementById("date").focus();
+                alert("date is required");
+                // $("#prodDatePicker").addClass("is-invalid");
+                document.getElementById("prodDatePicker").focus();
                 this.dateIsValid = false;
                 LoadingOverlayHide();
                 this.$refs.date.$el.focus();
