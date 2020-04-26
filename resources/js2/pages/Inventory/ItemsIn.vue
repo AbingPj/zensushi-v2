@@ -13,6 +13,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="date">Date</label>
+                            <date-picker v-model="date" :config="options"></date-picker>
                             <!-- <input type="date" class="form-control" v-model="date" /> -->
                             <div
                                 class="input-group date"
@@ -23,7 +24,6 @@
                                     type="text"
                                     class="form-control datetimepicker-input"
                                     data-target="#tempusdominus"
-                                    v-model="date"
                                 />
                                 <div
                                     class="input-group-append"
@@ -32,8 +32,6 @@
                                 >
                                     <div class="input-group-text">
                                         <i class="fa fa-calendar"></i>
-                                        <!-- <i class="fas fa-calendar-alt"></i> -->
-                                        <!-- <i class="far fa-calendar-alt"></i> -->
                                     </div>
                                 </div>
                             </div>
@@ -66,19 +64,33 @@
 </template>
 
 <script>
+// Import this component
+import datePicker from "vue-bootstrap-datetimepicker";
+
+// Import date picker css
+import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
 export default {
+    components: {
+        datePicker
+    },
     props: {
         item: Object
     },
     data() {
         return {
             inStock: null,
-            date: null
+            date: null,
+            options: {
+                format: "DD/MM/YYYY",
+                useCurrent: false
+            }
         };
     },
     methods: {
         stockIn() {
-            this.axiosPost();
+            this.date = $("#date").val();
+            console.log($("#date").val());
+            // this.axiosPost();
         },
         axiosPost() {
             LoadingOverlay();
@@ -104,6 +116,13 @@ export default {
                 });
         }
     },
+    created() {
+        $(function() {
+            $("#tempusdominus").datetimepicker({
+                maxDate: new Date()
+            });
+        });
+    },
 
     mounted() {
         let self = this;
@@ -111,11 +130,9 @@ export default {
             self.inStock = null;
             self.date = null;
         });
-        $(function() {
-            $("#tempusdominus").datetimepicker({
-                maxDate: new Date()
-            });
-        });
+        console.log(this.item);
+         var datetime = moment(this.item.created_at).format('DD/MM/YYYY');
+        this.date = datetime;
     }
 };
 </script>
