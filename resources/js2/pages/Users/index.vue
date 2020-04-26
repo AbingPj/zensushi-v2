@@ -16,34 +16,39 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title"></h6>
-                                <table id="dt" class="table table-bordered table-sm table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>Id</th>
-                                            <th>Image</th>
-                                            <th>Last Name</th>
-                                            <th>First Name</th>
-                                            <!-- <th>M.I.</th> -->
-                                            <th>Email</th>
-                                            <th>Role</th>
-                                            <th>Status</th>
-                                            <th style="width: 100px;">Option</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr v-for="user in users" :key="user.id">
-                                            <td>{{user.id}}</td>
-                                            <td></td>
-                                            <td></td>
-                                            <td>{{user.name}}</td>
-                                            <!-- <td></td> -->
-                                            <td>{{user.email}}</td>
-                                            <td>{{user.role.description}}</td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table
+                                        id="dt"
+                                        class="table table-bordered table-sm table-hover"
+                                    >
+                                        <thead>
+                                            <tr>
+                                                <th>Id</th>
+                                                <th>Image</th>
+                                                <th>Last Name</th>
+                                                <th>First Name</th>
+                                                <!-- <th>M.I.</th> -->
+                                                <th>Email</th>
+                                                <th>Role</th>
+                                                <th>Status</th>
+                                                <th style="width: 100px;">Option</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr v-for="user in users" :key="user.id">
+                                                <td>{{user.id}}</td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{{user.name}}</td>
+                                                <!-- <td></td> -->
+                                                <td>{{user.email}}</td>
+                                                <td>{{user.role.description}}</td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!-- /.card-body end -->
                         </div>

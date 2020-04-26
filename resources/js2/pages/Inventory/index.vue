@@ -21,6 +21,7 @@
                             </div>
                             <div class="card-body">
                                 <h6 class="card-title"></h6>
+                                <div class="table-responsive">
                                 <table id="dt" class="table table-bordered table-sm table-hover">
                                     <thead>
                                         <tr>
@@ -49,6 +50,7 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                </div>
                             </div>
                             <!-- /.card-body end -->
                         </div>
