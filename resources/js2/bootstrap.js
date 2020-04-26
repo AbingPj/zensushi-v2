@@ -5,8 +5,13 @@ try {
     require("bootstrap");
     require('admin-lte');
     require('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js');
+    require('admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js');
+
 } catch (e) { }
 
+$(function() {
+            $("#datetimepicker1").datetimepicker();
+});
 
 window.axios = require("axios");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
@@ -29,3 +34,6 @@ window.Echo = new Echo({
 });
 
 require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");
+
+
+

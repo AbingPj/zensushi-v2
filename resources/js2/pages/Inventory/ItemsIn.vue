@@ -11,13 +11,38 @@
 
                     <!-- Modal body -->
                     <div class="modal-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <div
+                                            class="input-group date"
+                                            id="datetimepicker1"
+                                            data-target-input="nearest"
+                                        >
+                                            <input
+                                                type="text"
+                                                class="form-control datetimepicker-input"
+                                                data-target="#datetimepicker1"
+                                            />
+                                            <div
+                                                class="input-group-append"
+                                                data-target="#datetimepicker1"
+                                                data-toggle="datetimepicker"
+                                            >
+                                                <div class="input-group-text">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input
-                                type="date"
-                                class="form-control"
-                                v-model="date"
-                            />
+                            <input type="date" class="form-control" v-model="date" />
                         </div>
 
                         <div class="form-group">
@@ -43,19 +68,18 @@
                 </div>
             </div>
         </div>
-
     </div>
 </template>
 
 <script>
 export default {
-    props:{
-        item:Object
+    props: {
+        item: Object
     },
     data() {
         return {
             inStock: null,
-            date: null,
+            date: null
         };
     },
     methods: {
@@ -93,6 +117,15 @@ export default {
             self.inStock = null;
             self.date = null;
         });
+
+        // $(document).ready(function() {
+        //     // // $("#datetimepicker1").datetimepicker();
+        //     $(function() {
+        //         $("#datetimepicker1").datetimepicker();
+        //     });
+        // });
+
+
     }
 };
 </script>
