@@ -17,7 +17,7 @@ class CreateInRecordsTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('item_id')->unsigned();
             $table->double('value', 10, 2)->nullable();
-            $table->date('date')->nullable();
+            $table->dateTime('date')->nullable();
             $table->timestamps();
             $table->bigInteger('user')->unsigned();
             $table->boolean('remove')->nullable()->default(false);
