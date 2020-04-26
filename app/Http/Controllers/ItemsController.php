@@ -15,6 +15,7 @@ use App\Unit;
 
 use App\Events\ItemsEvent;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -197,15 +198,15 @@ class ItemsController extends Controller
 
     public function  AdditionalItem(Request $request)
     {
+
         DB::transaction(function () use ($request) {
             $value        = $request->input('value');
-            $date         = $request->input('date');
             $item         = Item::findOrFail($request->input('itemId'));
             $add          = new Additional;
             $add->item_id = $item->id;
             $add->value   = $value;
             $add->user    = Auth::id();
-            $add->date    = $date;
+            $add->date    = Carbon::parse($request->date);
             $add->save();
             broadcast(new ItemsEvent($item->id));
         });
