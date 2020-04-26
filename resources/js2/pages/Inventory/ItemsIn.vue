@@ -22,7 +22,6 @@
                             >
                                 <input
                                     type="text"
-                                    v-on:change="dateChange"
                                     class="form-control datetimepicker-input"
                                     data-target="#tempusdominus"
                                     id="inDatePicker"
@@ -95,15 +94,9 @@ export default {
         };
     },
     methods: {
-        dateChange() {
-            console.log($("#inDatePicker").val());
-            this.date = $("#inDatePicker").val();
-
-            // this.axiosPost();
-        },
         stockIn() {
-            // this.date = $("#inDatePicker").val();
-            console.log($("#inDatePicker").val());
+            this.date = $("#inDatePicker").val();
+            // console.log($("#inDatePicker").val());
             this.axiosPost();
         },
         axiosPost() {

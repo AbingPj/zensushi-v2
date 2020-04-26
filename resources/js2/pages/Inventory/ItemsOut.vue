@@ -10,7 +10,31 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input type="date" class="form-control" v-model="date" />
+                            <!-- <date-picker v-model="date" :config="options"></date-picker> -->
+                            <!-- <input type="date" class="form-control" v-model="date" /> -->
+                            <div
+                                class="input-group date"
+                                id="outDateTimePicker"
+                                data-target-input="nearest"
+                            >
+                                <input
+                                    type="text"
+                                    class="form-control datetimepicker-input"
+                                    data-target="#outDateTimePicker"
+                                    id="outDatePicker"
+                                />
+                                <!-- :value="date" -->
+                                <!-- :value="setDate" -->
+                                <div
+                                    class="input-group-append"
+                                    data-target="#outDateTimePicker"
+                                    data-toggle="datetimepicker"
+                                >
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -46,10 +70,11 @@ export default {
             outStock: null,
             date: null,
             unit: null
-        }
+        };
     },
     methods: {
         stockOut() {
+            this.date = $("#outDatePicker").val();
             this.axiosPost();
         },
 
@@ -87,10 +112,14 @@ export default {
     mounted() {
         let self = this;
         $("#itemOutModal").on("hidden.bs.modal", function() {
-            //  window.clearTimeout(timer);
             self.outStock = null;
             self.date = null;
         });
+
+        $("#outDateTimePicker").datetimepicker({
+            maxDate: new Date()
+        });
+
     },
     events: {
         showItemOutModal(data) {
@@ -99,6 +128,5 @@ export default {
             this.unit = data.unit.description;
         }
     }
-
 };
 </script>
