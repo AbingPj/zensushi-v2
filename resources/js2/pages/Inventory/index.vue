@@ -44,7 +44,7 @@
                                             <td>{{item.category.description}}</td>
                                             <!-- <td>{{getMoment(item.created_at)}}</td> -->
                                             <td>
-                                                <action-button :item="item"></action-button>
+                                                <action-button :item="item" :index="index"></action-button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -60,6 +60,7 @@
         <items-update-modal></items-update-modal>
         <items-delete-modal></items-delete-modal>
         <items-choose-itemtype-modal></items-choose-itemtype-modal>
+        <items-in-modal></items-in-modal>
     </div>
 </template>
 

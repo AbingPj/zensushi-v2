@@ -13,7 +13,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <date-picker v-model="date" :config="options"></date-picker>
+                            <!-- <date-picker v-model="date" :config="options"></date-picker> -->
                             <!-- <input type="date" class="form-control" v-model="date" /> -->
                             <div
                                 class="input-group date"
@@ -22,9 +22,14 @@
                             >
                                 <input
                                     type="text"
+                                    v-on:change="dateChange"
                                     class="form-control datetimepicker-input"
                                     data-target="#tempusdominus"
+                                    id="inDatePicker"
+
                                 />
+                                <!-- :value="date" -->
+                                <!-- :value="setDate" -->
                                 <div
                                     class="input-group-append"
                                     data-target="#tempusdominus"
@@ -47,7 +52,7 @@
                                     v-model="inStock"
                                 />
                                 <div class="input-group-append">
-                                    <span class="input-group-text">{{ item.unit.description }}</span>
+                                    <span class="input-group-text">{{ unit }}</span>
                                 </div>
                             </div>
 
@@ -64,33 +69,42 @@
 </template>
 
 <script>
-// Import this component
-import datePicker from "vue-bootstrap-datetimepicker";
+// // Import this component
+// import datePicker from "vue-bootstrap-datetimepicker";
+// // Import date picker css
+// import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
 
-// Import date picker css
-import "pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css";
 export default {
-    components: {
-        datePicker
-    },
-    props: {
-        item: Object
-    },
+    // components: {
+    //     datePicker
+    // },
+    // props: {
+    //     item: Object
+    // },
     data() {
         return {
+            item: {},
             inStock: null,
             date: null,
-            options: {
-                format: "DD/MM/YYYY",
-                useCurrent: false
-            }
+            setDate: null,
+            unit: null
+            // options: {
+            //     format: "DD/MM/YYYY",
+            //     useCurrent: false
+            // }
         };
     },
     methods: {
-        stockIn() {
-            this.date = $("#date").val();
-            console.log($("#date").val());
+        dateChange() {
+            console.log($("#inDatePicker").val());
+            this.date = $("#inDatePicker").val();
+
             // this.axiosPost();
+        },
+        stockIn() {
+            // this.date = $("#inDatePicker").val();
+            console.log($("#inDatePicker").val());
+            this.axiosPost();
         },
         axiosPost() {
             LoadingOverlay();
@@ -116,23 +130,37 @@ export default {
                 });
         }
     },
-    created() {
-        $(function() {
-            $("#tempusdominus").datetimepicker({
-                maxDate: new Date()
-            });
-        });
-    },
 
     mounted() {
         let self = this;
+
         $("#itemInModal").on("hidden.bs.modal", function() {
             self.inStock = null;
             self.date = null;
+            $("#tempusdominus").datetimepicker({ date: null });
         });
-        console.log(this.item);
-         var datetime = moment(this.item.created_at).format('DD/MM/YYYY');
-        this.date = datetime;
+        $("#tempusdominus").datetimepicker({
+            // sideBySide: true,
+            // debug: true,
+            maxDate: new Date()
+        });
+
+        // $("#tempusdominus").datetimepicker({
+        //     maxDate: new Date()
+        // });
+
+        //console.log(this.item);
+        //var datetime = moment(this.item.created_at).format('DD/MM/YYYY');
+    },
+    events: {
+        showItemInModal(data) {
+            $("#itemInModal").modal("show");
+            this.item = data;
+            this.unit = data.unit.description;
+            // var datetime = this.item.created_at;
+            // console.log(moment(datetime).format("DD/MM/YYYY hh:mm A"));
+            // this.date = moment(datetime).format("DD/MM/YYYY hh:mm A");
+        }
     }
 };
 </script>

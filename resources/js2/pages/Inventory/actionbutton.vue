@@ -58,7 +58,6 @@
         >
             <i class="fa fa-trash fa-lg"></i>
         </button>
-        <items-in-modal :item="item" ></items-in-modal>
         <items-addtional-modal :item="item"></items-addtional-modal>
         <items-out-modal :prop_item="item"></items-out-modal>
     </div>
@@ -67,7 +66,8 @@
 <script>
 export default {
     props: {
-        item: Object
+        item: Object,
+        index: Number
     },
 
     methods: {
@@ -80,8 +80,8 @@ export default {
             let dataToIn = { ...data };
 
             if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
-                // this.$events.fire("showItemInModal", dataToIn);
-                 $("#itemInModal").modal("show");
+                this.$events.fire("showItemInModal", data);
+                //  $("#itemInModal").modal("show");
             } else {
                 console.log(data);
                 LoadingOverlay();
