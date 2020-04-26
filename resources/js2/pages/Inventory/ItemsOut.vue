@@ -21,6 +21,7 @@
                                     class="form-control datetimepicker-input"
                                     data-target="#outDateTimePicker"
                                     id="outDatePicker"
+                                    :value="date"
                                 />
                                 <div
                                     class="input-group-append"
@@ -122,6 +123,8 @@ export default {
             $("#itemOutModal").modal("show");
             this.item = data;
             this.unit = data.unit.description;
+            var datetime = new Date();
+            this.date = moment(datetime).format("DD/MM/YYYY hh:mm A");
         }
     }
 };
