@@ -11,7 +11,7 @@ class InventoryController extends Controller
 {
     public function getItems()
     {
-        $items = Item::with('unit','category','item_type')->get();
+        $items = Item::with('unit','category','item_type','raw_product')->get();
         $data =  $items->map(function ($item, $key) {
             $item->balance = ItemClass::getItemBalance($item->id);
             return $item;

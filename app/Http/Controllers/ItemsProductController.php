@@ -10,6 +10,7 @@ use App\Out_record;
 use App\Raw;
 use App\Scrap;
 use Auth;
+use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -106,16 +107,17 @@ class ItemsProductController extends Controller
 
             $total = $request->input('total');
             $difference  = $request->input('difference');
-        
+
 
             $selected_raw = $request->input('selected_raw');
             $selected_raw_item_id = $selected_raw['item_id'];
             $selected_raw_out_value = $request->input('selected_raw_out_value');
             $selected_products = $request->input('selected_products');
-            $date = $request->input('date');
+            $date = Carbon::parse($request->date);
+            // $date = $request->input('date');
             // dd($selected_products);
 
-            
+
 
             $raw_out = new Out_record;
             $raw_out->item_id = $selected_raw_item_id;
@@ -149,7 +151,7 @@ class ItemsProductController extends Controller
             dump($scrap_obj);
 
 
-            
+
 
             foreach ($selected_products as $key => $product) {
                 $in          = new In_record;

@@ -30,6 +30,7 @@
                                             <th>Unit</th>
                                             <th>Item Type</th>
                                             <th>Category</th>
+                                            <!-- <th>Created</th> -->
                                             <th style="width: 100px;">Option</th>
                                         </tr>
                                     </thead>
@@ -41,8 +42,9 @@
                                             <td>{{item.unit.description}}</td>
                                             <td>{{item.item_type.description}}</td>
                                             <td>{{item.category.description}}</td>
+                                            <!-- <td>{{getMoment(item.created_at)}}</td> -->
                                             <td>
-                                                <action-button :item="item"></action-button>
+                                                <action-button :item="item" :index="index"></action-button>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -53,7 +55,11 @@
                     </div>
                 </div>
             </div>
-        </div><!-- /.content -->
+        </div>
+        <!-- /.content -->
+        <items-addtional-modal></items-addtional-modal>
+        <items-out-modal></items-out-modal>
+        <items-in-modal></items-in-modal>
         <items-update-modal></items-update-modal>
         <items-delete-modal></items-delete-modal>
         <items-choose-itemtype-modal></items-choose-itemtype-modal>
@@ -69,23 +75,23 @@ export default {
     },
     mounted() {
         this.getItems();
-
         Echo.channel("ItemsChannel").listen("ItemsEvent", data => {
-            console.log(data);
             axios
                 .get("/api/getItems")
                 .then(res => {
-                    console.log(res);
                     this.items = res.data;
                     LoadingOverlayHide();
                 })
                 .catch(err => {
                     console.error(err);
                 });
-            // this.$refs.itemsVuetable.refreshVueTable();
         });
     },
     methods: {
+        // getMoment(time) {
+        //     var a = moment(time);
+        //     return moment(a).fromNow();
+        // },
         getItems() {
             axios
                 .get("/api/getItems")

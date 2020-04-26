@@ -5,6 +5,8 @@ try {
     require("bootstrap");
     require('admin-lte');
     require('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js');
+    window.moment = require('moment');
+    require('admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js');
 } catch (e) { }
 
 
@@ -29,3 +31,14 @@ window.Echo = new Echo({
 });
 
 require("gasparesganga-jquery-loading-overlay/dist/loadingoverlay");
+
+$(function () {
+    $("#prodDateTimePicker").datetimepicker({
+        maxDate: new Date()
+    });
+});
+
+
+
+
+

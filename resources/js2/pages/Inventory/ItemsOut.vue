@@ -3,42 +3,56 @@
         <div class="modal fade" id="itemOutModal">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <!-- Modal Header -->
                     <div class="modal-header">
                         <h4 class="modal-title">Item Stock-out</h4>
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                     </div>
-
-                    <!-- Modal body -->
                     <div class="modal-body">
-                        <form>
-                            <div class="form-group">
-                                <label for="date">Date</label>
-                                <input type="date" class="form-control" v-model="date" />
-                            </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
 
-                            <div class="form-group">
-                                <label for="title">Stock-out: {{ item.description }}</label>
-                                <div class="input-group">
-                                    <input
-                                        type="number"
-                                        class="form-control"
-                                        placeholder="0"
-                                        v-model="outStock"
-                                    />
-                                    <div class="input-group-append">
-                                        <span class="input-group-text">{{ item.unit.description }}</span>
+                            <div
+                                class="input-group date"
+                                id="outDateTimePicker"
+                                data-target-input="nearest"
+                            >
+                                <input
+                                    type="text"
+                                    class="form-control datetimepicker-input"
+                                    data-target="#outDateTimePicker"
+                                    id="outDatePicker"
+                                    :value="date"
+                                />
+                                <div
+                                    class="input-group-append"
+                                    data-target="#outDateTimePicker"
+                                    data-toggle="datetimepicker"
+                                >
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
                                     </div>
                                 </div>
-                                <br />
-                                <div class="text-center">
-                                    <button @click="stockOut()" class="btn btn-info">Stock-Out</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="title">Stock-out: {{ item.description }}</label>
+                            <div class="input-group">
+                                <input
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="0"
+                                    v-model="outStock"
+                                />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">{{ unit }}</span>
                                 </div>
                             </div>
-                        </form>
-                        <!-- <div class="modal-footer">
-                <button class="btn btn-info" data-dismiss="modal">IN</button>
-                        </div>-->
+                            <br />
+                            <div class="text-center">
+                                <button @click="stockOut()" class="btn btn-info">Stock-Out</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -48,18 +62,17 @@
 
 <script>
 export default {
-    props: {
-        prop_item: Object
-    },
     data() {
         return {
-            item: this.prop_item,
+            item: {},
             outStock: null,
-            date: null
+            date: null,
+            unit: null
         };
     },
     methods: {
         stockOut() {
+            this.date = $("#outDatePicker").val();
             this.axiosPost();
         },
 
@@ -94,25 +107,25 @@ export default {
         }
     },
 
-    created() {
-        this.$events.listen(
-            "showItemOutModal",
-            data => ($("#itemOutModal").modal("show"), (this.item = data))
-        );
-    },
-
     mounted() {
         let self = this;
         $("#itemOutModal").on("hidden.bs.modal", function() {
-            //  window.clearTimeout(timer);
             self.outStock = null;
             self.date = null;
         });
+
+        $("#outDateTimePicker").datetimepicker({
+            maxDate: new Date()
+        });
+    },
+    events: {
+        showItemOutModal(data) {
+            $("#itemOutModal").modal("show");
+            this.item = data;
+            this.unit = data.unit.description;
+            var datetime = new Date();
+            this.date = moment(datetime).format("DD/MM/YYYY hh:mm A");
+        }
     }
-    // mounted() {
-    //   $("#itemOutModal").on("show.bs.modal	", function(e) {
-    //     this.outStock = 0;
-    //   });
-    // }
 };
 </script>

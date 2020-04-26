@@ -13,7 +13,29 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <input type="date" class="form-control" v-model="date" />
+
+                            <div
+                                class="input-group date"
+                                id="addDateTimePicker"
+                                data-target-input="nearest"
+                            >
+                                <input
+                                    type="text"
+                                    class="form-control datetimepicker-input"
+                                    data-target="#addDateTimePicker"
+                                    id="addDatePicker"
+                                    :value="date"
+                                />
+                                <div
+                                    class="input-group-append"
+                                    data-target="#addDateTimePicker"
+                                    data-toggle="datetimepicker"
+                                >
+                                    <div class="input-group-text">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="form-group">
@@ -26,7 +48,7 @@
                                     v-model="additional"
                                 />
                                 <div class="input-group-append">
-                                    <span class="input-group-text">{{ item.unit.description }}</span>
+                                    <span class="input-group-text">{{ unit }}</span>
                                 </div>
                             </div>
 
@@ -47,17 +69,17 @@
 
 <script>
 export default {
-    props: {
-        item: Object
-    },
     data() {
         return {
+            item: {},
+            unit: null,
             additional: null,
             date: null
         };
     },
     methods: {
         additionalItem() {
+            this.date = $("#addDatePicker").val();
             this.axiosPost();
         },
         axiosPost() {
@@ -91,6 +113,18 @@ export default {
             self.additional = null;
             self.date = null;
         });
+        $("#addDateTimePicker").datetimepicker({
+            maxDate: new Date()
+        });
+    },
+    events: {
+        showItemAdditonalModal(data) {
+            $("#itemAdditionalModal").modal("show");
+            this.item = data;
+            this.unit = data.unit.description;
+            var datetime = new Date();
+            this.date = moment(datetime).format("DD/MM/YYYY hh:mm A");
+        }
     }
 };
 </script>

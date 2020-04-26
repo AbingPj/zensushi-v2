@@ -58,16 +58,16 @@
         >
             <i class="fa fa-trash fa-lg"></i>
         </button>
-        <items-in-modal :item="item" ></items-in-modal>
-        <items-addtional-modal :item="item"></items-addtional-modal>
-        <items-out-modal :prop_item="item"></items-out-modal>
+
+
     </div>
 </template>
 
 <script>
 export default {
     props: {
-        item: Object
+        item: Object,
+        index: Number
     },
 
     methods: {
@@ -80,28 +80,28 @@ export default {
             let dataToIn = { ...data };
 
             if (dataToIn.item_type_id == 1 || dataToIn.item_type_id == 3) {
-                // this.$events.fire("showItemInModal", dataToIn);
-                 $("#itemInModal").modal("show");
+                this.$events.fire("showItemInModal", data);
+                //  $("#itemInModal").modal("show");
             } else {
                 console.log(data);
                 LoadingOverlay();
                 // window.location = "/zensushi-production/" + data.product_raw_item_id +"/"+ data.id;
                 window.location =
                     "/zen/production/" +
-                    data.product_raw_item_id +
+                    data.raw_product.raw_id +
                     "/" +
                     data.id;
             }
         },
 
         itemAdditional(data) {
-            $("#itemAdditionalModal").modal("show");
+            this.$events.fire("showItemAdditonalModal", data);
+
         },
 
         itemOut(data) {
-            let dataToOut = { ...data };
-            if (dataToOut.item_type_id == 2 || dataToOut.item_type_id == 3) {
-                this.$events.fire("showItemOutModal", dataToOut);
+            if (data.item_type_id == 2 || data.item_type_id == 3) {
+                this.$events.fire("showItemOutModal", data);
             } else {
                 console.log(data);
                 LoadingOverlay();
