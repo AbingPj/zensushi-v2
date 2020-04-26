@@ -25,5 +25,8 @@ mix.js('resources/js/app.js', 'public/js')
     ).copyDirectory(
         "node_modules/admin-lte/dist/img",
         "public/images/adminlte"
+    ).copyDirectory(
+        "node_modules/admin-lte/plugins/moment",
+        "public/js/moment"
     );
 
