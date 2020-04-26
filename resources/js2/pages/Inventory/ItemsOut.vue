@@ -10,8 +10,7 @@
                     <div class="modal-body">
                         <div class="form-group">
                             <label for="date">Date</label>
-                            <!-- <date-picker v-model="date" :config="options"></date-picker> -->
-                            <!-- <input type="date" class="form-control" v-model="date" /> -->
+
                             <div
                                 class="input-group date"
                                 id="outDateTimePicker"
@@ -23,8 +22,6 @@
                                     data-target="#outDateTimePicker"
                                     id="outDatePicker"
                                 />
-                                <!-- :value="date" -->
-                                <!-- :value="setDate" -->
                                 <div
                                     class="input-group-append"
                                     data-target="#outDateTimePicker"
@@ -119,7 +116,6 @@ export default {
         $("#outDateTimePicker").datetimepicker({
             maxDate: new Date()
         });
-
     },
     events: {
         showItemOutModal(data) {

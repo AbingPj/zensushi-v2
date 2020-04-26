@@ -58,7 +58,7 @@
         >
             <i class="fa fa-trash fa-lg"></i>
         </button>
-        <items-addtional-modal :item="item"></items-addtional-modal>
+
 
     </div>
 </template>
@@ -95,7 +95,8 @@ export default {
         },
 
         itemAdditional(data) {
-            $("#itemAdditionalModal").modal("show");
+            this.$events.fire("showItemAdditonalModal", data);
+
         },
 
         itemOut(data) {

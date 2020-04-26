@@ -57,11 +57,12 @@
             </div>
         </div>
         <!-- /.content -->
+        <items-addtional-modal></items-addtional-modal>
+        <items-out-modal></items-out-modal>
+        <items-in-modal></items-in-modal>
         <items-update-modal></items-update-modal>
         <items-delete-modal></items-delete-modal>
         <items-choose-itemtype-modal></items-choose-itemtype-modal>
-        <items-out-modal></items-out-modal>
-        <items-in-modal></items-in-modal>
     </div>
 </template>
 
