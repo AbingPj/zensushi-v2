@@ -59,7 +59,7 @@
             <i class="fa fa-trash fa-lg"></i>
         </button>
         <items-addtional-modal :item="item"></items-addtional-modal>
-        <items-out-modal :prop_item="item"></items-out-modal>
+
     </div>
 </template>
 
@@ -99,9 +99,8 @@ export default {
         },
 
         itemOut(data) {
-            let dataToOut = { ...data };
-            if (dataToOut.item_type_id == 2 || dataToOut.item_type_id == 3) {
-                this.$events.fire("showItemOutModal", dataToOut);
+            if (data.item_type_id == 2 || data.item_type_id == 3) {
+                this.$events.fire("showItemOutModal", data);
             } else {
                 console.log(data);
                 LoadingOverlay();

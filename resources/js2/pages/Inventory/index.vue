@@ -61,6 +61,7 @@
         <items-delete-modal></items-delete-modal>
         <items-choose-itemtype-modal></items-choose-itemtype-modal>
         <items-in-modal></items-in-modal>
+         <items-out-modal></items-out-modal>
     </div>
 </template>
 
