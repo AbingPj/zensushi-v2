@@ -8701,6 +8701,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -9637,6 +9639,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -95457,50 +95464,53 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("h6", { staticClass: "card-title" }),
                   _vm._v(" "),
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-bordered table-sm table-hover",
-                      attrs: { id: "dt" }
-                    },
-                    [
-                      _vm._m(1),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.items, function(item, index) {
-                          return _c("tr", { key: index }, [
-                            _c("td", [_vm._v(_vm._s(item.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.description))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.balance))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.unit.description))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(item.item_type.description))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _vm._v(_vm._s(item.category.description))
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "td",
-                              [
-                                _c("action-button", {
-                                  attrs: { item: item, index: index }
-                                })
-                              ],
-                              1
-                            )
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-bordered table-sm table-hover",
+                        attrs: { id: "dt" }
+                      },
+                      [
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.items, function(item, index) {
+                            return _c("tr", { key: index }, [
+                              _c("td", [_vm._v(_vm._s(item.id))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.description))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.balance))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.unit.description))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(item.item_type.description))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(_vm._s(item.category.description))
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  _c("action-button", {
+                                    attrs: { item: item, index: index }
+                                  })
+                                ],
+                                1
+                              )
+                            ])
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])
@@ -96872,40 +96882,42 @@ var render = function() {
               _c("div", { staticClass: "card-body" }, [
                 _c("h6", { staticClass: "card-title" }),
                 _vm._v(" "),
-                _c(
-                  "table",
-                  {
-                    staticClass: "table table-bordered table-sm table-hover",
-                    attrs: { id: "dt" }
-                  },
-                  [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c(
-                      "tbody",
-                      _vm._l(_vm.users, function(user) {
-                        return _c("tr", { key: user.id }, [
-                          _c("td", [_vm._v(_vm._s(user.id))]),
-                          _vm._v(" "),
-                          _c("td"),
-                          _vm._v(" "),
-                          _c("td"),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(user.name))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(user.email))]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(user.role.description))]),
-                          _vm._v(" "),
-                          _c("td"),
-                          _vm._v(" "),
-                          _c("td")
-                        ])
-                      }),
-                      0
-                    )
-                  ]
-                )
+                _c("div", { staticClass: "table-responsive" }, [
+                  _c(
+                    "table",
+                    {
+                      staticClass: "table table-bordered table-sm table-hover",
+                      attrs: { id: "dt" }
+                    },
+                    [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.users, function(user) {
+                          return _c("tr", { key: user.id }, [
+                            _c("td", [_vm._v(_vm._s(user.id))]),
+                            _vm._v(" "),
+                            _c("td"),
+                            _vm._v(" "),
+                            _c("td"),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.name))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.email))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(user.role.description))]),
+                            _vm._v(" "),
+                            _c("td"),
+                            _vm._v(" "),
+                            _c("td")
+                          ])
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
               ])
             ])
           ])
