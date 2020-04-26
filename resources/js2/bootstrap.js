@@ -5,13 +5,10 @@ try {
     require("bootstrap");
     require('admin-lte');
     require('admin-lte/plugins/datatables-bs4/js/dataTables.bootstrap4.js');
+    window.moment = require('moment');
     require('admin-lte/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.js');
-
 } catch (e) { }
 
-$(function() {
-            $("#datetimepicker1").datetimepicker();
-});
 
 window.axios = require("axios");
 window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";

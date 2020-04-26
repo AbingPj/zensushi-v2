@@ -81,7 +81,7 @@
 
 </script>
 {{-- <script src="{{ url('/js/app.js') }}"></script> --}}
-<script src="{{ url('/js/moment/moment.min.js') }}"></script>
+{{-- <script src="{{ url('/js/moment/moment.min.js') }}"></script> --}}
 <script src="{{ url('/js/admin.js') }}"></script>
 <script src="{{ url('/js/bootstrap-notify.min.js') }}"></script>
 
