@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\DB;
 use App\Events\ItemsEvent;
-
+use Carbon\Carbon;
 
 class ItemsRawController extends Controller
 {
@@ -23,7 +23,7 @@ class ItemsRawController extends Controller
         // foreach ($rawItems as $key => $raw) {
         //     $raw->item = $raw->item;
         // }
-       
+
         if ($rawItems->isNotEmpty()) {
             $rawItems->map(function ($row) {
                 $row->selected = false;
@@ -42,8 +42,11 @@ class ItemsRawController extends Controller
     {
 
         DB::transaction(function () use ($request) {
+
+
             $value = $request->input('value');
-            $date = $request->input('date');
+              // $date = $request->input('date');
+            $date = Carbon::parse($request->date);
             $item = Item::findOrFail($request->input('itemId'));
             if ($item->item_type_id ==  1) {
                 $in          = new In_record;
@@ -69,7 +72,8 @@ class ItemsRawController extends Controller
     {
         DB::transaction(function () use ($request) {
             $value = floatval($request->input('value'));
-            $date = $request->input('date');
+            // $date = $request->input('date');
+            $date = Carbon::parse($request->date);
             $item = Item::findOrFail($request->input('itemId'));
             $balance =  ItemClass::getItemBalance($item->id);
             if (!($value > $balance)) {
