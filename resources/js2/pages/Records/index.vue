@@ -14,7 +14,7 @@
                                     >
                                         <thead>
                                             <tr>
-                                                <th style="width: 100px;" >Date</th>
+                                                <th style="width: 100px;">Date</th>
                                                 <th>Item ID</th>
                                                 <th>Item</th>
                                                 <th>Add</th>
@@ -40,6 +40,26 @@
                                                 <td>{{item.TOTAL}}</td>
                                                 <td>{{item.DIFFERENCE}}</td>
                                                 <td>
+                                                    <div
+                                                        class="btn-group"
+                                                        role="group"
+                                                        aria-label="Button group with nested dropdown"
+                                                    >
+                                                        <button
+                                                            @click="editAction(item, index)"
+                                                            type="button"
+                                                            class="btn btn-info"
+                                                        >
+                                                            <i class="fa fa-edit fa-lg"></i>
+                                                        </button>
+                                                        <button
+                                                            @click="deleteAction( item, index)"
+                                                            type="button"
+                                                            class="btn btn-danger"
+                                                        >
+                                                            <i class="fa fa-trash fa-lg"></i>
+                                                        </button>
+                                                    </div>
                                                     <!-- <records-action-button :item="item" :index="index"></action-button> -->
                                                 </td>
                                             </tr>
@@ -53,6 +73,8 @@
             </div>
         </div>
         <!-- /.content -->
+        <!-- <modal-delete-record></modal-delete-record>
+        <modal-update-record></modal-update-record> -->
     </div>
 </template>
 
@@ -82,7 +104,7 @@ export default {
             $(document).ready(function() {
                 $("#dt").DataTable({
                     language: { emptyTable: "nothing to see here" },
-                    order: [[1, "asc"]],
+                    order: [[0, "desc"]],
                     lengthMenu: [
                         [5, 10, 25, 50, -1],
                         [5, 10, 25, 50, "All"]
