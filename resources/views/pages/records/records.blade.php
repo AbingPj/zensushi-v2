@@ -21,5 +21,5 @@
         </div>
     </div>
     <records-page></records-page>
-   <vc-records baseurl ="{{ Url('/') }}"></vc-records>
+   {{-- <vc-records baseurl ="{{ Url('/') }}"></vc-records> --}}
 @endsection
