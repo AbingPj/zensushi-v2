@@ -46,7 +46,8 @@ class ItemsRawController extends Controller
 
             $value = $request->input('value');
               // $date = $request->input('date');
-            $date = Carbon::parse($request->date);
+            // $date = Carbon::parse($request->date);
+            $date = new Carbon($request->date);
             $item = Item::findOrFail($request->input('itemId'));
             if ($item->item_type_id ==  1) {
                 $in          = new In_record;
