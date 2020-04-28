@@ -147,6 +147,8 @@ Vue.component("production-raw-out", require("./pages/Production/ItemsRawOut2.vue
 
 /// Records ///
 Vue.component("records-page", require("./pages/Records/index.vue").default);
+Vue.component("modal-delete-record", require("./pages/Records/ModalDeleteRecord.vue").default);
+Vue.component("modal-update-record", require("./pages/Records/ModalUpdateRecord.vue").default);
 
 ////Users ///
 Vue.component("users-page", require("./pages/Users/index.vue").default);
