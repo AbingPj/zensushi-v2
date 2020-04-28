@@ -124,7 +124,7 @@ export default {
             this.item = data;
             this.unit = data.unit.description;
             var datetime = new Date();
-            this.date = moment(datetime).format("DD/MM/YYYY hh:mm A");
+            this.date = moment(datetime).format("MM/DD/YYYY hh:mm A");
         }
     }
 };
