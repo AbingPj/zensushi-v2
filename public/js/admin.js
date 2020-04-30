@@ -7761,6 +7761,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -9707,17 +9708,12 @@ __webpack_require__.r(__webpack_exports__);
     deleteRecord: function deleteRecord() {
       LoadingOverlay();
       axios.post("/records/delete", this.item).then(function (res) {
-        console.log(res);
-        LoadingOverlayHide();
-      })["catch"](function (err) {
-        console.error(err);
         LoadingOverlayHide();
       });
     }
   },
   events: {
     deleteRecordModal: function deleteRecordModal(data) {
-      console.log(data);
       this.item = data;
       $("#deleteRecordModal").modal("show");
     }
@@ -9821,18 +9817,13 @@ __webpack_require__.r(__webpack_exports__);
     updateRecord: function updateRecord() {
       LoadingOverlay();
       axios.post("/records/update", this.item).then(function (res) {
-        console.log(res);
-        $("#updateRecordModal").modal("hide");
         LoadingOverlayHide();
-      })["catch"](function (err) {
         $("#updateRecordModal").modal("hide");
-        console.error(err);
       });
     }
   },
   events: {
     updateRecordModal: function updateRecordModal(data) {
-      console.log(data);
       this.item = data;
       $("#updateRecordModal").modal("show");
     }
@@ -9943,18 +9934,27 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     };
   },
   created: function created() {
-    this.getRecords();
-  },
-  methods: {
-    getRecords: function getRecords() {
-      var _this = this;
+    var _this = this;
 
+    this.getRecords();
+    Echo.channel("RecordsChannel").listen("RecordsEvent", function (data) {
       axios.get("/api/getRecords").then(function (res) {
         _this.items = res.data;
+      });
+    });
+  },
+  methods: {
+    momentFormatter: function momentFormatter(datetime) {
+      var result = moment(datetime);
+      return moment(result).format("MMM.DD,YYYY - hh:mmA");
+    },
+    getRecords: function getRecords() {
+      var _this2 = this;
 
-        _this.datatablesInitialize();
-      })["catch"](function (err) {
-        console.error(err);
+      axios.get("/api/getRecords").then(function (res) {
+        _this2.items = res.data;
+
+        _this2.datatablesInitialize();
       });
     },
     datatablesInitialize: function datatablesInitialize() {
@@ -94891,8 +94891,8 @@ var staticRenderFns = [
         attrs: { onclick: "return LoadingOverlay()", href: "/zen/inventory" }
       },
       [
-        _c("i", { staticClass: "far fa-window-close fa-lg" }),
-        _vm._v(" Cancel\n                                        ")
+        _c("i", { staticClass: "far fa-times-circle fa-lg" }),
+        _vm._v(" Cancel\n\n                                        ")
       ]
     )
   }
@@ -97616,111 +97616,124 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("div", { staticClass: "content" }, [
-      _c("div", { staticClass: "container-fluid" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col" }, [
-            _c("div", { staticClass: "card card-primary card-outline" }, [
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c(
-                    "table",
-                    {
-                      staticClass: "table table-bordered table-sm table-hover",
-                      attrs: { id: "dt" }
-                    },
-                    [
-                      _vm._m(0),
-                      _vm._v(" "),
-                      _c(
-                        "tbody",
-                        _vm._l(_vm.items, function(item, index) {
-                          return _c("tr", { key: index }, [
-                            _c("td", [_vm._v(_vm._s(item.date))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.item_id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.item))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.ADD))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.IN))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.OUT))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.BONES))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.SCRAPS))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.TOTAL))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(item.DIFFERENCE))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "btn-group",
-                                  attrs: {
-                                    role: "group",
-                                    "aria-label":
-                                      "Button group with nested dropdown"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-info",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.editAction(item, index)
+  return _c(
+    "div",
+    [
+      _c("div", { staticClass: "content" }, [
+        _c("div", { staticClass: "container-fluid" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col" }, [
+              _c("div", { staticClass: "card card-primary card-outline" }, [
+                _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "table-responsive" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "table table-bordered table-sm table-hover",
+                        attrs: { id: "dt" }
+                      },
+                      [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.items, function(item, index) {
+                            return _c("tr", { key: index }, [
+                              _c("td", [
+                                _vm._v(_vm._s(_vm.momentFormatter(item.date)))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", { staticClass: "text-center" }, [
+                                _vm._v(_vm._s(item.item_id))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.item))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.ADD))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.IN))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.OUT))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.BONES))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.SCRAPS))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.TOTAL))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(item.DIFFERENCE))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass: "btn-group",
+                                    attrs: {
+                                      role: "group",
+                                      "aria-label":
+                                        "Button group with nested dropdown"
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-info",
+                                        attrs: { type: "button" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.editAction(item, index)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-edit fa-lg"
-                                      })
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "button",
-                                    {
-                                      staticClass: "btn btn-danger",
-                                      attrs: { type: "button" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.deleteAction(item, index)
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-edit fa-lg"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass: "btn btn-danger",
+                                        attrs: { type: "button" },
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.deleteAction(item, index)
+                                          }
                                         }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass: "fa fa-trash fa-lg"
-                                      })
-                                    ]
-                                  )
-                                ]
-                              )
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "fa fa-trash fa-lg"
+                                        })
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
                             ])
-                          ])
-                        }),
-                        0
-                      )
-                    ]
-                  )
+                          }),
+                          0
+                        )
+                      ]
+                    )
+                  ])
                 ])
               ])
             ])
           ])
         ])
-      ])
-    ])
-  ])
+      ]),
+      _vm._v(" "),
+      _c("modal-delete-record"),
+      _vm._v(" "),
+      _c("modal-update-record")
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -97729,9 +97742,9 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", { staticStyle: { width: "100px" } }, [_vm._v("Date")]),
+        _c("th", { staticStyle: { width: "150px" } }, [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Item ID")]),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v("Item_ID")]),
         _vm._v(" "),
         _c("th", [_vm._v("Item")]),
         _vm._v(" "),
@@ -97741,13 +97754,13 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("OUT")]),
         _vm._v(" "),
-        _c("th", [_vm._v("BONES")]),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v("Bones")]),
         _vm._v(" "),
-        _c("th", [_vm._v("SCRAPS")]),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v("Craps")]),
         _vm._v(" "),
-        _c("th", [_vm._v("TOTAL PROD")]),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v("Total")]),
         _vm._v(" "),
-        _c("th", [_vm._v("DIFFERENCE")]),
+        _c("th", { staticStyle: { width: "50px" } }, [_vm._v("Diff.")]),
         _vm._v(" "),
         _c("th", { staticStyle: { width: "100px" } }, [_vm._v("Option")])
       ])
