@@ -14,7 +14,7 @@
                                     >
                                         <thead>
                                             <tr>
-                                                <th style="width: 100px;">Date</th>
+                                                <th style="width: 150px;">Date</th>
                                                 <th>Item ID</th>
                                                 <th>Item</th>
                                                 <th>Add</th>
@@ -29,8 +29,8 @@
                                         </thead>
                                         <tbody>
                                             <tr v-for="(item, index) in items" :key="index">
-                                                <td>{{item.date}}</td>
-                                                <td>{{item.item_id}}</td>
+                                                <td>{{momentFormatter(item.date)}}</td>
+                                                <td class="text-center" >{{item.item_id}}</td>
                                                 <td>{{item.item}}</td>
                                                 <td>{{item.ADD}}</td>
                                                 <td>{{item.IN}}</td>
@@ -89,6 +89,10 @@ export default {
         this.getRecords();
     },
     methods: {
+        momentFormatter(datetime) {
+            var result = moment(datetime);
+            return moment(result).format('MMM.DD,YYYY - hh:mmA');
+        },
         getRecords() {
             axios
                 .get("/api/getRecords")
