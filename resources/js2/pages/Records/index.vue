@@ -15,22 +15,22 @@
                                         <thead>
                                             <tr>
                                                 <th style="width: 150px;">Date</th>
-                                                <th>Item ID</th>
+                                                <th style="width:50px;">Item_ID</th>
                                                 <th>Item</th>
                                                 <th>Add</th>
                                                 <th>IN</th>
                                                 <th>OUT</th>
-                                                <th>BONES</th>
-                                                <th>SCRAPS</th>
-                                                <th>TOTAL PROD</th>
-                                                <th>DIFFERENCE</th>
-                                                <th style="width: 100px;">Option</th>
+                                                <th style="width:50px;">Bones</th>
+                                                <th style="width:50px;">Craps</th>
+                                                <th style="width:50px;">Total</th>
+                                                <th style="width:50px;">Diff.</th>
+                                                <th style="width:100px;">Option</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr v-for="(item, index) in items" :key="index">
                                                 <td>{{momentFormatter(item.date)}}</td>
-                                                <td class="text-center" >{{item.item_id}}</td>
+                                                <td class="text-center">{{item.item_id}}</td>
                                                 <td>{{item.item}}</td>
                                                 <td>{{item.ADD}}</td>
                                                 <td>{{item.IN}}</td>
@@ -73,8 +73,8 @@
             </div>
         </div>
         <!-- /.content -->
-        <!-- <modal-delete-record></modal-delete-record>
-        <modal-update-record></modal-update-record> -->
+        <modal-delete-record></modal-delete-record>
+        <modal-update-record></modal-update-record>
     </div>
 </template>
 
@@ -87,11 +87,16 @@ export default {
     },
     created() {
         this.getRecords();
+        Echo.channel("RecordsChannel").listen("RecordsEvent", data => {
+            axios.get("/api/getRecords").then(res => {
+                this.items = res.data;
+            });
+        });
     },
     methods: {
         momentFormatter(datetime) {
             var result = moment(datetime);
-            return moment(result).format('MMM.DD,YYYY - hh:mmA');
+            return moment(result).format("MMM.DD,YYYY - hh:mmA");
         },
         getRecords() {
             axios
@@ -100,9 +105,6 @@ export default {
                     this.items = res.data;
                     this.datatablesInitialize();
                 })
-                .catch(err => {
-                    console.error(err);
-                });
         },
         datatablesInitialize() {
             $(document).ready(function() {
