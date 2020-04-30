@@ -154,7 +154,8 @@
                                                 onclick="return LoadingOverlay()"
                                                 href="/zen/inventory"
                                             >
-                                                <i class="far fa-window-close fa-lg"></i> Cancel
+                                                <i class="far fa-times-circle fa-lg"></i> Cancel
+
                                             </a>
                                         </div>
                                     </div>
