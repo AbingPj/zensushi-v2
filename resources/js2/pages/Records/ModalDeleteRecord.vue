@@ -68,21 +68,16 @@ export default {
       LoadingOverlay();
       axios.post("/records/delete",this.item)
       .then(res => {
-        console.log(res)
          LoadingOverlayHide();
       })
-      .catch(err => {
-        console.error(err); 
-         LoadingOverlayHide();
-      })
+
     }
 
   },
 
- 
+
   events: {
     deleteRecordModal(data) {
-      console.log(data);
       this.item = data;
       $("#deleteRecordModal").modal("show");
     }
