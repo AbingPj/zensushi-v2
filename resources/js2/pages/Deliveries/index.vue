@@ -20,14 +20,19 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in items" :key="index">
-                                        <td  v-if="item.selected == 'false'" >{{item.id}}</td>
-                                        <td  v-if="item.selected == 'false'" >{{item.description}}</td>
-                                        <td  v-if="item.selected == 'false'" >{{item.balance}} {{item.unit_desc}}</td>
-                                        <td  v-if="item.selected == 'false'" >
+                                        <td v-if="item.selected == 'false'">{{item.id}}</td>
+                                        <td v-if="item.selected == 'false'">{{item.description}}</td>
+                                        <td
+                                            v-if="item.selected == 'false'"
+                                        >{{item.balance}} {{item.unit_desc}}</td>
+                                        <td v-if="item.selected == 'false'">
                                             <button
                                                 class="btn btn-warning btn-sm text-dark"
                                                 @click="selectProduct(item)"
-                                            >  Select</button>
+                                            >
+                                                <i class="fas fa-mouse-pointer"></i>
+                                                Select
+                                            </button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -84,10 +89,9 @@
                                                 class="btn btn-danger"
                                                 @click="deleteProduct(product)"
                                             >
-                                               <i class="fas fa-eraser"></i>
+                                                <i class="fas fa-backspace"></i>
                                             </button>
                                         </td>
-
                                     </tr>
                                 </tbody>
                             </table>
@@ -107,7 +111,17 @@
                                     id="branch"
                                 />
                                 <br />
-                                <button class="btn btn-primary btn-block" @click="submit()">Submit</button>
+                                <button class="btn btn-warning btn-block" @click="submit()">
+                                    <i class="fas fa-check-circle"></i>
+                                    &nbsp;
+                                    &nbsp;
+                                    Submit
+                                    &nbsp;
+                                    &nbsp;
+                                    <i
+                                        class="fas fa-shipping-fast"
+                                    ></i>
+                                </button>
                             </div>
                         </div>
                     </div>
