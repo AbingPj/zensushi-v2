@@ -20,5 +20,6 @@
             </div>
         </div>
     </div>
+    {{-- <delivery-request-page></delivery-request-page> --}}
     <delivery-request-page></delivery-request-page>
 @endsection
