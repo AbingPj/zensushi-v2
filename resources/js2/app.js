@@ -150,6 +150,13 @@ Vue.component("records-page", require("./pages/Records/index.vue").default);
 Vue.component("modal-delete-record", require("./pages/Records/ModalDeleteRecord.vue").default);
 Vue.component("modal-update-record", require("./pages/Records/ModalUpdateRecord.vue").default);
 
+/// Delivery Request
+Vue.component("delivery-request-page", require("./pages/DeliveryRequest/index.vue").default);
+
+/// Deliveries
+Vue.component("deliveries-page", require("./pages/Deliveries/index.vue").default);
+
+
 ////Users ///
 Vue.component("users-page", require("./pages/Users/index.vue").default);
 
