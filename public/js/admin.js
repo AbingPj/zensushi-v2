@@ -94691,7 +94691,7 @@ var render = function() {
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-5" }, [
+        _c("div", { staticClass: "col-md-6 col-lg-5" }, [
           _c("div", { staticClass: "card card-primary" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -94768,7 +94768,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-7" }, [
+        _c("div", { staticClass: "col-md-6 col-lg-7" }, [
           _c("div", { staticClass: "card card-warning" }, [
             _vm._m(2),
             _vm._v(" "),
@@ -95012,7 +95012,7 @@ var render = function() {
   return _c("div", { staticClass: "content" }, [
     _c("div", { staticClass: "container-fluid" }, [
       _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-sm-5" }, [
+        _c("div", { staticClass: "col-md-6 col-lg-5" }, [
           _c("div", { staticClass: "card card-primary" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -95088,7 +95088,7 @@ var render = function() {
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "col-sm-7" }, [
+        _c("div", { staticClass: "col-md-6 col-lg-7" }, [
           _c("div", { staticClass: "card card-success" }, [
             _vm._m(2),
             _vm._v(" "),

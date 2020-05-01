@@ -2,7 +2,7 @@
     <div class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-sm-5">
+                <div class="col-md-6 col-lg-5">
                     <div class="card card-primary">
                         <div class="card-header">
                             <h3 class="card-title">Select Item</h3>
@@ -45,7 +45,7 @@
                         </div>-->
                     </div>
                 </div>
-                <div class="col-sm-7">
+                <div class="col-md-6 col-lg-7">
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">Product Delivery List</h3>
