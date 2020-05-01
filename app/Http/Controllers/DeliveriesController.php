@@ -20,15 +20,24 @@ class DeliveriesController extends Controller
     {
 
         $items = Item::all()->where("item_type_id", "<>", "1");
+        $result = array();
         if ($items->isNotEmpty()) {
-            $items->map(function ($row) {
+
+            foreach ($items as $key => $row) {
                 $row->balance =  ItemClass::getItemBalance($row->id);
                 $row->unit_desc = $row->unit->description;
                 $row->selected = "false";
-                return $row;
-            });
+                array_push($result, $row);
+            }
+            // $items->map(function ($row) {
+            //     $row->balance =  ItemClass::getItemBalance($row->id);
+            //     $row->unit_desc = $row->unit->description;
+            //     $row->selected = "false";
+            //     return $row;
+            // });
         }
-        return response()->json($items);
+
+        return response()->json($result);
     }
 
     public function serchProducts($product)
@@ -79,7 +88,7 @@ class DeliveriesController extends Controller
             $data = Notification::CountUnseen();
             broadcast(new NotificationEvent($data));
 
-            
+
         });
     }
 
@@ -103,7 +112,7 @@ class DeliveriesController extends Controller
             // $notif = new Notification;
             // $notif->notification_type_id = 2;
             // $notif->
-            
+
         });
     }
 }
