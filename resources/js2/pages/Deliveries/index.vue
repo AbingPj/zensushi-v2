@@ -7,7 +7,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Select Item</h3>
                         </div>
-                        <div class="card-body">
+                        <div class="card-body" style="min-height: 300px;">
                             <!-- <div class="table-responsive"> -->
                             <table id="dt" class="table table-sm table-hover">
                                 <thead>
@@ -20,14 +20,14 @@
                                 </thead>
                                 <tbody>
                                     <tr v-for="(item, index) in items" :key="index">
-                                        <td>{{item.id}}</td>
-                                        <td>{{item.description}}</td>
-                                        <td>{{item.balance}} {{item.unit_desc}}</td>
-                                        <td>
+                                        <td  v-if="item.selected == 'false'" >{{item.id}}</td>
+                                        <td  v-if="item.selected == 'false'" >{{item.description}}</td>
+                                        <td  v-if="item.selected == 'false'" >{{item.balance}} {{item.unit_desc}}</td>
+                                        <td  v-if="item.selected == 'false'" >
                                             <button
-                                                class="btn btn-success btn-sm"
+                                                class="btn btn-warning btn-sm text-dark"
                                                 @click="selectProduct(item)"
-                                            >Select</button>
+                                            >  Select</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -38,6 +38,78 @@
                         <!-- <div class="card-footer">
                                 <button type="submit" class="btn btn-primary">Submit</button>
                         </div>-->
+                    </div>
+                </div>
+                <div class="col-sm-7">
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Product Delivery List</h3>
+                        </div>
+                        <div class="card-body" style="min-height: 300px;">
+                            <!-- <div class="table-responsive"> -->
+                            <table id="dt" class="table table-striped table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 100px;">Item id</th>
+                                        <th>Item Name</th>
+                                        <th style="width: 150px;">Quantity</th>
+                                        <th style="width: 50px;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="product in selectedProducts" :key="product.id">
+                                        <td style="width: 100px;">{{product.id}}</td>
+                                        <td>{{product.description}}</td>
+                                        <td style="width: 150px;">
+                                            <div class="input-group input-group-sm">
+                                                <input
+                                                    type="number"
+                                                    style="text-align:center;"
+                                                    class="form-control"
+                                                    v-model="product.quantity"
+                                                    min="1"
+                                                    max="100"
+                                                    onkeypress="return (event.charCode !=8 && event.charCode ==0 || (event.charCode >= 48 && event.charCode <= 57))"
+                                                />
+                                                <!-- :value="product.quantity" -->
+                                                <div class="input-group-append">
+                                                    <span
+                                                        class="input-group-text"
+                                                    >{{product.unit_desc}}</span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td style="width: 50px;">
+                                            <button
+                                                class="btn btn-danger"
+                                                @click="deleteProduct(product)"
+                                            >
+                                               <i class="fas fa-eraser"></i>
+                                            </button>
+                                        </td>
+
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <br />
+
+                            <!-- </div> -->
+                        </div>
+
+                        <div class="card-footer">
+                            <div style="padding: 0px 50px 0px 50px ">
+                                <label for="branch" class="mr-sm-2">Branch:</label>
+                                <input
+                                    v-model="branch"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="Enter Branch Name"
+                                    id="branch"
+                                />
+                                <br />
+                                <button class="btn btn-primary btn-block" @click="submit()">Submit</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -52,7 +124,9 @@ export default {
     },
     data() {
         return {
-            items: []
+            items: [],
+            selectedProducts: [],
+            branch: ""
         };
     },
     methods: {
@@ -62,6 +136,7 @@ export default {
                 this.datatablesInitialize();
             });
         },
+
         datatablesInitialize() {
             $(document).ready(function() {
                 $("#dt").DataTable({
@@ -86,13 +161,13 @@ export default {
                         addClass: "form-control input-lg col-xs-12"
                     },
                     fnDrawCallback: function() {
-                        $("input[type='search']").attr("id", "searchBox");
+                        $("input[type='search']").attr("id", "selectSearchBox");
                         $("#dt").css("cssText", "margin-top: 0px !important;");
-                        $("select[name='dt_length'], #searchBox").removeClass(
-                            "input-sm"
-                        );
-                        $("#searchBox")
-                            .css("width", "400px")
+                        $(
+                            "select[name='dt_length'], #selectSearchBox"
+                        ).removeClass("input-sm");
+                        $("#selectSearchBox")
+                            .css("width", "300px")
                             .focus();
                         $("#dt_filter").removeClass("dataTables_filter");
                     }
@@ -100,6 +175,25 @@ export default {
                     // language: {  },
                 });
             });
+        },
+        selectProduct(data) {
+            let y = this.selectedProducts.find(list => list.id == data.id);
+            var selectedData;
+            if (y == undefined) {
+                selectedData = data;
+                selectedData.quantity = 1;
+                this.selectedProducts.push(selectedData);
+            }
+            return (data.selected = "true");
+        },
+        deleteProduct(data) {
+            let newList = this.selectedProducts.filter(function(list) {
+                return list.id != data.id;
+            });
+            this.selectedProducts = newList;
+
+            let item = this.items.find(list => list.id == data.id);
+            return (item.selected = "false");
         }
     }
 };

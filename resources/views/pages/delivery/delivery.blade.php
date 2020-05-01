@@ -21,5 +21,5 @@
         </div>
     </div>
     <deliveries-page></deliveries-page>
-    <delivery-page></delivery-page>
+    {{-- <delivery-page></delivery-page> --}}
 @endsection
