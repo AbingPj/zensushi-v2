@@ -8,7 +8,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-header" style="border-bottom:0;">
                                 <h5 class="m-0">
-                                    <a type="button" class="btn btn-info" href>
+                                    <a type="button" class="btn btn-info" href="/zen/users/create">
                                         <i class="fas fa-user-plus fa-lg"></i> Create New User
                                     </a>
                                 </h5>
