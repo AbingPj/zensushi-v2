@@ -98962,7 +98962,7 @@ var staticRenderFns = [
             "a",
             {
               staticClass: "btn btn-info",
-              attrs: { type: "button", href: "" }
+              attrs: { type: "button", href: "/zen/users/create" }
             },
             [
               _c("i", { staticClass: "fas fa-user-plus fa-lg" }),
