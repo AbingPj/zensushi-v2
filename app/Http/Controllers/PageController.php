@@ -129,11 +129,20 @@ class PageController extends Controller
         $page_title = "Deliveries";
         return view('pages.delivery.delivery', compact('page_title'));
     }
+
+
     public function zenUsers()
     {
         $page_title = "Users";
         return view('pages.users.users', compact('page_title'));
     }
+
+    public function zenUsersCreate()
+    {
+        $page_title = "Users";
+        return view('pages.users.users-create', compact('page_title'));
+    }
+
 
 
     public function zenProduction()
