@@ -89,7 +89,7 @@
                                                 class="btn btn-danger"
                                                 @click="deleteProduct(product)"
                                             >
-                                               <i class="fas fa-backspace"></i>
+                                                <i class="fas fa-backspace"></i>
                                             </button>
                                         </td>
                                     </tr>
@@ -132,7 +132,7 @@
 <script>
 export default {
     created() {
-        this.getItems();
+        this.getItems("initialize");
     },
     data() {
         return {
@@ -142,10 +142,30 @@ export default {
         };
     },
     methods: {
-        getItems() {
+        submit() {
+            LoadingOverlay();
+            axios
+                .post("/items/delivery/send-delivery-request", {
+                    branch: this.branch,
+                    products: this.selectedProducts
+                })
+                .then(res => {
+                    console.log(res);
+                    this.branch = "";
+                    this.selectedProducts = [];
+                    this.getItems();
+                    LoadingOverlayHide();
+                })
+                .catch(err => {
+                    console.error(err);
+                });
+        },
+        getItems(action) {
             axios.get("/items/delivery/products").then(res => {
                 this.items = res.data;
-                this.datatablesInitialize();
+                if (action == "initialize") {
+                    this.datatablesInitialize();
+                }
             });
         },
 
