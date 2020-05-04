@@ -134,7 +134,7 @@
 <script>
 export default {
     created() {
-        this.getItems();
+        this.getItems("initialize");
     },
     data() {
         return {
@@ -144,10 +144,28 @@ export default {
         };
     },
     methods: {
-        getItems() {
+        submit() {
+            LoadingOverlay();
+
+            axios
+                .post("/items/delivery/send-delivery", {
+                    branch: this.branch,
+                    products: this.selectedProducts
+                })
+                .then(res => {
+                    console.log(res);
+                    this.branch = "";
+                    this.selectedProducts = [];
+                    this.getItems();
+                    LoadingOverlayHide();
+                });
+        },
+        getItems(action) {
             axios.get("/items/delivery/products").then(res => {
                 this.items = res.data;
-                this.datatablesInitialize();
+                if (action == "initialize") {
+                    this.datatablesInitialize();
+                }
             });
         },
 
