@@ -75,12 +75,12 @@
 
 
 
-                                    <div class="form-group text-center text-success">
+                                    {{-- <div class="form-group text-center text-success">
                                         <a class="btn btn-outline-success btn-block " href="{{ route('page.register') }}">Sign up</a>
-                                    </div>
-                                    <!-- <div class="form-group text-center">
-                                    <a href="https://www.fb.com">Forgot Password?</a>
-                                </div> -->
+                                    </div> --}}
+                                     <div class="form-group text-center">
+                                    <a href="">Forgot Password?</a>
+                                </div>
                                 </form>
                             </div>
 
@@ -100,7 +100,7 @@
         </div>
     </div>
     </div>
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
 </body>
 
