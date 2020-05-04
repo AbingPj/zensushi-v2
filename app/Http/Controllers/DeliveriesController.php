@@ -18,48 +18,17 @@ class DeliveriesController extends Controller
 {
     public function getProducts()
     {
-
         $items = Item::all()->where("item_type_id", "<>", "1");
         $result = array();
         if ($items->isNotEmpty()) {
-
             foreach ($items as $key => $row) {
                 $row->balance =  ItemClass::getItemBalance($row->id);
                 $row->unit_desc = $row->unit->description;
                 $row->selected = "false";
                 array_push($result, $row);
             }
-            // $items->map(function ($row) {
-            //     $row->balance =  ItemClass::getItemBalance($row->id);
-            //     $row->unit_desc = $row->unit->description;
-            //     $row->selected = "false";
-            //     return $row;
-            // });
         }
-
         return response()->json($result);
-    }
-
-    public function serchProducts($product)
-    {
-        $prod = $product;
-        // $items = Item::whereRaw("item_type_id <> 1 AND (description LIKE '%" . $prod . "%' OR id LIKE '%" . $prod . "')")->get();
-        $items = Item::where('item_type_id', '<>', 1)
-            ->where(function ($query) use ($prod) {
-                return $query->where("description", "LIKE", "%$prod%")
-                    ->orWhere("id", "like", "%$prod%");
-            })
-            ->get();
-
-        if ($items->isNotEmpty()) {
-            $items->map(function ($row) {
-                $row->balance =  ItemClass::getItemBalance($row->id);
-                $row->unit_desc = $row->unit->description;
-                $row->selected = "false";
-                return $row;
-            });
-        }
-        return response()->json($items);
     }
 
     public function sendDeliveryRequest(Request $request)
@@ -77,18 +46,14 @@ class DeliveriesController extends Controller
                 $request_list->quantity = $product['quantity'];
                 $request_list->save();
             }
-
             $notif = new Notification;
             $notif->title = 'New Delivery Request';
             $notif->notification_type_id = 2;
             $notif->request_id = $req->id;
             $notif->user_id = Auth::user()->id;
             $notif->save();
-
             $data = Notification::CountUnseen();
             broadcast(new NotificationEvent($data));
-
-
         });
     }
 
@@ -108,11 +73,6 @@ class DeliveriesController extends Controller
                 $list->quantity = $product['quantity'];
                 $list->save();
             }
-
-            // $notif = new Notification;
-            // $notif->notification_type_id = 2;
-            // $notif->
-
         });
     }
 }
