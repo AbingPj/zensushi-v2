@@ -8,6 +8,7 @@
     <title>{{config('app.name')}} Inventory</title>
     <link rel="icon" href="{{ asset('images/zenicon.png')}}">
     <link rel="stylesheet" href="{{ asset('css/app.css')}}">
+    {{-- <link rel="stylesheet" href="{{ asset('css/admin.css')}}"> --}}
 </head>
 
 {{-- <body style="background-image: url({{asset('images/16.jpg')}})"> --}}
@@ -66,7 +67,7 @@
                                     </button> --}}
                                         <button type="submit" class="btn btn-primary btn-block ld-over btnLogin">
                                             {{ __('Login') }}
-                                             <img style="margin:-10px;" src="{{asset('images/svg_logo/logo7.svg')}}"  class="ld ld-broadcast" />
+                                            <img style="margin:-10px;" src="{{asset('images/svg_logo/logo7.svg')}}" class="ld ld-broadcast" />
                                         </button>
                                         <hr class="my-4">
                                     </div>
@@ -77,30 +78,31 @@
 
                                     {{-- <div class="form-group text-center text-success">
                                         <a class="btn btn-outline-success btn-block " href="{{ route('page.register') }}">Sign up</a>
-                                    </div> --}}
-                                     <div class="form-group text-center">
-                                    <a href="">Forgot Password?</a>
-                                </div>
-                                </form>
+                            </div> --}}
+                            <div class="form-group text-center">
+                                <a href="">Forgot Password?</a>
                             </div>
-
-                            <div class="col-sm-12  col-md-6">
-                                {{-- <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;"> --}}
-                                <img class="welcome-image">
-                            </div>
-                            <br>
-                            <br>
+                            </form>
                         </div>
 
-
-
+                        <div class="col-sm-12  col-md-6">
+                            {{-- <img src="{{asset('images/logo.png')}}" style="width:100%;height:100%;"> --}}
+                            <img class="welcome-image">
+                        </div>
+                        <br>
+                        <br>
                     </div>
+
+
+
                 </div>
             </div>
         </div>
     </div>
     </div>
+    </div>
     {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 
 </body>
 
