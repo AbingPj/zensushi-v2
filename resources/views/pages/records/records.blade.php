@@ -1,4 +1,4 @@
-@extends('layout2.master')
+@extends('layout.master')
 
 @section('title', 'Records' )
 

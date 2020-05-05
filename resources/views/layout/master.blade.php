@@ -3,21 +3,21 @@
 
 <head>
     <title>{{config('app.name')}} @yield('title') </title>
-    @include('layout2.parts.head')
+    @include('layout.parts.head')
 </head>
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed">
     <div id="app2">
         <div class="wrapper">
-            @include('layout2.parts.navbar')
-            @include('layout2.parts.mainsidebar')
+            @include('layout.parts.navbar')
+            @include('layout.parts.mainsidebar')
             <div class="content-wrapper">
                 @yield('content')
             </div>
-            @include('layout2.parts.controlsidebar')
-            @include('layout2.parts.mainfooter')
+            @include('layout.parts.controlsidebar')
+            @include('layout.parts.mainfooter')
         </div>
     </div>
-    @include('layout2.parts.scripts')
+    @include('layout.parts.scripts')
 </body>
 
 </html>
