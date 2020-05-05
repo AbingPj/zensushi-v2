@@ -25,21 +25,8 @@ Route::get('/welcomepage', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/', 'WelcomeController@welcome')->name('page.welcome');
 Route::get('/registerpage', 'WelcomeController@register')->name('page.register');
 
-// Page Controller
-Route::get('/home', 'PageController@home');
-Route::get('/zensushi', 'PageController@home')->name('page.home');
-Route::get('/zensushi-items', 'PageController@items')->name('page.items');
-Route::get('/zensushi-records', 'PageController@records')->name('page.records');
-Route::get('/zensushi-delivery-request', 'PageController@deliveryRequest')->name('page.delivery.request');
-Route::get('/zensushi-delivery', 'PageController@delivery')->name('page.delivery');
-Route::get('/zensushi-notification', 'PageController@notification')->name('page.notification');
-Route::get('/zensushi-production', 'PageController@production')->name('page.production');
-Route::get('/zensushi-production/{item_id}', 'PageController@production2');
-Route::get('/zensushi-production/{item_id}/{product_item_id}', 'PageController@production3');
-Route::get('/zensushi-production/{item_id}/{product_item_id}/{item_raw_stock_out}', 'PageController@production4');
-
-
 Route::group(['prefix' => 'zen'], function () {
+    // Page Controller
     Route::get('/', 'PageController@zen')->name('zen.home');
     Route::get('/inventory', 'PageController@zenInventory')->name('zen.inventory');
     Route::get('/create/items/type/{id}', 'PageController@zenCreateItem');
