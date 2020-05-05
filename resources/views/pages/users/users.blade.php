@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', '{{$page_title}}' )
+@section('title', 'Users' )
 
 @section('content')
     <div class="content-header">
