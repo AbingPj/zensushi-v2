@@ -42,6 +42,7 @@ Vue.component("deliveries-page", require("./pages/Deliveries/index.vue").default
 
 ////  Users
 Vue.component("users-page", require("./pages/Users/index.vue").default);
+Vue.component("create-user-page", require("./pages/Users/CreateUser.vue").default);
 
 
 
