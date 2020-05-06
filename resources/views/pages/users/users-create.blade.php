@@ -8,7 +8,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                    <h1 class="m-0 text-dark"><i class="fas fa-th"></i> {{$page_title}}</h1>
+                    <h1 class="m-0 text-dark"><i class="fas fa-users-cog"></i> {{$page_title}}</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -24,6 +24,10 @@
                 </div>
             </div>
         </div>
+
+        <create-user-page>
+
+        </create-user-page>
         {{-- <items-create
             itemtype="{{ $itemType }}"
             categories="{{ $categories }}"
