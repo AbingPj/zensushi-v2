@@ -7,7 +7,7 @@
                         <div class="card card-primary card-outline">
                             <div class="card-header" style="border-bottom:0;">
                                 <h5 class="m-0">
-                                    <i class="fas fa-folder-plus fa-lg"></i>
+                                    <i class="fas fa-user-plus"></i>
                                     Create User
                                 </h5>
                                 <!-- folder-plus -->
